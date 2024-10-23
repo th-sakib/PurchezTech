@@ -1,11 +1,15 @@
 import { FaLongArrowAltRight } from "react-icons/fa";
 
-const Button = ({ children, shopNow }) => {
-  console.log(children);
+const Button = ({ children, shopNow, login }) => {
   return (
     <div
-      className={`btn bg-primary-color text-white rounded-sm font-bolder text-sm h-11 min-h-11 border-none ${
-        shopNow ? "hover:bg-[#111010] group w-36 " : "hover:bg-[#111010] "
+      className={`${
+        login &&
+        "btn px-6 btn-outline outline-textC rounded-none text-textC hover:bg-primary-color"
+      }
+      ${
+        shopNow &&
+        "btn border-none outline-none bg-primary-color hover:bg-on-hover text-white group w-36 rounded-none"
       }`}
     >
       <span className="">{children}</span>

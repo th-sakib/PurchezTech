@@ -1,23 +1,35 @@
-import Button from "../../../Components/Button";
+import BannnerText from "./BannnerText";
+
+// import images
+import gamingConsole from "../../../assets/images/Banner-image/gaming-console-bg.png";
+import laptop from "../../../assets/images/Banner-image/art-laptop-nobg.png";
+import drone from "../../../assets/images/Banner-image/drone.png";
+import phone from "../../../assets/images/Banner-image/phone.png";
 
 const Banner = () => {
   return (
-    <div className="flex justify-center items-center my-5 max-w-screen-lg  mx-auto ">
-      {/* first section */}
-      <div className="w-full">
-        <h1 className="text-6xl mb-10">Easy Buy Tech & Accessories</h1>
-        <p className="w-9/12 text-justify mb-10">
-          There has never been a simpler way to buy tech accessories than with
-          Purcheztech. We understand the importance of having access to
-          reliable, high-quality technology products, whether it's for work,
-          gaming, or staying connected. That,s why we,ve built a platform that
-          makes shopping for the latest tech as easy as possible.
-        </p>
-
-        <Button shopNow>Shop now</Button>
-      </div>
-      {/* last section */}
-      <div className="w-7/12 h-96 bg-red-950"></div>
+    <div className="flex justify-center items-center my-48 relative">
+      <BannnerText />
+      <img
+        className="absolute right-16 -top-32 h-28 opacity-50"
+        src={phone}
+        alt="gaming console icon not clickable"
+      />
+      <img
+        className="absolute left-16 -top-32 h-28 opacity-50"
+        src={laptop}
+        alt="gaming console icon not clickable"
+      />
+      <img
+        className="absolute right-16 -bottom-32 h-28 opacity-50 -rotate-12"
+        src={gamingConsole}
+        alt="gaming console icon not clickable"
+      />
+      <img
+        className="absolute left-16 -bottom-32 h-20 opacity-50"
+        src={drone}
+        alt="gaming console icon not clickable"
+      />
     </div>
   );
 };

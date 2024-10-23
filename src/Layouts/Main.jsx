@@ -5,11 +5,11 @@ import Navbar from "../Pages/Shared/Navbar/Navbar";
 const Main = () => {
   return (
     <>
-      <div className="max-w-screen-xl mx-auto text-primary-color">
+      <div className="max-w-screen-xl mx-auto text-textC">
         <Navbar></Navbar>
-        <Outlet></Outlet>
       </div>
       <div>
+        <Outlet></Outlet>
         <Footer></Footer>
       </div>
     </>

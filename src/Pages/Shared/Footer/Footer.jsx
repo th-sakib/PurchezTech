@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <div className="max-w-[100vw]">
-      <footer className="footer bg-[#1A1819] p-10 text-[#868284]">
+      <footer className="footer bg-primary-color p-10 text-[#c3c0c1]">
         <nav>
           <div className="space-y-1 mb-4 text-white">
             <h6 className="font-bold text-xl mb-4 text-white">Contacts</h6>
@@ -63,7 +63,7 @@ const Footer = () => {
               <input
                 type="text"
                 placeholder="Enter your email"
-                className="input border-white join-item bg-[#1A1819] focus:outline-none focus:border-white focus:border-dashed"
+                className="input border-white join-item bg-primary-color focus:outline-none focus:border-white focus:border-dashed"
               />
               <button className="btn bg-white join-item">
                 <IoIosArrowRoundForward className="text-3xl" />
@@ -72,7 +72,7 @@ const Footer = () => {
           </fieldset>
         </form>
       </footer>
-      <footer className="footer bg-[#1A1819] p-10 text-[#b3afb1] text-[.6rem] footer-center -mt-5">
+      <footer className="footer bg-primary-color p-10 text-[#c3c0c1] text-[.6rem] footer-center -mt-5">
         <aside>
           <p className="tracking-normal">
             Copyright © {new Date().getFullYear()} - All right reserved by ACME

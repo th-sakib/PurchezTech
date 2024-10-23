@@ -6,7 +6,7 @@ import { router } from "./Routes/Route";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <div className={`mx-auto font-josefin_sans text-[#1A1819]`}>
+    <div className={`mx-auto font-josefin_sans text-textC `}>
       <RouterProvider router={router} />
     </div>
   </StrictMode>
