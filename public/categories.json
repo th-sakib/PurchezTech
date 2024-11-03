@@ -1,0 +1,44 @@
+{
+  "categories": [
+    {
+      "title": "AirPods",
+      "imageURL": "https://ibb.co.com/DCw6DJw"
+    },
+    {
+      "title": "Mobile Accessories",
+      "imageURL": "https://ibb.co.com/Kbd95S8"
+    },
+    {
+      "title": "Drones",
+      "imageURL": "https://ibb.co.com/85Hp7xr"
+    },
+    {
+      "title": "Gaming Consoles",
+      "imageURL": "https://ibb.co.com/0FqqZk5"
+    },
+    {
+      "title": "Headphones",
+      "imageURL": "https://ibb.co.com/YBNxr06"
+    },
+    {
+      "title": "Smartphones",
+      "imageURL": "https://ibb.co.com/vshmbgz"
+    },
+    {
+      "title": "Laptops",
+      "imageURL": "https://ibb.co.com/P6dHGTX"
+    },
+    {
+      "title": "PC Components",
+      "imageURL": "https://ibb.co.com/VWsTS9X"
+    },
+    {
+      "title": "Smartwatch",
+      "imageURL": "https://ibb.co.com/bJjDJpy"
+    },
+    {
+      "title": "Camera",
+      "imageURL": "https://ibb.co.com/hCwF9KX"
+    }
+  ]
+}

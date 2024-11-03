@@ -2,38 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* // #1995AD, #A1D6E2, #F1F1F2 */
-
 .active {
     background-color: transparent !important;
-    color: #00ABE4 !important;
-    border-bottom: 1px solid #00ABE4 !important;
     border-radius: 0 !important;
     border-radius: 0 !important;
     background-color: transparent !important;
-    padding-left: 0 !important;
+    /* padding-left: 1rem !important; */
     padding-right: 0 !important;
+}
+
+.active p {
+    color: #FFC75F !important;
 }
 
 li a {
     display: flex;
     font-size: small;
-}
-
-li a p {
-    padding-top: .4rem;
-    padding-bottom: .4rem;
-
-}
-
-li a:not(.active):hover {
-    background-color: transparent !important;
-    color: #FFF !important;
-    transform: scale(1.05);
-    outline: none !important;
-    transition: .2s ease;
+    padding-right: 0 !important;
+    padding: 0 .3rem;
+    position: relative
 }
 
 li svg {
     margin-bottom: 4px;
+}
+
+ul li {
+    position: relative
 }

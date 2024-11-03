@@ -8,9 +8,9 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="max-w-[100vw]">
-      <footer className="footer bg-primary-color p-10 text-[#c3c0c1]">
-        <nav>
+    <div className="max-w-[100vw] bg-neutral box-border">
+      <footer className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-between overflow-hidden text-neutral-content p-10 mx-auto md:max-w-screen-xl text-sm gap-9">
+        <nav className="">
           <div className="space-y-1 mb-4 text-white">
             <h6 className="font-bold text-xl mb-4 text-white">Contacts</h6>
 
@@ -36,14 +36,14 @@ const Footer = () => {
             </div>
           </div>
         </nav>
-        <nav>
+        <nav className="flex flex-col gap-2">
           <h6 className="font-bold text-xl mb-4 text-white">Company</h6>
           <a className="link hover:text-white no-underline">About us</a>
           <a className="link hover:text-white no-underline">Services</a>
           <a className="link hover:text-white no-underline">Privacy Policy</a>
           <a className="link hover:text-white no-underline">Terms of service</a>
         </nav>
-        <nav>
+        <nav className="flex flex-col gap-2">
           <h6 className="font-bold text-xl mb-4 text-white">Product Links</h6>
           <a className="link hover:text-white no-underline">Categories</a>
           <a className="link hover:text-white no-underline">New Arrival</a>
@@ -52,7 +52,7 @@ const Footer = () => {
           <a className="link hover:text-white no-underline">Discount</a>
           <a className="link hover:text-white no-underline">Special Offer</a>
         </nav>
-        <form>
+        <form className="">
           <h6 className="font-bold text-xl mb-4 text-white">Newsletter</h6>
           <fieldset className="form-control w-80">
             <p className="mb-8">
@@ -63,20 +63,19 @@ const Footer = () => {
               <input
                 type="text"
                 placeholder="Enter your email"
-                className="input border-white join-item bg-primary-color focus:outline-none focus:border-white focus:border-dashed"
+                className="input border-white join-item bg-transparent focus:outline-none focus:border-white focus:border-dashed"
               />
-              <button className="btn bg-white join-item">
+              <button className="btn bg-white join-item" type="button">
                 <IoIosArrowRoundForward className="text-3xl" />
               </button>
             </div>
           </fieldset>
         </form>
       </footer>
-      <footer className="footer bg-primary-color p-10 text-[#c3c0c1] text-[.6rem] footer-center -mt-5">
+      <footer className="footer p-10 bg-neutral text-[#c3c0c1] text-[.6rem] footer-center -mt-5">
         <aside>
           <p className="tracking-normal">
-            Copyright © {new Date().getFullYear()} - All right reserved by ACME
-            Industries Ltd
+            Copyright © {new Date().getFullYear()} - All right reserved to sakib
           </p>
         </aside>
       </footer>

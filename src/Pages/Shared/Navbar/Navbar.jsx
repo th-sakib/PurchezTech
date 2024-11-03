@@ -5,6 +5,7 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import { LuMail } from "react-icons/lu";
 import { AiFillProduct, AiOutlineProduct } from "react-icons/ai";
 import { RiContactsBook3Line, RiContactsBookFill } from "react-icons/ri";
+import { RxCross2 } from "react-icons/rx";
 import {
   BiComment,
   BiInfoSquare,
@@ -12,19 +13,17 @@ import {
   BiSolidInfoSquare,
 } from "react-icons/bi";
 import Button from "../../../Components/Button";
+import { useState } from "react";
 
 const Navbar = () => {
-  const location = useLocation();
-
-  const isHome = location.pathname === "/" || location.pathname === "home";
-
+  const [search, setSearch] = useState("");
   const navOptions = (
     <>
       <li className="">
         <NavLink to="/">
           {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-2 px-3">
-              {isActive ? <IoHome /> : <IoHomeOutline />} <p>home</p>
+            <div className="flex justify-center items-center space-x-1 px-1">
+              {/* {isActive ? <IoHome /> : <IoHomeOutline />} */ <p>home</p>}
             </div>
           )}
         </NavLink>
@@ -32,18 +31,9 @@ const Navbar = () => {
       <li className="active:bg-transparent">
         <NavLink to={"/all-products"}>
           {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-2 px-3">
-              {isActive ? <AiFillProduct /> : <AiOutlineProduct />}{" "}
-              <p>All Products</p>
-            </div>
-          )}
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/blogs">
-          {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-2 px-3">
-              {isActive ? <BiSolidComment /> : <BiComment />} <p>Blogs</p>
+            <div className="flex justify-center items-center space-x-1 px-1">
+              {/* {isActive ? <AiFillProduct /> : <AiOutlineProduct />} */}
+              <p>shop</p>
             </div>
           )}
         </NavLink>
@@ -51,9 +41,9 @@ const Navbar = () => {
       <li>
         <NavLink to="/contact">
           {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-2 px-3">
-              {isActive ? <RiContactsBookFill /> : <RiContactsBook3Line />}{" "}
-              <p>Contact us</p>
+            <div className="flex justify-center items-center space-x-1 px-1">
+              {/* {isActive ? <RiContactsBookFill /> : <RiContactsBook3Line />}{" "} */}
+              <p>Contact</p>
             </div>
           )}
         </NavLink>
@@ -61,9 +51,9 @@ const Navbar = () => {
       <li>
         <NavLink to="/about-us">
           {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-2 px-3">
-              {isActive ? <BiSolidInfoSquare /> : <BiInfoSquare />}{" "}
-              <p>About Us</p>
+            <div className="flex justify-center items-center space-x-1 px-1">
+              {/* {isActive ? <BiSolidInfoSquare /> : <BiInfoSquare />}  */}
+              <p>About</p>
             </div>
           )}
         </NavLink>
@@ -72,51 +62,21 @@ const Navbar = () => {
   );
 
   return (
-    <div
-      className={`${
-        isHome
-          ? "fixed top-0 left-0 w-full bg-hero-background font-josefin_sans"
-          : "fixed top-0 left-0 w-full bg-hero-background font-josefin_sans shadow-2xl"
-      }`}
-    >
-      <div className="navbar px-9">
-        {/* navbar start */}
-        <div className="navbar-start max-h-11">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="flex menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              {navOptions}
-            </ul>
-          </div>
-          <Link to={"/"} className="">
+    <div className="navbar p-0 bg-base-100 text-black justify-between max-w-screen-xl mx-auto">
+      <section className="hidden md:inline-flex">
+        {/* logo section  */}
+        <section className="flex">
+          <Link>
             <img
               width={100}
               src={logo}
               alt="PurchezTech Logo"
-              className="h-10 w-10"
+              className="h-9 w-9"
             />
           </Link>
           <Link
             to={"/"}
-            className="-mx-2 mt-3 text-xl font-josefin_sans font-extrabold"
+            className="-mx-2 mt-[.6rem] text-xl font-josefin_sans font-extrabold"
           >
             <span className="">urch</span>
             {/* <span className="text-xl font-sankofa px-1 inline-block transform translate-y-[-2px] bg-textC text-white mt-2 font-normal">
@@ -126,42 +86,60 @@ const Navbar = () => {
             {/* the TECH part  */}
             <span>Tech</span>
           </Link>
-        </div>
-        {/* middle */}
-        <div className="navbar-center hidden lg:flex max-h-11">
-          <div className="flex justify-center flex-col items-center">
-            <div className="block">
-              {/* searchbox */}
-              <div className={`join rounded-none items-center justify-center`}>
-                <input
-                  type="text"
-                  placeholder="Search for your desired Products"
-                  className="input bg-transparent join-item focus:outline-none w-[30vw] h-11 border-white focus:border-on-hover "
-                />
-                <button className="btn bg-white border-white text-on-hover rounded-sm font-bolder text-base h-11 min-h-11 hover:bg-white hover:border-white">
-                  <IoSearchSharp />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        </section>
+      </section>
 
-        {/* right side */}
-        <div className="navbar-end">
-          <div className="flex space-x-7 items-center">
-            {/*TODO: add a input field for search not animation*/}
-            <HiOutlineShoppingCart className="text-xl cursor-pointer hover:text-on-hover" />
-            <LuMail className="text-xl cursor-pointer hover:text-on-hover" />
-            <Button login>Login</Button>
-          </div>
+      {/* center of navbar  */}
+      <section className="w-full md:flex-1 px-6 md:px-0 box-border">
+        {/* search box  */}
+        <div
+          className={`flex rounded-none items-center justify-center relative md:ml-6 w-full`}
+        >
+          <input
+            type="text"
+            className={
+              "input rounded-none focus:outline-none w-full h-10 border-black focus:border-on-hover"
+            }
+            placeholder="Search for your desired Products"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+          {search && (
+            <RxCross2
+              className="absolute right-14 cursor-pointer text-primary-color"
+              onClick={() => setSearch("")}
+            />
+          )}
+          <button className="px-3 bg-black border-black hover:border-on-hover  hover:bg-on-hover rounded-none min-h-10 h-10">
+            <IoSearchSharp className="text-base text-white" />
+          </button>
         </div>
-      </div>
-      {/* nav bot-middle menues */}
-      <div className="navbar text-center hidden lg:block z-40 w-full">
-        <ul className="flex justify-center items-center px-1 space-x-5 font-bold uppercase">
+      </section>
+
+      {/* nav end  */}
+      <section className="hidden md:inline-flex">
+        {/* menu items */}
+        <ul className="uppercase mx-4 hidden md:inline-flex text-[#363634] ">
           {navOptions}
         </ul>
-      </div>
+
+        <div className="flex space-x-7 items-center">
+          {/* cart icon  */}
+          <Link to="/cart" className="relative group hover:text-on-hover">
+            <HiOutlineShoppingCart className={`text-xl cursor-pointer`} />
+            <span className="absolute -top-2 -right-2 text-xs bg-black text-white w-4 h-4 rounded-full font-extrabold group-hover:bg-on-hover group-hover:text-white text-center ">
+              0
+            </span>
+          </Link>
+
+          {/* login button */}
+          <Link to="/login">
+            <Button className="bg-transparent border-black hover:bg-on-hover hover:text-white">
+              Login
+            </Button>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 };
