@@ -6,6 +6,8 @@ import Contact from "../Pages/Contact/Contact";
 import AllProducts from "../Pages/AllProducts/AllProducts/AllProducts";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import Login from "../Pages/Auth/Login";
+import AuthLayout from "../Layouts/AuthLayout";
+import ProtectedRoute from "./protectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -29,9 +31,23 @@ export const router = createBrowserRouter([
         path: "about-us",
         element: <AboutUs />,
       },
+    ],
+  },
+  {
+    path: "/admin/dashboard",
+    element: <h1>admin no component</h1>,
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "register",
+        element: <h1>register no component</h1>,
       },
     ],
   },

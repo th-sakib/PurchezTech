@@ -3,9 +3,9 @@ import errorRobo from "../assets/images/error-page.png";
 
 const ErrorPage = () => {
   return (
-    <div className="flex flex-col justify-center items-center h-screen font-mono text-black selection:text-primary-color">
+    <div className="flex flex-col justify-center items-center h-screen font-mono text-black selection:bg-accent-color/30">
       {" "}
-      //TODO: text-color
+      {/* TODO: text-color */}
       {/* image */}
       <div className="relative mb-3 mr-60">
         <img
