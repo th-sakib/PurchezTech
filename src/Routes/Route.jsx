@@ -8,6 +8,7 @@ import AboutUs from "../Pages/AboutUs/AboutUs";
 import Login from "../Pages/Auth/Login";
 import AuthLayout from "../Layouts/AuthLayout";
 import ProtectedRoute from "./protectedRoute";
+import Signup from "../Pages/Auth/Signup";
 
 export const router = createBrowserRouter([
   {
@@ -47,7 +48,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "register",
-        element: <h1>register no component</h1>,
+        element: <Signup />,
       },
     ],
   },

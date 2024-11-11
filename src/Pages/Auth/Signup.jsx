@@ -5,8 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { MdEmail } from "react-icons/md";
 import { TbEyeClosed } from "react-icons/tb";
 import { BsFillEyeFill } from "react-icons/bs";
+import { FaUser } from "react-icons/fa";
 
-const Login = () => {
+const Signup = () => {
   const [passView, setPassView] = useState(false);
 
   const navigate = useNavigate();
@@ -23,18 +24,29 @@ const Login = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div className="relative group">
           <input
+            className="outline-none w-full bg-transparent border-b border-secondary-color"
+            {...register("username", { required: true })}
+            type="username"
+            name="username"
+            placeholder="Username"
+          />
+          <FaUser className="absolute top-1 right-2 group-focus-within:text-accent-color" />
+        </div>
+
+        <div className="relative group">
+          <input
             className="outline-none w-full bg-transparent border-b border-secondary-color "
             {...register("email", { required: true })}
             type="email"
             name="email"
-            placeholder="Email or Username"
+            placeholder="Email"
           />
           <MdEmail className="absolute top-1 right-2 group-focus-within:text-accent-color" />
         </div>
 
         <div className="relative group">
           <input
-            className="outline-none w-full bg-transparent border-b border-secondary-color"
+            className="outline-none w-full bg-transparent border-b border-secondary-color "
             {...register("password", { required: true })}
             type={passView ? "text" : "password"}
             name="password"
@@ -50,16 +62,15 @@ const Login = () => {
         </div>
 
         <Button btnType="submit" className="text-white w-full">
-          Log in
+          Create Account
         </Button>
 
         <div className="text-center">
           <p className="text-sm">
-            New here?{" "}
-            <Link to="/auth/register" className="underline">
-              create account
+            Already have an account?{" "}
+            <Link to="/auth/login" className="underline">
+              Login
             </Link>
-            ?
           </p>
         </div>
       </form>
@@ -67,4 +78,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
