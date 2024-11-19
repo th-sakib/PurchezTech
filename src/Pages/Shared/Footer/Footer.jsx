@@ -61,6 +61,7 @@ const Footer = () => {
             </p>
             <div className="join rounded-none">
               <input
+                name="footer-search"
                 type="text"
                 placeholder="Enter your email"
                 className="input border-white join-item bg-transparent focus:outline-none focus:border-white focus:border-dashed"

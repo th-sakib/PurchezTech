@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 
+// TODO: have to implement the isAuthecated or not logic from redux store (hint: maybe need to fetch cookies)
 const ProtectedRoute = ({ children }) => {
   const location = useLocation();
 

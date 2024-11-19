@@ -1,22 +1,16 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../../assets/images/Logo/main-logo-fn.png";
-import { IoHome, IoHomeOutline, IoSearchSharp } from "react-icons/io5";
+import { IoSearchSharp } from "react-icons/io5";
 import { HiOutlineShoppingCart } from "react-icons/hi";
-import { LuMail } from "react-icons/lu";
-import { AiFillProduct, AiOutlineProduct } from "react-icons/ai";
-import { RiContactsBook3Line, RiContactsBookFill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
-import {
-  BiComment,
-  BiInfoSquare,
-  BiSolidComment,
-  BiSolidInfoSquare,
-} from "react-icons/bi";
 import Button from "../../../Components/Button";
 import { useState } from "react";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
+
+  const location = useLocation();
+
   const navOptions = (
     <>
       <li className="">
@@ -97,6 +91,7 @@ const Navbar = () => {
         >
           <input
             type="text"
+            name="search-box"
             className={
               "input rounded-none focus:outline-none w-full h-10 border-black focus:border-on-hover"
             }
@@ -133,7 +128,7 @@ const Navbar = () => {
           </Link>
 
           {/* login button */}
-          <Link to="/auth/login">
+          <Link to="/auth/login" state={{ from: location.pathname }}>
             <Button className="bg-transparent border-black hover:bg-on-hover hover:text-white">
               Login
             </Button>

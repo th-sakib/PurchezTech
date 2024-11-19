@@ -8,7 +8,8 @@ const AuthLayout = () => {
 
   const pathname = location.pathname;
 
-  console.log(location.pathname);
+  const from = location?.state?.from || location?.state || "/";
+
   return (
     <div className="h-screen bg-background-color flex justify-center items-center">
       <div
@@ -31,7 +32,7 @@ const AuthLayout = () => {
           className={`absolute top-2 right-2 cursor-pointer text-xl z-50 ${
             pathname === "/auth/login" ? "text-white" : "text-black"
           } `}
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(from)}
         />
         {/* form section  */}
         <section className={`p-10 w-full md:w-1/2 z-20`}>
