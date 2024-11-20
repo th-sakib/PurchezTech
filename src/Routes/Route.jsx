@@ -7,8 +7,9 @@ import AllProducts from "../Pages/AllProducts/AllProducts/AllProducts";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import Login from "../Pages/Auth/Login";
 import AuthLayout from "../Layouts/AuthLayout";
-import ProtectedRoute from "./protectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
 import Signup from "../Pages/Auth/Signup";
+import NonAdmin from "../Components/NonAdmin";
 
 export const router = createBrowserRouter([
   {
@@ -32,15 +33,39 @@ export const router = createBrowserRouter([
         path: "about-us",
         element: <AboutUs />,
       },
+      {
+        path: "cart",
+        element: (
+          <ProtectedRoute>
+            {" "}
+            <h1>cart</h1>
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
+  // admin routes
   {
     path: "/admin/dashboard",
-    element: <h1>admin no component</h1>,
+    errorElement: <ErrorPage />,
+    element: (
+      <ProtectedRoute>
+        <h1>admin no component</h1>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/non-admin",
+    element: <NonAdmin />,
   },
   {
     path: "/auth",
-    element: <AuthLayout />,
+    errorElement: <ErrorPage />,
+    element: (
+      <ProtectedRoute>
+        <AuthLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "login",

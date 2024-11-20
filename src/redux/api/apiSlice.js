@@ -31,14 +31,14 @@ export const apiSlice = createApi({
 
     logoutUser: builder.mutation({
       query: () => ({
-        path: `${USER_URL}/logout`,
+        url: `${USER_URL}/logout`,
         method: "POST",
       }),
       invalidatesTags: ["User"],
     }),
 
     getUser: builder.query({
-      query: () => "/user/current-user",
+      query: () => `${USER_URL}/current-user`,
       providesTags: ["User"],
     }),
   }),

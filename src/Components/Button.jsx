@@ -1,10 +1,11 @@
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { cn } from "../lib/cn";
 
-const Button = ({ children, className, shopNow, btnType }) => {
+const Button = ({ children, className, shopNow, btnType, btnHandler }) => {
   return (
     <button
       type={btnType || "btn"}
+      onClick={btnHandler}
       className={cn(
         "btn bg-accent-color text-accent-color hover:bg-on-hover rounded-none px-6 group",
         className
