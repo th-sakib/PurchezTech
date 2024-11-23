@@ -12,7 +12,7 @@ import {
   selectRegistrationEmail,
   setUser,
 } from "../../redux/features/user/userSlice";
-import { toast } from "../../lib/toast";
+import { toast } from "../../lib/sweetAlert/toast";
 
 const Login = () => {
   const [passView, setPassView] = useState(false);
@@ -41,14 +41,14 @@ const Login = () => {
   // getting the location of previous page from this page visited
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from || "/";
+  const from = location?.state?.from || "/";
 
   // on submit handler
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const res = await loginUser(data).unwrap();
       reset();
+
       dispatch(setUser({ ...res.data.loggedInUser }));
       toast.fire({
         title: "You are successfully logged in",
@@ -57,8 +57,9 @@ const Login = () => {
       });
       navigate(from);
     } catch (error) {
-      error?.data?.errors?.[0]?.message;
-      error.data.stack;
+      console.log(error?.data?.errors?.[0]?.message);
+      // console.log(error?.data?.stack);
+      // console.log(error?.stack);
     }
   };
 
@@ -166,8 +167,7 @@ const Login = () => {
         {/* server error  */}
         {isError && (
           <div className="text-red-500 text-sm mt-2">
-            {error?.data?.errors?.[0]?.message ||
-              "Something went wrong. Please try again."}
+            {error?.data?.message || "Something went wrong. Please try again."}
           </div>
         )}
 

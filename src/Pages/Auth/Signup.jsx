@@ -11,7 +11,7 @@ import { FaUser, FaUserEdit } from "react-icons/fa";
 import { useRegisterUserMutation } from "../../redux/api/apiSlice";
 import { useDispatch } from "react-redux";
 import { setRegistrationEmail } from "../../redux/features/user/userSlice";
-import { toast } from "../../lib/toast";
+import { toast } from "../../lib/sweetAlert/toast";
 
 const Signup = () => {
   const [passView, setPassView] = useState(false);
@@ -46,6 +46,7 @@ const Signup = () => {
       });
       navigate("/auth/login");
     } catch (err) {
+      console.log(err?.data?.message);
       console.log(error?.data?.errors?.[0]?.message);
     }
   };
@@ -218,8 +219,7 @@ const Signup = () => {
         {/* error from server  */}
         {isError && (
           <div className="text-red-500 text-sm mt-2">
-            {error?.data?.errors?.[0]?.message ||
-              "Something went wrong. Please try again."}
+            {error?.data?.message || "Something went wrong. Please try again."}
           </div>
         )}
 

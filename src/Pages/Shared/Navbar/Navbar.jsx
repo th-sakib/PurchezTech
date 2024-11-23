@@ -5,13 +5,8 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import { RxCross2 } from "react-icons/rx";
 import Button from "../../../Components/Button";
 import { useState } from "react";
-import {
-  clearUser,
-  selectIsAuthenticated,
-} from "../../../redux/features/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useLogoutUserMutation } from "../../../redux/api/apiSlice";
-import { toast } from "../../../lib/toast";
+import { selectIsAuthenticated } from "../../../redux/features/user/userSlice";
+import { useSelector } from "react-redux";
 import Avatar from "./Avatar";
 
 const Navbar = () => {
@@ -19,23 +14,7 @@ const Navbar = () => {
   const location = useLocation();
 
   // rtk / rtk query
-  const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const [logoutUser, { isLoading }] = useLogoutUserMutation();
-
-  const logoutHandler = async () => {
-    try {
-      await logoutUser().unwrap();
-      dispatch(clearUser());
-    } catch (err) {
-      console.log(err?.data?.message);
-      console.log(err?.data?.stack);
-    }
-    toast.fire({
-      icon: "warning",
-      title: "You are logged out!",
-    });
-  };
 
   const navOptions = (
     <>
@@ -162,7 +141,6 @@ const Navbar = () => {
             </Link>
           ) : (
             <Avatar />
-            // <Button btnHandler={logoutHandler}>Logout</Button>
           )}
         </div>
       </section>

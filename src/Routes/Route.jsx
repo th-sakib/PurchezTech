@@ -34,10 +34,9 @@ export const router = createBrowserRouter([
         element: <AboutUs />,
       },
       {
-        path: "cart",
+        path: "/cart",
         element: (
           <ProtectedRoute>
-            {" "}
             <h1>cart</h1>
           </ProtectedRoute>
         ),

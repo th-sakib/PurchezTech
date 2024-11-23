@@ -1,20 +1,43 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useGetUserQuery } from "../redux/api/apiSlice";
-import { useSelector } from "react-redux";
+import { useLazyGetUserQuery } from "../redux/api/apiSlice";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  clearUser,
   selectIsAuthenticated,
   selectUserRole,
 } from "../redux/features/user/userSlice";
+import { useEffect } from "react";
 
 // TODO: have to implement the isAuthecated or not logic from redux store (hint: maybe need to fetch cookies)
 const ProtectedRoute = ({ children }) => {
   const location = useLocation();
-
-  // rtk query
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const userRole = useSelector(selectUserRole);
 
-  // helpler functions
+  const dispatch = useDispatch();
+
+  // refresh token endpoint
+  const [getUserTrigger, { isLoading }] = useLazyGetUserQuery();
+
+  // refresh token in component mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        console.log("trigger try");
+        await getUserTrigger();
+      } catch (error) {
+        dispatch(clearUser());
+      }
+    };
+
+    checkAuth();
+  }, [getUserTrigger, dispatch]);
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
+  // // helpler functions
   const nonProtectedPage = () => {
     location.pathname === "/";
   };
@@ -34,6 +57,8 @@ const ProtectedRoute = ({ children }) => {
 
   // if user not authenticated
   if (!isAuthenticated && !isAuthPage()) {
+    // dispatch(clearUser());
+
     return <Navigate to="/auth/login" replace />;
   }
 
