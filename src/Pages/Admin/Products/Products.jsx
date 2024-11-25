@@ -11,11 +11,7 @@ const Products = () => {
 
   return (
     <div className="flex mt-4">
-      <Button
-        btnType="button"
-        btnHandler={toggleSidebar}
-        className="ml-auto mr-8"
-      >
+      <Button btnHandler={toggleSidebar} className="ml-auto mr-8">
         Add Product
       </Button>
       <Sidebar isOpenSidebar={isOpenSidebar} toggleSidebar={toggleSidebar} />

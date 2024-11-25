@@ -1,4 +1,5 @@
 import React from "react";
+import AddProductForm from "./AddProductForm";
 
 const Sidebar = ({ isOpenSidebar, toggleSidebar }) => {
   return (

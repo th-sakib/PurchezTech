@@ -4,7 +4,7 @@ import { cn } from "../lib/cn";
 const Button = ({ children, className, shopNow, btnType, btnHandler }) => {
   return (
     <button
-      type={btnType || "btn"}
+      type={btnType || "button"}
       onClick={btnHandler}
       className={cn(
         "btn bg-accent-color text-white hover:bg-on-hover rounded-none px-6 group",

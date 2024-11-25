@@ -144,7 +144,7 @@ const Login = () => {
           />
 
           {/* eye icon button */}
-          <button type="button" onClick={() => setPassView(!passView)}>
+          <button type="btn" onClick={() => setPassView(!passView)}>
             {passView ? (
               <BsFillEyeFill
                 className={`absolute top-1 right-2 group-focus-within:text-accent-color ${
