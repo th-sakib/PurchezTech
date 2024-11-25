@@ -7,7 +7,7 @@ const Button = ({ children, className, shopNow, btnType, btnHandler }) => {
       type={btnType || "btn"}
       onClick={btnHandler}
       className={cn(
-        "btn bg-accent-color text-accent-color hover:bg-on-hover rounded-none px-6 group",
+        "btn bg-accent-color text-white hover:bg-on-hover rounded-none px-6 group",
         className
       )}
     >

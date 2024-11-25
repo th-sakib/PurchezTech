@@ -3,11 +3,15 @@ import robotAvatar from "../../../assets/images/robot-avatar.png";
 import { toast } from "../../../lib/sweetAlert/toast";
 import { useLogoutUserMutation } from "../../../redux/api/apiSlice";
 import { clearUser } from "../../../redux/features/user/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { FaUser, FaUserGear } from "react-icons/fa6";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const Avatar = () => {
   const dispatch = useDispatch();
   const [logoutUser, { isLoading }] = useLogoutUserMutation();
+
+  const location = useLocation();
 
   const logoutHandler = async () => {
     try {
@@ -49,10 +53,20 @@ const Avatar = () => {
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 drawer-end">
             {/* Sidebar content here */}
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to="/your-profile">
+                {location?.pathname.includes("/admin") ? (
+                  <FaUserGear className="text-base" />
+                ) : (
+                  <FaUser className="text-base" />
+                )}
+                Your Profile
+              </Link>
             </li>
+
+            {/* logout button  */}
             <li>
               <button onClick={logoutHandler}>
+                <FaSignOutAlt className="text-base" />
                 {isLoading ? "Logging out" : "Logout"}
               </button>
             </li>

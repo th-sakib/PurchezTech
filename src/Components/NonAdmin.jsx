@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import angryRobo from "../assets/images/angry-robo.jpeg";
 
-const NonAdmin = () => {
+const NoAccess = () => {
   return (
     <div className="flex flex-col justify-center items-center h-screen font-mono text-black selection:bg-accent-color/30">
       {" "}
@@ -36,4 +36,4 @@ const NonAdmin = () => {
   );
 };
 
-export default NonAdmin;
+export default NoAccess;

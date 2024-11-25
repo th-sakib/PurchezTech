@@ -9,7 +9,10 @@ import Login from "../Pages/Auth/Login";
 import AuthLayout from "../Layouts/AuthLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import Signup from "../Pages/Auth/Signup";
-import NonAdmin from "../Components/NonAdmin";
+import NoAccess from "../Components/NonAdmin";
+import AdminLayout from "../Layouts/AdminLayout";
+import Profile from "../Pages/Shared/Profile/Profile";
+import Products from "../Pages/Admin/Products/Products";
 
 export const router = createBrowserRouter([
   {
@@ -19,7 +22,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>,
+        element: <Home />,
       },
       {
         path: "all-products",
@@ -41,22 +44,53 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "/your-profile",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
+
   // admin routes
   {
-    path: "/admin/dashboard",
-    errorElement: <ErrorPage />,
+    path: "/admin",
     element: (
       <ProtectedRoute>
-        <h1>admin no component</h1>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "dashboard",
+        element: <h1>hello world</h1>,
+      },
+      {
+        path: "products",
+        element: <Products />,
+      },
+      {
+        path: "orders",
+        element: <h1>hello world</h1>,
+      },
+    ],
+  },
+
+  // non-admin routes for warning
+  {
+    path: "/no-access",
+    element: (
+      <ProtectedRoute>
+        <NoAccess />
       </ProtectedRoute>
     ),
   },
-  {
-    path: "/non-admin",
-    element: <NonAdmin />,
-  },
+
+  // auth routes
   {
     path: "/auth",
     errorElement: <ErrorPage />,

@@ -6,9 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sankofa: ["Sankofa Display", "sans-serif"],
         josefin_sans: ["Josefin Sans", "sans-serif"],
-        avro: ["Arvo", "serif"],
       },
       colors: {
         "primary-color": "#1A1F2B", // Dark Charcoal - for main text and headers, providing a deep, strong contrast

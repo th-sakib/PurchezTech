@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { clearUser } from "../features/user/userSlice";
 import Swal from "sweetalert2";
+import { Navigate } from "react-router-dom";
 
 const USER_URL = "api/v1/user";
 
