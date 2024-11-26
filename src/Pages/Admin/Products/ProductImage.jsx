@@ -36,6 +36,7 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
   }
 
   function handleOnChange(e) {
+    e.preventDefault();
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       setValue("image", selectedFile, { shouldValidate: true });
