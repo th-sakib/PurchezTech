@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
 import ProductImage from "./ProductImage";
 import Button from "../../../Components/Button";
+import {
+  useCreateProductMutation,
+  useUploadProductMutation,
+} from "../../../redux/api/apiSlice.js";
 
 const AddProductForm = () => {
   const techProductWithBrands = {
@@ -145,17 +149,28 @@ const AddProductForm = () => {
     formState: { errors },
   } = useForm();
 
+  // getting post methods from api slice
+  const [uploadProduct, { isLoading: uploading }] = useUploadProductMutation();
+  const [createProduct, { isLoading: submitting }] = useCreateProductMutation();
+
   // checking what category option is selected
   const selectedCategy = watch("category");
-  // using selectedCategory to get brand names
+  // using selectedCategory to get brand names => to sync brands with category
   const brandsAccordingCategory = techProductWithBrands[selectedCategy] || [];
 
-  const onSubmit = (data) => {
-    console.log("submit");
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("productImage", data.productImage);
+
+      const imageRes = await uploadProduct(formData).unwrap();
+      console.log(imageRes);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
       {/* image  */}
       <div className="mb-3">
         <ProductImage
@@ -282,6 +297,14 @@ const AddProductForm = () => {
               value: true,
               message: "Price is required",
             },
+            pattern: {
+              value: /^[0-9]+$/,
+              message: "Price takes only integer number",
+            },
+            min: {
+              value: 0,
+              message: "Price can't be negative",
+            },
           })}
           type="text"
           name="price"
@@ -301,6 +324,14 @@ const AddProductForm = () => {
               value: true,
               message: "Sale Price is required",
             },
+            pattern: {
+              value: /^[0-9]+$/,
+              message: "Sale price takes only integer number",
+            },
+            min: {
+              value: 0,
+              message: "Sale price can't be negative",
+            },
           })}
           type="text"
           name="salePrice"
@@ -308,6 +339,33 @@ const AddProductForm = () => {
           placeholder="Enter product salePrice"
         />
         <p className="text-red-600 text-sm">{errors?.salePrice?.message}</p>
+      </div>
+
+      {/* Total Stock  */}
+      <div className="relative group h-12 mb-12">
+        <label htmlFor="stock">Total Stock</label>
+        <input
+          className="input input-bordered w-full max-w-xs"
+          {...register("stock", {
+            required: {
+              value: true,
+              message: "Total stock is required",
+            },
+            pattern: {
+              value: /^[0-9]+$/,
+              message: "Total stock takes only integer number",
+            },
+            min: {
+              value: 0,
+              message: "Total stock can't be negative",
+            },
+          })}
+          type="text"
+          name="stock"
+          id="stock"
+          placeholder="Enter product stock"
+        />
+        <p className="text-red-600 text-sm">{errors?.stock?.message}</p>
       </div>
 
       <Button btnType="submit" className="w-full">

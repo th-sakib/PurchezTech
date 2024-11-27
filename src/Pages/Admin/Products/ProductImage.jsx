@@ -7,7 +7,7 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
   const [draggedIn, setDraggedIn] = useState(false);
   const fileInputRef = useRef(null);
 
-  const watchFile = watch("image") || false;
+  const watchFile = watch("productImage") || false;
 
   function handleOnDragOver(e) {
     e.preventDefault();
@@ -30,8 +30,8 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
     fileInputRef.current.files = dataTransfer.files;
 
     if (dropFile) {
-      setValue("image", dropFile, { shouldValidate: true });
-      trigger("image");
+      setValue("productImage", dropFile, { shouldValidate: true });
+      trigger("productImage");
     }
   }
 
@@ -39,8 +39,8 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
     e.preventDefault();
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      setValue("image", selectedFile, { shouldValidate: true });
-      trigger("image");
+      setValue("productImage", selectedFile, { shouldValidate: true });
+      trigger("productImage");
     }
   }
 
@@ -50,11 +50,11 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
 
       {/* the drag and drop input  */}
       <label
-        htmlFor="image"
+        htmlFor="productImage"
         className={`w-full h-32 rounded border-2 border-dashed flex flex-col justify-center items-center mt-2 text-gray-600 cursor-pointer relative ${
-          errors?.image && "border-red-600"
+          errors?.productImage && "border-red-600"
         } ${draggedIn && "border-accent-color"} ${
-          watchFile & !errors?.image && "border-green-700"
+          watchFile & !errors?.productImage && "border-green-700"
         } "border-gray-600"
         }`}
         onDragOver={handleOnDragOver}
@@ -62,7 +62,7 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
         onDrop={hadnleOnDrop}
       >
         <input
-          {...register("image", {
+          {...register("productImage", {
             required: {
               value: true,
             },
@@ -70,8 +70,8 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
               value?.size <= 4 * 1024 * 1024 || "File should be less than 4MB",
           })}
           type="file"
-          id="image"
-          name="image"
+          id="productImage"
+          name="productImage"
           className="hidden"
           ref={fileInputRef}
           onChange={handleOnChange}
@@ -84,11 +84,11 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
         {watchFile && (
           <div
             className={`absolute top-0 right-[106%] bg-white p-5 rounded-md border ${
-              errors?.image ? "border-red-600" : "border-green-700"
+              errors?.productImage ? "border-red-600" : "border-green-700"
             } flex flex-col justify-start items-center w-full`}
           >
             <div className="flex gap-2 justify-center items-center">
-              {errors?.image ? <MdBrokenImage /> : <FaFileImage />}
+              {errors?.productImage ? <MdBrokenImage /> : <FaFileImage />}
               <span>{watchFile?.name}</span>
             </div>
 
@@ -98,7 +98,7 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
           </div>
         )}
       </label>
-      <p className="text-red-700 text-xs">{errors?.image?.message}</p>
+      <p className="text-red-700 text-xs">{errors?.productImage?.message}</p>
     </>
   );
 };

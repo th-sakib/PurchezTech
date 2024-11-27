@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { clearUser } from "../features/user/userSlice";
 import Swal from "sweetalert2";
-import { Navigate } from "react-router-dom";
 
 const USER_URL = "api/v1/user";
+const ADMIN_URL = "api/v1/admin";
 
 // default base query
 const baseQuery = fetchBaseQuery({
@@ -20,6 +20,8 @@ extraOptions: Any additional options you might want to pass to modify the reques
 */
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
+  // console.log(result);
+
   result?.error && console.log(result?.error?.data?.message);
 
   if (
@@ -65,7 +67,12 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
       });
     }
   }
-  if (result?.error?.data?.message === "Access Token not found")
+
+  // if jwt not found
+  if (
+    result?.error?.data?.message === "Access Token not found" ||
+    result?.error?.status === "FETCH_ERROR"
+  )
     api.dispatch(clearUser());
   return result;
 };
@@ -73,7 +80,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReAuth,
-  tagTypes: ["User"], // For cache management
+  tagTypes: ["User", "Product"], // For cache management
   endpoints: (builder) => ({
     // refresh access token
     refreshAccessToken: builder.mutation({
@@ -114,6 +121,29 @@ export const apiSlice = createApi({
       query: () => `${USER_URL}/current-user`,
       providesTags: ["User"],
     }),
+
+    // admin - upload product
+    uploadProduct: builder.mutation({
+      query: (formImg) => ({
+        url: `${ADMIN_URL}/upload-product`,
+        method: "POST",
+        body: formImg,
+      }),
+      invalidatesTags: ["Product"],
+    }),
+
+    // to create product
+    createProduct: builder.mutation({
+      query: (productData) => ({
+        url: `${ADMIN_URL}/create-product`,
+        method: "POST",
+        body: productData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      invalidatesTags: ["Product"],
+    }),
   }),
 });
 
@@ -124,4 +154,6 @@ export const {
   useGetUserQuery,
   useLazyGetUserQuery,
   useLogoutUserMutation,
+  useCreateProductMutation,
+  useUploadProductMutation,
 } = apiSlice;
