@@ -19,7 +19,7 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
     setDraggedIn(false);
   }
 
-  function hadnleOnDrop(e) {
+  function handleOnDrop(e) {
     e.preventDefault();
     setDraggedIn(false);
     const dropFile = e.dataTransfer.files?.[0];
@@ -59,7 +59,7 @@ const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
         }`}
         onDragOver={handleOnDragOver}
         onDragLeave={handleOnDragLeave}
-        onDrop={hadnleOnDrop}
+        onDrop={handleOnDrop}
       >
         <input
           {...register("productImage", {

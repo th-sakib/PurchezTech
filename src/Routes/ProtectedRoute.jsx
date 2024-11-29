@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useLazyGetUserQuery } from "../redux/api/apiSlice";
+import { useLazyGetAuthenticityQuery } from "../redux/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearUser,
@@ -19,26 +19,31 @@ const ProtectedRoute = ({ children }) => {
   const dispatch = useDispatch();
 
   // refresh token endpoint
-  const [getUserTrigger, { isLoading }] = useLazyGetUserQuery();
+  const [getAuthenticityTrigger, { isLoading, isUninitialized }] =
+    useLazyGetAuthenticityQuery();
 
   // refresh token in component mount
   useEffect(() => {
     const checkAuth = async () => {
       try {
         // console.log("trigger try");
-        await getUserTrigger();
+        await getAuthenticityTrigger();
       } catch (error) {
         dispatch(clearUser());
       }
     };
 
     checkAuth();
-  }, [getUserTrigger, dispatch]);
+  }, [getAuthenticityTrigger, dispatch]);
   // console.log("role: ", userRole);
   // console.log("isAuthenticated", isAuthenticated);
 
-  if (isLoading) {
-    return <h1>Loading...</h1>;
+  if (isLoading || isUninitialized) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-infinity loading-lg"></span>
+      </div>
+    );
   }
 
   const isAuthPage = () =>

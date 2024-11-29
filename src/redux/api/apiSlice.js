@@ -82,7 +82,7 @@ export const apiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
   tagTypes: ["User", "Product"], // For cache management
   endpoints: (builder) => ({
-    // refresh access token
+    // refresh access token - POST
     refreshAccessToken: builder.mutation({
       query: () => ({
         url: `${USER_URL}/refresh-token`,
@@ -90,7 +90,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    // user register / singup endpoint
+    // user register / signup endpoint - POST
     registerUser: builder.mutation({
       query: (newUser) => ({
         url: `${USER_URL}/register`,
@@ -100,6 +100,15 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
+    // check authenticity - GET
+    getAuthenticity: builder.query({
+      query: () => ({
+        url: `${USER_URL}/authenticity`,
+        providesTags: ["User"],
+      }),
+    }),
+
+    // to login user - POST
     loginUser: builder.mutation({
       query: (user) => ({
         url: `${USER_URL}/login`,
@@ -109,6 +118,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
+    // to logout user - POST
     logoutUser: builder.mutation({
       query: () => ({
         url: `${USER_URL}/logout`,
@@ -117,12 +127,14 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
+    // to get user - GET
     getUser: builder.query({
       query: () => `${USER_URL}/current-user`,
       providesTags: ["User"],
     }),
 
-    // admin - upload product
+    // admin endpoints
+    // upload image to cloudinary - POST
     uploadProduct: builder.mutation({
       query: (formImg) => ({
         url: `${ADMIN_URL}/upload-product`,
@@ -132,7 +144,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["Product"],
     }),
 
-    // to create product
+    // to create product - POST
     createProduct: builder.mutation({
       query: (productData) => ({
         url: `${ADMIN_URL}/create-product`,
@@ -144,16 +156,48 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Product"],
     }),
+
+    // to get all product list - GET
+    getAllProduct: builder.query({
+      query: () => `${ADMIN_URL}/get-product`,
+      providesTags: ["Product"],
+    }),
+
+    // to delete individual product - POST
+    deleteProduct: builder.mutation({
+      query: (id) => ({
+        url: `${ADMIN_URL}/delete-product/${id}`,
+        method: "POST",
+      }),
+
+      invalidatesTags: ["Product"],
+    }),
+
+    // to update | edit product - PUT
+    updateProduct: builder.mutation({
+      query: (id, formData) => ({
+        url: `${ADMIN_URL}/update-product/${id}`,
+        method: "PUT",
+        body: formData,
+      }),
+
+      invalidatesTags: ["Product"],
+    }),
   }),
 });
 
 export const {
   useRefreshAccessTokenMutation,
+
   useRegisterUserMutation,
   useLoginUserMutation,
   useGetUserQuery,
-  useLazyGetUserQuery,
+  useLazyGetAuthenticityQuery,
   useLogoutUserMutation,
   useCreateProductMutation,
   useUploadProductMutation,
+
+  useGetAllProductQuery,
+  useDeleteProductMutation,
+  useUpdateProductMutation,
 } = apiSlice;

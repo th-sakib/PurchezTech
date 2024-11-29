@@ -6,11 +6,15 @@ import { router } from "./Routes/Route";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
+function Main() {
+  return <RouterProvider router={router} />;
+}
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <div className={`font-josefin_sans text-primary-color `}>
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <Main />
       </Provider>
     </div>
   </StrictMode>

@@ -135,7 +135,7 @@ const Navbar = () => {
           {/* login button */}
           {!isAuthenticated ? (
             <Link to="/auth/login" state={{ from: location.pathname }}>
-              <Button className="bg-transparent border-black hover:bg-on-hover hover:text-white">
+              <Button className="bg-transparent border-black text-accent-color hover:bg-on-hover hover:text-white">
                 Login
               </Button>
             </Link>

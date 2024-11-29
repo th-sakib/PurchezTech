@@ -1,8 +1,8 @@
-import { Navigate, Outlet, useSearchParams } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Footer from "../Pages/Shared/Footer/Footer";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
 import { useEffect } from "react";
-import { useLazyGetUserQuery } from "../redux/api/apiSlice";
+import { useLazyGetAuthenticityQuery } from "../redux/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearUser,
@@ -17,23 +17,28 @@ const Main = () => {
   const userRole = useSelector(selectUserRole);
 
   // refresh token endpoint
-  const [getUserTrigger, { isLoading }] = useLazyGetUserQuery();
+  const [getAuthenticityTrigger, { isLoading, isUninitialized }] =
+    useLazyGetAuthenticityQuery();
 
   // refresh token in component mount
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await getUserTrigger();
+        await getAuthenticityTrigger();
       } catch (error) {
         dispatch(clearUser());
       }
     };
 
     checkAuth();
-  }, [getUserTrigger, dispatch]);
+  }, [getAuthenticityTrigger, dispatch]);
 
-  if (isLoading) {
-    return <h1>Loading...</h1>;
+  if (isLoading || isUninitialized) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-infinity loading-lg"></span>
+      </div>
+    );
   }
 
   return userRole !== "admin" ? (

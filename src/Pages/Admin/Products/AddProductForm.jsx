@@ -154,9 +154,9 @@ const AddProductForm = () => {
   const [createProduct, { isLoading: submitting }] = useCreateProductMutation();
 
   // checking what category option is selected
-  const selectedCategy = watch("category");
+  const selectCategory = watch("category");
   // using selectedCategory to get brand names => to sync brands with category
-  const brandsAccordingCategory = techProductWithBrands[selectedCategy] || [];
+  const brandsAccordingCategory = techProductWithBrands[selectCategory] || [];
 
   const onSubmit = async (data) => {
     try {
@@ -164,11 +164,27 @@ const AddProductForm = () => {
       formData.append("productImage", data.productImage);
 
       const imageRes = await uploadProduct(formData).unwrap();
-      console.log(imageRes);
+
+      imageRes.data.result.url; // to get the image url
+
+      const imageURL = imageRes?.data?.result?.url;
+      const fullData = {
+        title: data.title,
+        description: data.description,
+        category: data.category,
+        brand: data.brand,
+        price: data.price,
+        salePrice: data.salePrice,
+        totalStock: data.stock,
+        imageURL: imageURL,
+      };
+
+      const response = await createProduct(fullData).unwrap();
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
       {/* image  */}
@@ -206,7 +222,7 @@ const AddProductForm = () => {
       </div>
 
       {/* description */}
-      <div className="relative group h-8 mb-[5.2rem]">
+      <div className="relative group h-8 mb-[83.2px]">
         <label htmlFor="description">Description</label>
         <textarea
           className="textarea textarea-bordered w-full"
@@ -369,7 +385,7 @@ const AddProductForm = () => {
       </div>
 
       <Button btnType="submit" className="w-full">
-        Add Product
+        {uploading || submitting ? "Creating product..." : "Create Product"}
       </Button>
     </form>
   );
