@@ -141,7 +141,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: formImg,
       }),
-      invalidatesTags: ["Product"],
+      invalidatesTags: [],
     }),
 
     // to create product - POST

@@ -1,156 +1,22 @@
 import { useForm } from "react-hook-form";
 import ProductImage from "./ProductImage";
 import Button from "../../../Components/Button";
-import {
-  useCreateProductMutation,
-  useUploadProductMutation,
-} from "../../../redux/api/apiSlice.js";
+import { techProductWithBrands } from "../../../constant.js";
+import { useCreateProductMutation } from "../../../redux/api/apiSlice.js";
+import { useCallback, useEffect, useState } from "react";
 
 const AddProductForm = () => {
-  const techProductWithBrands = {
-    Laptops: ["Dell", "HP", "Apple", "Lenovo", "ASUS", "Acer", "MSI", "Razer"],
-    Desktops: [
-      "Dell",
-      "HP",
-      "Lenovo",
-      "Apple",
-      "ASUS",
-      "Acer",
-      "CyberPowerPC",
-      "iBUYPOWER",
-    ],
-    Smartphones: [
-      "Apple",
-      "Samsung",
-      "Google",
-      "OnePlus",
-      "Xiaomi",
-      "Huawei",
-      "Oppo",
-      "Vivo",
-    ],
-    Tablets: ["Apple", "Samsung", "Microsoft", "Lenovo", "Huawei", "Amazon"],
-    Monitors: ["Dell", "Samsung", "LG", "ASUS", "Acer", "BenQ", "HP", "MSI"],
-    "Printers & Scanners": [
-      "HP",
-      "Canon",
-      "Epson",
-      "Brother",
-      "Xerox",
-      "Lexmark",
-    ],
-    "Networking Equipment": [
-      "Netgear",
-      "TP-Link",
-      "Cisco",
-      "Asus",
-      "Linksys",
-      "Ubiquiti",
-      "D-Link",
-    ],
-    "Storage Devices": [
-      "Western Digital",
-      "Seagate",
-      "SanDisk",
-      "Kingston",
-      "Samsung",
-      "Crucial",
-      "Toshiba",
-    ],
-    "PC Components": [
-      "Intel",
-      "AMD",
-      "NVIDIA",
-      "Corsair",
-      "MSI",
-      "ASUS",
-      "Gigabyte",
-      "EVGA",
-    ],
-    "Wearable Devices": [
-      "Apple",
-      "Fitbit",
-      "Samsung",
-      "Garmin",
-      "Xiaomi",
-      "Huawei",
-    ],
-    "Smart Home Devices": [
-      "Google",
-      "Amazon",
-      "Apple",
-      "Philips Hue",
-      "Ring",
-      "Nest",
-      "TP-Link",
-    ],
-    "Gaming Consoles": ["Sony", "Microsoft", "Nintendo", "Steam"],
-    "Audio Equipment": [
-      "Bose",
-      "Sony",
-      "JBL",
-      "Sennheiser",
-      "Beats",
-      "Logitech",
-      "Audio-Technica",
-    ],
-    "Camera & Photography": [
-      "Canon",
-      "Nikon",
-      "Sony",
-      "Fujifilm",
-      "Olympus",
-      "GoPro",
-    ],
-    Drones: ["DJI", "Autel Robotics", "Parrot", "Skydio", "Holy Stone"],
-    "VR & AR Devices": ["Meta", "Sony", "HTC", "Valve", "Microsoft", "Pico"],
-    "Software & Subscriptions": [
-      "Microsoft",
-      "Adobe",
-      "Apple",
-      "Google",
-      "Autodesk",
-      "Zoom",
-    ],
-    "Charging Accessories": [
-      "Anker",
-      "Belkin",
-      "Apple",
-      "Samsung",
-      "RAVPower",
-      "Mophie",
-    ],
-    "Keyboards & Mice": [
-      "Logitech",
-      "Razer",
-      "Corsair",
-      "SteelSeries",
-      "Microsoft",
-      "Apple",
-    ],
-    "Graphics Tablets": ["Wacom", "Huion", "XP-Pen", "Gaomon", "UGEE"],
-    Projectors: ["Epson", "BenQ", "Optoma", "ViewSonic", "LG", "Sony"],
-    "Power Supplies & UPS": [
-      "APC",
-      "CyberPower",
-      "EVGA",
-      "Corsair",
-      "Seasonic",
-      "Cooler Master",
-    ],
-  };
+  const [imageInfo, setImageInfo] = useState({});
 
   const {
     register,
     handleSubmit,
     watch,
-    setValue,
-    trigger,
+    reset,
     formState: { errors },
   } = useForm();
 
-  // getting post methods from api slice
-  const [uploadProduct, { isLoading: uploading }] = useUploadProductMutation();
+  // from apiSlice
   const [createProduct, { isLoading: submitting }] = useCreateProductMutation();
 
   // checking what category option is selected
@@ -159,235 +25,243 @@ const AddProductForm = () => {
   const brandsAccordingCategory = techProductWithBrands[selectCategory] || [];
 
   const onSubmit = async (data) => {
-    try {
-      const formData = new FormData();
-      formData.append("productImage", data.productImage);
-
-      const imageRes = await uploadProduct(formData).unwrap();
-
-      imageRes.data.result.url; // to get the image url
-
-      const imageURL = imageRes?.data?.result?.url;
-      const fullData = {
-        title: data.title,
-        description: data.description,
-        category: data.category,
-        brand: data.brand,
-        price: data.price,
-        salePrice: data.salePrice,
-        totalStock: data.stock,
-        imageURL: imageURL,
-      };
-
-      const response = await createProduct(fullData).unwrap();
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const fullData = {
+    //     title: data.title,
+    //     description: data.description,
+    //     category: data.category,
+    //     brand: data.brand,
+    //     price: data.price,
+    //     salePrice: data.salePrice,
+    //     totalStock: data.stock,
+    //     imageURL: imageInfo.imageURL,
+    //   };
+    //   const response = await createProduct(fullData).unwrap();
+    //   toast.fire({
+    //     title: "Product has been Created!",
+    //     text: "Product creation successful",
+    //     icon: "success",
+    //   });
+    //   reset();
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+    <>
       {/* image  */}
       <div className="mb-3">
-        <ProductImage
-          register={register}
-          errors={errors}
-          setValue={setValue}
-          trigger={trigger}
-          watch={watch}
-        />
+        <ProductImage setImageInfo={setImageInfo} imageInfo={imageInfo} />
       </div>
 
-      {/* title */}
-      <div className="relative group h-12 mb-10">
-        <label htmlFor="title">Title</label>
-        <input
-          className="input input-bordered w-full max-w-xs"
-          {...register("title", {
-            required: {
-              value: true,
-              message: "Title is required",
-            },
-            minLength: {
-              value: 3,
-              message: "Minimum 3 character",
-            },
-          })}
-          type="text"
-          name="title"
-          id="title"
-          placeholder="Enter product title"
-        />
-        <p className="text-red-600 text-sm">{errors?.title?.message}</p>
-      </div>
+      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+        {/* title */}
+        <div className="relative group h-12 mb-10">
+          <label className="font-bold" htmlFor="title">
+            Title
+          </label>
+          <input
+            className="input input-bordered w-full max-w-xs"
+            {...register("title", {
+              required: {
+                value: true,
+                message: "Title is required",
+              },
+              minLength: {
+                value: 3,
+                message: "Minimum 3 character",
+              },
+            })}
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Enter product title"
+          />
+          <p className="text-red-600 text-sm">{errors?.title?.message}</p>
+        </div>
 
-      {/* description */}
-      <div className="relative group h-8 mb-[83.2px]">
-        <label htmlFor="description">Description</label>
-        <textarea
-          className="textarea textarea-bordered w-full"
-          {...register("description", {
-            required: {
-              value: true,
-              message: "Description is required",
-            },
-            minLength: {
-              value: 3,
-              message: "Minimum 3 character",
-            },
-          })}
-          type="text"
-          name="description"
-          id="description"
-          placeholder="Enter product description"
-        />
-        <p className="text-red-600 text-sm -mt-1">
-          {errors?.description?.message}
-        </p>
-      </div>
+        {/* description */}
+        <div className="relative group h-8 mb-[83.2px]">
+          <label className="font-bold" htmlFor="description">
+            Description
+          </label>
+          <textarea
+            className="textarea textarea-bordered w-full"
+            {...register("description", {
+              required: {
+                value: true,
+                message: "Description is required",
+              },
+              minLength: {
+                value: 3,
+                message: "Minimum 3 character",
+              },
+            })}
+            type="text"
+            name="description"
+            id="description"
+            placeholder="Enter product description"
+          />
+          <p className="text-red-600 text-sm -mt-1">
+            {errors?.description?.message}
+          </p>
+        </div>
 
-      {/* category  */}
-      <div className="relative group h-8 mb-14">
-        <label htmlFor="category">Category</label>
-        <select
-          name="category"
-          id="category"
-          defaultValue="default"
-          {...register("category", {
-            validate: (value) => value !== "default" || "Category is required",
-          })}
-          className="select select-bordered w-full max-w-xs"
-        >
-          {/* Placeholder option */}
-          <option disabled value="default" className="capitalize">
-            Select category
-          </option>
-
-          {/* Dynamic options */}
-          {Object.keys(techProductWithBrands).map((key) => (
-            <option key={key} value={key} className="capitalize">
-              {key}
+        {/* category  */}
+        <div className="relative group h-8 mb-14">
+          <label className="font-bold" htmlFor="category">
+            Category
+          </label>
+          <select
+            name="category"
+            id="category"
+            defaultValue="default"
+            {...register("category", {
+              validate: (value) =>
+                value !== "default" || "Category is required",
+            })}
+            className="select select-bordered w-full max-w-xs"
+          >
+            {/* Placeholder option */}
+            <option disabled value="default" className="capitalize">
+              Select category
             </option>
-          ))}
-        </select>
 
-        {/* Error message */}
-        <p className="text-red-600 text-sm">{errors?.category?.message}</p>
-      </div>
+            {/* Dynamic options */}
+            {Object.keys(techProductWithBrands).map((key) => (
+              <option key={key} value={key} className="capitalize">
+                {key}
+              </option>
+            ))}
+          </select>
 
-      {/* brand  */}
-      <div className="relative group h-8 mb-14">
-        <label htmlFor="brand">Brand</label>
-        <select
-          name="brand"
-          id="brand"
-          defaultValue="default"
-          {...register("brand", {
-            validate: (value) => value !== "default" || "Brand is required",
-          })}
-          className="select select-bordered w-full max-w-xs"
-          disabled={!brandsAccordingCategory.length}
-        >
-          {/* Placeholder option */}
-          <option disabled value="default" className="capitalize">
-            Select Brand
-          </option>
+          {/* Error message */}
+          <p className="text-red-600 text-sm">{errors?.category?.message}</p>
+        </div>
 
-          {/* Dynamic options */}
-          {brandsAccordingCategory.map((brand, idx) => (
-            <option key={idx}>{brand}</option>
-          ))}
-        </select>
+        {/* brand  */}
+        <div className="relative group h-8 mb-14">
+          <label className="font-bold" htmlFor="brand">
+            Brand
+          </label>
+          <select
+            name="brand"
+            id="brand"
+            defaultValue="default"
+            {...register("brand", {
+              validate: (value) => value !== "default" || "Brand is required",
+            })}
+            className="select select-bordered w-full max-w-xs"
+            disabled={!brandsAccordingCategory.length}
+          >
+            {/* Placeholder option */}
+            <option disabled value="default" className="capitalize">
+              Select Brand
+            </option>
 
-        {/* Error message */}
-        <p className="text-red-600 text-sm">{errors?.brand?.message}</p>
-      </div>
+            {/* Dynamic options */}
+            {brandsAccordingCategory.map((brand, idx) => (
+              <option key={idx}>{brand}</option>
+            ))}
+          </select>
 
-      {/* price  */}
-      <div className="relative group h-12 mb-10">
-        <label htmlFor="price">Price</label>
-        <input
-          className="input input-bordered w-full max-w-xs"
-          {...register("price", {
-            required: {
-              value: true,
-              message: "Price is required",
-            },
-            pattern: {
-              value: /^[0-9]+$/,
-              message: "Price takes only integer number",
-            },
-            min: {
-              value: 0,
-              message: "Price can't be negative",
-            },
-          })}
-          type="text"
-          name="price"
-          id="price"
-          placeholder="Enter product price"
-        />
-        <p className="text-red-600 text-sm">{errors?.price?.message}</p>
-      </div>
+          {/* Error message */}
+          <p className="text-red-600 text-sm">{errors?.brand?.message}</p>
+        </div>
 
-      {/* Sale price  */}
-      <div className="relative group h-12 mb-12">
-        <label htmlFor="salePrice">Sale Price</label>
-        <input
-          className="input input-bordered w-full max-w-xs"
-          {...register("salePrice", {
-            required: {
-              value: true,
-              message: "Sale Price is required",
-            },
-            pattern: {
-              value: /^[0-9]+$/,
-              message: "Sale price takes only integer number",
-            },
-            min: {
-              value: 0,
-              message: "Sale price can't be negative",
-            },
-          })}
-          type="text"
-          name="salePrice"
-          id="salePrice"
-          placeholder="Enter product salePrice"
-        />
-        <p className="text-red-600 text-sm">{errors?.salePrice?.message}</p>
-      </div>
+        {/* price  */}
+        <div className="relative group h-12 mb-10">
+          <label className="font-bold" htmlFor="price">
+            Price
+          </label>
+          <input
+            className="input input-bordered w-full max-w-xs"
+            {...register("price", {
+              required: {
+                value: true,
+                message: "Price is required",
+              },
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Price takes only integer number",
+              },
+              min: {
+                value: 0,
+                message: "Price can't be negative",
+              },
+            })}
+            type="text"
+            name="price"
+            id="price"
+            placeholder="Enter product price"
+          />
+          <p className="text-red-600 text-sm">{errors?.price?.message}</p>
+        </div>
 
-      {/* Total Stock  */}
-      <div className="relative group h-12 mb-12">
-        <label htmlFor="stock">Total Stock</label>
-        <input
-          className="input input-bordered w-full max-w-xs"
-          {...register("stock", {
-            required: {
-              value: true,
-              message: "Total stock is required",
-            },
-            pattern: {
-              value: /^[0-9]+$/,
-              message: "Total stock takes only integer number",
-            },
-            min: {
-              value: 0,
-              message: "Total stock can't be negative",
-            },
-          })}
-          type="text"
-          name="stock"
-          id="stock"
-          placeholder="Enter product stock"
-        />
-        <p className="text-red-600 text-sm">{errors?.stock?.message}</p>
-      </div>
+        {/* Sale price  */}
+        <div className="relative group h-12 mb-12">
+          <label className="font-bold" htmlFor="salePrice">
+            Sale Price
+          </label>
+          <input
+            className="input input-bordered w-full max-w-xs"
+            {...register("salePrice", {
+              required: {
+                value: true,
+                message: "Sale Price is required",
+              },
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Sale price takes only integer number",
+              },
+              min: {
+                value: 0,
+                message: "Sale price can't be negative",
+              },
+            })}
+            type="text"
+            name="salePrice"
+            id="salePrice"
+            placeholder="Enter product salePrice"
+          />
+          <p className="text-red-600 text-sm">{errors?.salePrice?.message}</p>
+        </div>
 
-      <Button btnType="submit" className="w-full">
-        {uploading || submitting ? "Creating product..." : "Create Product"}
-      </Button>
-    </form>
+        {/* Total Stock  */}
+        <div className="relative group h-12 mb-12">
+          <label className="font-bold" htmlFor="stock">
+            Total Stock
+          </label>
+          <input
+            className="input input-bordered w-full max-w-xs"
+            {...register("stock", {
+              required: {
+                value: true,
+                message: "Total stock is required",
+              },
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "Total stock takes only integer number",
+              },
+              min: {
+                value: 0,
+                message: "Total stock can't be negative",
+              },
+            })}
+            type="text"
+            name="stock"
+            id="stock"
+            placeholder="Enter product stock"
+          />
+          <p className="text-red-600 text-sm">{errors?.stock?.message}</p>
+        </div>
+
+        <Button btnType="submit" className="w-full">
+          {submitting ? "Creating product..." : "Create Product"}
+        </Button>
+      </form>
+    </>
   );
 };
 

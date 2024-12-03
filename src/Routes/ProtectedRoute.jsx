@@ -8,13 +8,11 @@ import {
 } from "../redux/features/user/userSlice";
 import { useEffect } from "react";
 
-// TODO: have to implement the isAuthecated or not logic from redux store (hint: maybe need to fetch cookies)
+// TODO: have to implement the isAuthenticated or not logic from redux store (hint: maybe need to fetch cookies)
 const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const userRole = useSelector(selectUserRole);
-  // console.log(userRole);
-  // console.log(isAuthenticated);
 
   const dispatch = useDispatch();
 
@@ -26,7 +24,6 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // console.log("trigger try");
         await getAuthenticityTrigger();
       } catch (error) {
         dispatch(clearUser());
@@ -35,8 +32,6 @@ const ProtectedRoute = ({ children }) => {
 
     checkAuth();
   }, [getAuthenticityTrigger, dispatch]);
-  // console.log("role: ", userRole);
-  // console.log("isAuthenticated", isAuthenticated);
 
   if (isLoading || isUninitialized) {
     return (
@@ -50,10 +45,7 @@ const ProtectedRoute = ({ children }) => {
     location.pathname.includes("/login") ||
     location.pathname.includes("/register");
 
-  // console.log("is auth page: ", isAuthPage());
-
   const isAdminPage = () => location.pathname.startsWith("/admin");
-  // console.log("isadmin page: ", isAdminPage());
 
   // if user not authenticated
   if (!isAuthenticated) {

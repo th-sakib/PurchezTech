@@ -1,106 +1,162 @@
-import { useRef, useState } from "react";
-import { IoCloudUploadOutline } from "react-icons/io5";
-import { FaFileImage } from "react-icons/fa6";
-import { MdBrokenImage } from "react-icons/md";
+import { useDropzone } from "react-dropzone";
+import { FiDownload } from "react-icons/fi";
+import { GiCrossMark } from "react-icons/gi";
+import Swal from "sweetalert2";
+import { useUploadProductMutation } from "../../../redux/api/apiSlice.js";
+import { memo, useCallback, useEffect, useState } from "react";
+import LoaderSpinner from "../../../Components/LoaderSpinner.jsx";
 
-const ProductImage = ({ register, errors, setValue, trigger, watch }) => {
-  const [draggedIn, setDraggedIn] = useState(false);
-  const fileInputRef = useRef(null);
+const ProductImage = memo(({ setImageInfo, imageInfo }) => {
+  const [localImg, setLocalImg] = useState([]);
 
-  const watchFile = watch("productImage") || false;
+  const [uploadProduct, { isLoading: uploading }] = useUploadProductMutation();
 
-  function handleOnDragOver(e) {
-    e.preventDefault();
-    setDraggedIn(true);
+  const onDrop = useCallback(
+    async (acceptedFiles, rejectedFiles) => {
+      if (rejectedFiles?.length > 0) {
+        Swal.fire({
+          title: rejectedFiles[0].errors[0].message,
+          text: "Select one image, multiple files are not granted!",
+        });
+        return;
+      }
+
+      if (
+        rejectedFiles.length === 0 &&
+        (!acceptedFiles || acceptedFiles.length === 0)
+      ) {
+        console.log("No file is selected");
+        return;
+      }
+
+      // getting the file details locally and the url too
+      setLocalImg((prevFile) => [
+        ...prevFile,
+        ...acceptedFiles.map((file) =>
+          Object.assign(file, { preview: URL.createObjectURL(file) })
+        ),
+      ]);
+
+      // console.log("file", file);
+
+      const formData = new FormData();
+      formData.append("productImage", acceptedFiles[0]); // Since maxFiles=1
+
+      try {
+        const res = await uploadProduct(formData).unwrap();
+        console.log("Image upload success");
+
+        const imgInfo = {
+          imageURL: res.data.secure_url,
+          publicID: res.data.public_id,
+        };
+
+        setImageInfo(imgInfo);
+      } catch (error) {
+        console.error("Image upload failed:", error?.data?.message);
+        Swal.fire({
+          title: "Upload Failed",
+          text: error?.data?.message || "An error occurred while uploading.",
+          icon: "error",
+        });
+      }
+    },
+    [uploadProduct, localImg]
+  );
+
+  const {
+    acceptedFiles,
+    rejectedFiles,
+    getRootProps,
+    getInputProps,
+    isFocused,
+    isDragAccept,
+    isDragReject,
+    isDragActive,
+  } = useDropzone({
+    disabled: uploading,
+    useFsAccessApi: true,
+    accept: {
+      "image/png": [],
+      "image/jpeg": [],
+      "image/jpg": [],
+    },
+    maxFiles: 1,
+    maxSize: 5 * 1024 * 1024,
+    onDrop,
+  });
+
+  function handleDelete() {
+    setLocalImg([]);
+    setImageInfo({});
   }
 
-  function handleOnDragLeave(e) {
-    e.preventDefault();
-    setDraggedIn(false);
-  }
-
-  function handleOnDrop(e) {
-    e.preventDefault();
-    setDraggedIn(false);
-    const dropFile = e.dataTransfer.files?.[0];
-
-    // Update the hidden input field's files
-    const dataTransfer = new DataTransfer();
-    dataTransfer.items.add(dropFile);
-    fileInputRef.current.files = dataTransfer.files;
-
-    if (dropFile) {
-      setValue("productImage", dropFile, { shouldValidate: true });
-      trigger("productImage");
+  // styling border color
+  const borderColor = () => {
+    if (isFocused && acceptedFiles.length === 0 && !isDragReject) {
+      return "border-gray-500";
+    } else if (isDragAccept) {
+      return "border-green-500";
+    } else if (isDragReject) {
+      return "border-red-500";
+    } else if (acceptedFiles.length !== 0) {
+      return "border-accent-color";
+    } else {
+      return "border-gray-300";
     }
-  }
-
-  function handleOnChange(e) {
-    e.preventDefault();
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      setValue("productImage", selectedFile, { shouldValidate: true });
-      trigger("productImage");
-    }
-  }
+  };
 
   return (
-    <>
-      <h3 className="text-xl font-bold">Upload Image</h3>
-
-      {/* the drag and drop input  */}
-      <label
-        htmlFor="productImage"
-        className={`w-full h-32 rounded border-2 border-dashed flex flex-col justify-center items-center mt-2 text-gray-600 cursor-pointer relative ${
-          errors?.productImage && "border-red-600"
-        } ${draggedIn && "border-accent-color"} ${
-          watchFile & !errors?.productImage && "border-green-700"
-        } "border-gray-600"
-        }`}
-        onDragOver={handleOnDragOver}
-        onDragLeave={handleOnDragLeave}
-        onDrop={handleOnDrop}
+    <div>
+      <h4 className="text-base font-bold">Upload Image</h4>
+      <div
+        {...getRootProps()}
+        className={`cursor-pointer h-32 rounded-lg w-full border-2 border-dashed ${borderColor()} flex justify-center items-center transition-all duration-300`}
       >
-        <input
-          {...register("productImage", {
-            required: {
-              value: true,
-            },
-            validate: (value) =>
-              value?.size <= 4 * 1024 * 1024 || "File should be less than 4MB",
-          })}
-          type="file"
-          id="productImage"
-          name="productImage"
-          className="hidden"
-          ref={fileInputRef}
-          onChange={handleOnChange}
-        />
-        <IoCloudUploadOutline className="text-4xl" />
-        <p className="text-center text-2xl font-bold">Drag and Drop</p>
-        <span className="text-sm font-normal">Or Upload a photo</span>
+        <input {...getInputProps()} />
 
-        {/* the image showing */}
-        {watchFile && (
-          <div
-            className={`absolute top-0 right-[106%] bg-white p-5 rounded-md border ${
-              errors?.productImage ? "border-red-600" : "border-green-700"
-            } flex flex-col justify-start items-center w-full`}
-          >
-            <div className="flex gap-2 justify-center items-center">
-              {errors?.productImage ? <MdBrokenImage /> : <FaFileImage />}
-              <span>{watchFile?.name}</span>
-            </div>
-
-            <div className="block text-xs">
-              size: {(watchFile?.size / 1024).toFixed(1)} KB
-            </div>
+        {/* middle text and icon div  */}
+        {uploading ? (
+          <div>
+            <LoaderSpinner />
+          </div>
+        ) : (
+          <div className="text-center flex flex-col justify-center items-center">
+            <FiDownload className="text-4xl" />
+            {isDragActive ? (
+              <>
+                <span className="text-xl font-bold">Drag the image here</span>
+              </>
+            ) : (
+              <>
+                <span className="text-xl font-bold">Drag & Drop</span>
+                <span>Or Select Images</span>
+              </>
+            )}
           </div>
         )}
-      </label>
-      <p className="text-red-700 text-xs">{errors?.productImage?.message}</p>
-    </>
+      </div>
+      {/* local file div */}
+      {localImg.length > 0 &&
+        localImg.map((file, idx) => (
+          <div
+            key={idx}
+            className="text-center flex flex-col justify-center items-center absolute h-24 w-full bg-background-color rounded-s-lg right-full top-14"
+          >
+            <div>
+              <img src={file.preview} alt="previewed file" className="h-14" />
+              <GiCrossMark
+                className="absolute top-1 right-2 hover:text-accent-color cursor-pointer"
+                onClick={handleDelete}
+              />
+            </div>
+          </div>
+        ))}
+    </div>
   );
-};
+});
 
 export default ProductImage;
+{
+  /*  */
+}
