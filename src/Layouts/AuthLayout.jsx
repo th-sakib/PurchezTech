@@ -11,11 +11,11 @@ const AuthLayout = () => {
   const from = location?.state?.from || location?.state || "/";
 
   return (
-    <div className="h-screen bg-background-color flex justify-center items-center">
+    <div className="md:h-screen bg-background-color flex justify-center items-center">
       <div
-        className={`md:h-[60vh] w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] flex flex-col-reverse overflow-hidden ${
+        className={`my-3 md:my-0 w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] flex flex-col-reverse overflow-hidden ${
           pathname === "/auth/register" ? "md:flex-row-reverse" : "md:flex-row"
-        } justify-between items-center border border-accent-color relative`}
+        } justify-between items-stretch border border-accent-color relative`}
       >
         {/* login page animation */}
         <span
@@ -27,13 +27,16 @@ const AuthLayout = () => {
           // -top-72 right-[30rem] md:right-[31rem] lg:right-[37rem]
         ></span>
 
-        {/* the cross sign  */}
+        {/* the arrow left sign  */}
         <HiMiniArrowLeft
           className={`absolute top-2 right-2 cursor-pointer text-xl z-50 ${
-            pathname === "/auth/login" ? "text-white" : "text-black"
+            pathname === "/auth/login"
+              ? "text-white"
+              : "text-white md:text-black"
           } `}
           onClick={() => navigate(from)}
         />
+
         {/* form section  */}
         <section className={`p-10 w-full md:w-1/2 z-20`}>
           <h1 className="self-stretch text-center text-3xl font-bold mb-4 uppercase">
@@ -41,15 +44,16 @@ const AuthLayout = () => {
           </h1>
           <Outlet></Outlet>
         </section>
+
         {/* welcome section  */}
         <section
-          className={`w-full md:w-1/2 h-[40vh] md:h-full text-white  flex flex-col items-center ${
+          className={`w-full h-auto md:w-1/2 text-white  flex flex-col items-center ${
             pathname === "/auth/login" ? "md:items-end" : "md:items-start"
           } justify-center overflow-hidden bg-accent-color lg:bg-transparent `}
         >
           {/* text-div  */}
           <div
-            className={`z-50 text-center ${
+            className={`p-10 z-50 text-center ${
               pathname === "/auth/login" ? "md:text-right" : "md:text-left"
             } px-5`}
           >

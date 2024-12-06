@@ -3,9 +3,10 @@ import ProductImage from "./ProductImage";
 import Button from "../../../Components/Button";
 import { techProductWithBrands } from "../../../constant.js";
 import { useCreateProductMutation } from "../../../redux/api/apiSlice.js";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
+import { toast } from "../../../lib/sweetAlert/toast.js";
 
-const AddProductForm = () => {
+const AddProductForm = ({ isOpenSidebar }) => {
   const [imageInfo, setImageInfo] = useState({});
 
   const {
@@ -25,36 +26,41 @@ const AddProductForm = () => {
   const brandsAccordingCategory = techProductWithBrands[selectCategory] || [];
 
   const onSubmit = async (data) => {
-    // try {
-    //   const fullData = {
-    //     title: data.title,
-    //     description: data.description,
-    //     category: data.category,
-    //     brand: data.brand,
-    //     price: data.price,
-    //     salePrice: data.salePrice,
-    //     totalStock: data.stock,
-    //     imageURL: imageInfo.imageURL,
-    //   };
-    //   const response = await createProduct(fullData).unwrap();
-    //   toast.fire({
-    //     title: "Product has been Created!",
-    //     text: "Product creation successful",
-    //     icon: "success",
-    //   });
-    //   reset();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const fullData = {
+        title: data.title,
+        description: data.description,
+        category: data.category,
+        brand: data.brand,
+        price: data.price,
+        salePrice: data.salePrice,
+        totalStock: data.stock,
+        imageURL: imageInfo.imageURL,
+        publicID: imageInfo.publicID,
+      };
+      const response = await createProduct(fullData).unwrap();
+      console.log(response?.data?.message || "product successfully created");
+      toast.fire({
+        title: "Product has been Created!",
+        text: "Product creation successful",
+        icon: "success",
+      });
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
       {/* image  */}
       <div className="mb-3">
-        <ProductImage setImageInfo={setImageInfo} imageInfo={imageInfo} />
+        <ProductImage
+          setImageInfo={setImageInfo}
+          imageInfo={imageInfo}
+          isOpenSidebar={isOpenSidebar}
+        />
       </div>
-
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         {/* title */}
         <div className="relative group h-12 mb-10">

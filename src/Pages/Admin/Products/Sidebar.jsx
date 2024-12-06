@@ -21,7 +21,7 @@ const Sidebar = ({ isOpenSidebar, toggleSidebar }) => {
           ></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             {/* Sidebar content here */}
-            <AddProductForm />
+            <AddProductForm isOpenSidebar={isOpenSidebar} />
           </ul>
         </div>
       </div>

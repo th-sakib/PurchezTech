@@ -4,7 +4,7 @@ import Button from "../../Components/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdEmail } from "react-icons/md";
 import { TbEyeClosed } from "react-icons/tb";
-import { BsFillEyeFill } from "react-icons/bs";
+import { BsCloudLightning, BsFillEyeFill } from "react-icons/bs";
 import { FaUser, FaUserEdit } from "react-icons/fa";
 
 // imports which related to redux-toolkit / rtk-query
@@ -12,6 +12,8 @@ import { useRegisterUserMutation } from "../../redux/api/apiSlice";
 import { useDispatch } from "react-redux";
 import { setRegistrationEmail } from "../../redux/features/user/userSlice";
 import { toast } from "../../lib/sweetAlert/toast";
+import GoogleLogin from "./GoogleLogin";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const Signup = () => {
   const [passView, setPassView] = useState(false);
@@ -195,7 +197,7 @@ const Signup = () => {
           />
 
           {/* icon inside input  */}
-          <button type="btn" onClick={() => setPassView(!passView)}>
+          <button type="button" onClick={() => setPassView(!passView)}>
             {passView ? (
               <BsFillEyeFill
                 className={`absolute top-1 right-2 group-focus-within:text-accent-color ${
@@ -222,18 +224,25 @@ const Signup = () => {
             {error?.data?.message || "Something went wrong. Please try again."}
           </div>
         )}
+        <div className="flex flex-col gap-2">
+          <Button btnType="submit" className="text-white w-full">
+            {isLoading ? "Creating account..." : "Create Account"}
+          </Button>
 
-        <Button btnType="submit" className="text-white w-full">
-          {isLoading ? "Creating accout.." : "Create Account"}
-        </Button>
+          {/* google login  */}
+          <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+            <GoogleLogin />
+          </GoogleOAuthProvider>
 
-        <div className="text-center">
-          <p className="text-sm">
-            Already have an account?{" "}
-            <Link to="/auth/login" className="underline">
-              Login
-            </Link>
-          </p>
+          {/* the bottom text  */}
+          <div className="text-center">
+            <p className="text-sm">
+              Already have an account?{" "}
+              <Link to="/auth/login" className="underline">
+                Login
+              </Link>
+            </p>
+          </div>
         </div>
       </form>
     </>

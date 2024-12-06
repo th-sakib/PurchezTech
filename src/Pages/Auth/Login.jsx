@@ -13,6 +13,9 @@ import {
   setUser,
 } from "../../redux/features/user/userSlice";
 import { toast } from "../../lib/sweetAlert/toast";
+import GoogleLogin from "./GoogleLogin";
+
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const Login = () => {
   const [passView, setPassView] = useState(false);
@@ -144,7 +147,7 @@ const Login = () => {
           />
 
           {/* eye icon button */}
-          <button type="btn" onClick={() => setPassView(!passView)}>
+          <button type="button" onClick={() => setPassView(!passView)}>
             {passView ? (
               <BsFillEyeFill
                 className={`absolute top-1 right-2 group-focus-within:text-accent-color ${
@@ -172,18 +175,25 @@ const Login = () => {
         )}
 
         {/* submit button  */}
-        <Button btnType="submit" className="text-white w-full">
-          {isLoading ? "Logging in..." : "Log in"}
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Button btnType="submit" className="text-white w-full">
+            {isLoading ? "Logging in..." : "Log in"}
+          </Button>
 
-        <div className="text-center">
-          <p className="text-sm">
-            New here?{" "}
-            <Link to="/auth/register" className="underline" state={from}>
-              create account
-            </Link>
-            ?
-          </p>
+          {/* google login  */}
+          <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+            <GoogleLogin />
+          </GoogleOAuthProvider>
+
+          <div className="text-center">
+            <p className="text-sm">
+              New here?{" "}
+              <Link to="/auth/register" className="underline" state={from}>
+                create account
+              </Link>
+              ?
+            </p>
+          </div>
         </div>
       </form>
     </>

@@ -118,6 +118,16 @@ export const apiSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
+    // login user with GOOGLE
+    googleLogin: builder.mutation({
+      query: (code) => ({
+        url: `${USER_URL}/google-login`,
+        method: "POST",
+        body: { code },
+      }),
+      invalidatesTags: ["User"],
+    }),
+
     // to logout user - POST
     logoutUser: builder.mutation({
       query: () => ({
@@ -134,14 +144,23 @@ export const apiSlice = createApi({
     }),
 
     // admin endpoints
-    // upload image to cloudinary - POST
-    uploadProduct: builder.mutation({
-      query: (formImg) => ({
-        url: `${ADMIN_URL}/upload-product`,
-        method: "POST",
-        body: formImg,
+    // upload image to cloudinary - POST this one is handled with xmlhttprequest in the productImage page
+    // uploadProduct: builder.mutation({
+    //   query: (formImg) => ({
+    //     url: `${ADMIN_URL}/upload-product`,
+    //     method: "POST",
+    //     body: formImg,
+    //   }),
+    //   invalidatesTags: [],
+    // }),
+
+    // delete cloudinary product
+    deleteUploadedProduct: builder.mutation({
+      query: (publicID) => ({
+        url: `${ADMIN_URL}/delete-cloud-product`,
+        method: "DELETE",
+        body: { publicID },
       }),
-      invalidatesTags: [],
     }),
 
     // to create product - POST
@@ -191,6 +210,8 @@ export const {
 
   useRegisterUserMutation,
   useLoginUserMutation,
+  useGoogleLoginMutation,
+
   useGetUserQuery,
   useLazyGetAuthenticityQuery,
   useLogoutUserMutation,
@@ -200,4 +221,5 @@ export const {
   useGetAllProductQuery,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useDeleteUploadedProductMutation,
 } = apiSlice;
