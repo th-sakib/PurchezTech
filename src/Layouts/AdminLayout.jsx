@@ -41,7 +41,8 @@ const AdminLayout = () => {
       {/* sidebar HEADER  */}
       <div className="text-2xl flex items-center justify-between">
         <div className=" flex gap-2 items-center">
-          <AiOutlineDashboard /> <h1 className="font-bold">Admin Panel</h1>
+          <AiOutlineDashboard className="text-accent-color text-3xl" />
+          <h1 className="font-bold">Admin Panel</h1>
         </div>
         <RxCross2
           className="cursor-pointer lg:hidden absolute top-1 right-1 text-base hover:text-accent-color"
@@ -55,7 +56,7 @@ const AdminLayout = () => {
         <li key={item.id} onClick={toggleDrawer}>
           <NavLink to={item.path}>
             {item.icon}
-            {item.label}
+            <p className="">{item.label}</p>
           </NavLink>
         </li>
       ))}

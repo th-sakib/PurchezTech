@@ -105,8 +105,8 @@ const Signup = () => {
                 message: "Use at least 4 char",
               },
               maxLength: {
-                value: 10,
-                message: "Can't use more than 10 char",
+                value: 20,
+                message: "Can't use more than 20 char",
               },
               // pattern: {
               //   value: /(?!.*[\.\-\_]{2,})^[a-z0-9\.\-\_]/,

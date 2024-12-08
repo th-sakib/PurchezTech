@@ -15,6 +15,7 @@ export default {
         "on-hover": "#005F8A", // Midnight Blue - hover effect for buttons and interactive elements, adding a darker, assertive contrast
         "background-color": "#F2F4F5", // Warm Gray - a subtle gray that provides a soft, neutral backdrop without overpowering the design
         "additional-color": "#F4A261", // Burnt Orange - for highlights, icons, and calls to action, adding a warm yet earthy contrast
+        "faded-text": "#aaa", // for descriptions of product
       },
     },
   },

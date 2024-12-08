@@ -1,7 +1,7 @@
 import React from "react";
 import AddProductForm from "./AddProductForm";
 
-const Sidebar = ({ isOpenSidebar, toggleSidebar }) => {
+const Sidebar = ({ isOpenSidebar, toggleSidebar, setIsOpenSidebar }) => {
   return (
     <div>
       <div className="drawer drawer-end">
@@ -21,7 +21,10 @@ const Sidebar = ({ isOpenSidebar, toggleSidebar }) => {
           ></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             {/* Sidebar content here */}
-            <AddProductForm isOpenSidebar={isOpenSidebar} />
+            <AddProductForm
+              isOpenSidebar={isOpenSidebar}
+              setIsOpenSidebar={setIsOpenSidebar}
+            />
           </ul>
         </div>
       </div>

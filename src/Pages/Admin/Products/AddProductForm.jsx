@@ -6,8 +6,9 @@ import { useCreateProductMutation } from "../../../redux/api/apiSlice.js";
 import { useState } from "react";
 import { toast } from "../../../lib/sweetAlert/toast.js";
 
-const AddProductForm = ({ isOpenSidebar }) => {
+const AddProductForm = ({ isOpenSidebar, setIsOpenSidebar }) => {
   const [imageInfo, setImageInfo] = useState({});
+  const [localImg, setLocalImg] = useState([]);
 
   const {
     register,
@@ -39,6 +40,9 @@ const AddProductForm = ({ isOpenSidebar }) => {
         publicID: imageInfo.publicID,
       };
       const response = await createProduct(fullData).unwrap();
+      setIsOpenSidebar(false);
+      setImageInfo({});
+      setLocalImg([]);
       console.log(response?.data?.message || "product successfully created");
       toast.fire({
         title: "Product has been Created!",
@@ -59,6 +63,8 @@ const AddProductForm = ({ isOpenSidebar }) => {
           setImageInfo={setImageInfo}
           imageInfo={imageInfo}
           isOpenSidebar={isOpenSidebar}
+          setLocalImg={setLocalImg}
+          localImg={localImg}
         />
       </div>
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">

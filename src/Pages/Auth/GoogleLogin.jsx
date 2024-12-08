@@ -1,11 +1,12 @@
 import { GrGoogle } from "react-icons/gr";
 import Button from "../../Components/Button";
-import { useGoogleLogin } from "@react-oauth/google";
 import { useGoogleLoginMutation } from "../../redux/api/apiSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "../../lib/sweetAlert/toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/features/user/userSlice";
+
+import { useGoogleLogin } from "@react-oauth/google";
 
 const GoogleLogin = () => {
   const [googleLogin, { isLoading }] = useGoogleLoginMutation();
@@ -31,7 +32,6 @@ const GoogleLogin = () => {
         });
         navigate(from);
       }
-      console.log(authResult.code);
     } catch (error) {
       console.log("Error while requesting google code: ", error);
     }
@@ -48,10 +48,10 @@ const GoogleLogin = () => {
     <div>
       <Button
         btnHandler={googleSignInHandler}
-        className="w-full bg-transparent border-black text-accent-color hover:bg-on-hover hover:text-white capitalize flex items-center justify-center gap-3"
+        className="w-full bg-transparent border-black text-accent-color hover:bg-on-hover hover:text-white capitalize flex items-center justify-center"
       >
         <GrGoogle className="text-base drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]" />
-        <p className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+        <p className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] mt-1">
           login with google
         </p>
       </Button>

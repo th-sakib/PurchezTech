@@ -119,9 +119,9 @@ const Navbar = () => {
       {/* nav end  */}
       <section className="hidden md:inline-flex">
         {/* menu items */}
-        <ul className="uppercase mx-4 hidden md:inline-flex text-[#363634] ">
+        <nav className="uppercase mx-4 hidden md:inline-flex text-[#363634] ">
           {navOptions}
-        </ul>
+        </nav>
 
         <div className="flex space-x-7 items-center">
           {/* cart icon  */}

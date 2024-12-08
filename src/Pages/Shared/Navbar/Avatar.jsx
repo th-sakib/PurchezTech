@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import robotAvatar from "../../../assets/images/robot-avatar.png";
 import { toast } from "../../../lib/sweetAlert/toast";
 import { useLogoutUserMutation } from "../../../redux/api/apiSlice";
@@ -12,6 +12,8 @@ const Avatar = () => {
   const [logoutUser, { isLoading }] = useLogoutUserMutation();
 
   const location = useLocation();
+
+  const userInfo = useSelector((state) => state.user.userInfo);
 
   const logoutHandler = async () => {
     try {
@@ -39,7 +41,7 @@ const Avatar = () => {
             {/* avatar  */}
             <div className="avatar">
               <div className="ring-primary-color ring-offset-base-100 h-8 rounded-full ring-2 ring-offset-1 cursor-pointer">
-                <img src={robotAvatar} />
+                <img src={userInfo.avatar ? userInfo.avatar : robotAvatar} />
               </div>
             </div>
           </label>
