@@ -2,13 +2,30 @@ import { useForm } from "react-hook-form";
 import ProductImage from "./ProductImage";
 import Button from "../../../Components/Button";
 import { techProductWithBrands } from "../../../constant.js";
-import { useCreateProductMutation } from "../../../redux/api/apiSlice.js";
-import { useState } from "react";
+import {
+  useCreateProductMutation,
+  useUpdateProductMutation,
+} from "../../../redux/api/apiSlice.js";
+import { useEffect, useState } from "react";
 import { toast } from "../../../lib/sweetAlert/toast.js";
+import { useSelector } from "react-redux";
+import LoaderSpinner from "../../../Components/LoaderSpinner.jsx";
 
-const AddProductForm = ({ isOpenSidebar, setIsOpenSidebar }) => {
+const AddProductForm = ({
+  isOpenSidebar,
+  setIsOpenSidebar,
+  isEditMode,
+  setIsEditMode,
+}) => {
   const [imageInfo, setImageInfo] = useState({});
   const [localImg, setLocalImg] = useState([]);
+
+  // from updateSlice
+  const productData = useSelector((state) => state.updateProduct.product);
+
+  // from apiSlice
+  const [createProduct, { isLoading: submitting }] = useCreateProductMutation();
+  const [updateProduct, { isLoading: updating }] = useUpdateProductMutation();
 
   const {
     register,
@@ -18,8 +35,29 @@ const AddProductForm = ({ isOpenSidebar, setIsOpenSidebar }) => {
     formState: { errors },
   } = useForm();
 
-  // from apiSlice
-  const [createProduct, { isLoading: submitting }] = useCreateProductMutation();
+  useEffect(() => {
+    if (isEditMode && productData) {
+      reset({
+        title: productData.title || "",
+        description: productData.description || "",
+        category: productData.category || "default",
+        brand: productData.brand || "default",
+        price: productData.price || "",
+        salePrice: productData.salePrice || "",
+        stock: productData.totalStock || "",
+      });
+    } else {
+      reset({
+        title: "",
+        description: "",
+        category: "default",
+        brand: "default",
+        price: "",
+        salePrice: "",
+        stock: "",
+      });
+    }
+  }, [productData, isEditMode, reset]);
 
   // checking what category option is selected
   const selectCategory = watch("category");
@@ -51,7 +89,43 @@ const AddProductForm = ({ isOpenSidebar, setIsOpenSidebar }) => {
       });
       reset();
     } catch (error) {
-      console.log(error);
+      console.log(error.message || "Product Creation failed");
+    }
+  };
+
+  const handleUpdate = async (data) => {
+    const {
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      totalStock,
+    } = data;
+
+    const currentData = {
+      id: productData._id,
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      totalStock,
+    };
+    try {
+      const res = await updateProduct(currentData).unwrap();
+      console.log(res.message);
+      setIsEditMode(false);
+      setIsOpenSidebar(false);
+      toast.fire({
+        title: "Updated Successful",
+        text: "Product Updating was successful",
+        icon: "success",
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -59,15 +133,22 @@ const AddProductForm = ({ isOpenSidebar, setIsOpenSidebar }) => {
     <>
       {/* image  */}
       <div className="mb-3">
-        <ProductImage
-          setImageInfo={setImageInfo}
-          imageInfo={imageInfo}
-          isOpenSidebar={isOpenSidebar}
-          setLocalImg={setLocalImg}
-          localImg={localImg}
-        />
+        {isEditMode ? (
+          ""
+        ) : (
+          <ProductImage
+            setImageInfo={setImageInfo}
+            imageInfo={imageInfo}
+            isOpenSidebar={isOpenSidebar}
+            setLocalImg={setLocalImg}
+            localImg={localImg}
+          />
+        )}
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+      <form
+        onSubmit={handleSubmit(isEditMode ? handleUpdate : onSubmit)}
+        encType="multipart/form-data"
+      >
         {/* title */}
         <div className="relative group h-12 mb-10">
           <label className="font-bold" htmlFor="title">
@@ -269,9 +350,20 @@ const AddProductForm = ({ isOpenSidebar, setIsOpenSidebar }) => {
           <p className="text-red-600 text-sm">{errors?.stock?.message}</p>
         </div>
 
-        <Button btnType="submit" className="w-full">
-          {submitting ? "Creating product..." : "Create Product"}
-        </Button>
+        {/* buttons */}
+        {isEditMode ? (
+          <Button btnType="submit" className="w-full">
+            {updating ? (
+              <LoaderSpinner className="loading-md" />
+            ) : (
+              "Update Product"
+            )}
+          </Button>
+        ) : (
+          <Button btnType="submit" className="w-full">
+            {submitting ? <LoaderSpinner /> : "Create Product"}
+          </Button>
+        )}
       </form>
     </>
   );

@@ -186,7 +186,7 @@ export const apiSlice = createApi({
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `${ADMIN_URL}/delete-product/${id}`,
-        method: "POST",
+        method: "DELETE",
       }),
 
       invalidatesTags: ["Product"],
@@ -194,8 +194,8 @@ export const apiSlice = createApi({
 
     // to update | edit product - PUT
     updateProduct: builder.mutation({
-      query: (id, formData) => ({
-        url: `${ADMIN_URL}/update-product/${id}`,
+      query: (formData) => ({
+        url: `${ADMIN_URL}/update-product/${formData.id}`,
         method: "PUT",
         body: formData,
       }),

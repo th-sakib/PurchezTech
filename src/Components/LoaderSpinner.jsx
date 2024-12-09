@@ -1,9 +1,13 @@
 import React from "react";
 
-const LoaderSpinner = () => {
+const LoaderSpinner = ({ className }) => {
   return (
     <div>
-      <span className="loading loading-infinity loading-lg"></span>
+      <span
+        className={`loading loading-infinity ${
+          className ? className : "loading-lg"
+        }`}
+      ></span>
     </div>
   );
 };

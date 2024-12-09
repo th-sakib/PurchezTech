@@ -1,5 +1,6 @@
 import React from "react";
 import AddProductForm from "./AddProductForm";
+import { useSelector } from "react-redux";
 
 const Sidebar = ({
   isOpenSidebar,
@@ -28,6 +29,8 @@ const Sidebar = ({
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             {/* Sidebar content here */}
             <AddProductForm
+              isEditMode={isEditMode}
+              setIsEditMode={setIsEditMode}
               isOpenSidebar={isOpenSidebar}
               setIsOpenSidebar={setIsOpenSidebar}
             />

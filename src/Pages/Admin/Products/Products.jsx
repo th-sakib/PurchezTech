@@ -39,7 +39,7 @@ const Products = () => {
         </Button>
       </div>
 
-      <div className="flex mx-5 flex-wrap gap-5 justify-center mb-3">
+      <div className="flex mx-5 flex-wrap justify-center mb-3">
         {/* if loading or fetching  */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-10 my-4">
           {isLoading || isFetching
@@ -48,7 +48,7 @@ const Products = () => {
                 .map((_, idx) => (
                   <div
                     key={idx}
-                    className="card bg-base-100 shadow-xl w-60 gap-3 rounded-sm rounded-b-lg "
+                    className="card bg-base-100 shadow-xl w-60 gap-3 rounded-sm rounded-b-lg mt-4"
                   >
                     <div className="skeleton h-44 w-full rounded-none"></div>
                     <div className="px-2 overflow-hidden ">

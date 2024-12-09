@@ -21,7 +21,7 @@ const Navbar = () => {
       <li className="">
         <NavLink to="/">
           {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-1 px-1">
+            <div className="flex justify-center items-center space-x-1 px-1 ">
               {/* {isActive ? <IoHome /> : <IoHomeOutline />} */ <p>home</p>}
             </div>
           )}

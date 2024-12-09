@@ -11,6 +11,15 @@
   padding-right: 0 !important;
 }
 
+li {
+  list-style-type: none !important;
+}
+
+li a:active {
+  background: transparent !important;
+  color: black !important;
+}
+
 .active p {
   color: #ffc75f !important;
 }

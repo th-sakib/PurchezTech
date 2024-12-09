@@ -6,16 +6,24 @@ import { MdAddShoppingCart } from "react-icons/md";
 
 import Button from "./Button";
 import LoaderSpinner from "./LoaderSpinner";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUserRole } from "../redux/features/user/userSlice";
+import { setProduct } from "../redux/features/admin/updateProductSlice";
+import { useDeleteProductMutation } from "../redux/api/apiSlice";
+import { toast } from "../lib/sweetAlert/toast";
+import Swal from "sweetalert2";
 
 const ProductCard = ({
-  product,
+  product, // this is coming from product component
   isLoading,
   setIsOpenSidebar,
   setIsEditMode,
 }) => {
+  const dispatch = useDispatch();
   const userRole = useSelector(selectUserRole);
+
+  const [deleteProduct, { isLoading: deleting }] = useDeleteProductMutation();
+
   const adminIcons = [
     { id: 1, icon: <PiEye />, handler: handlePreview },
     { id: 2, icon: <GrFormEdit />, handler: handleEdit },
@@ -32,11 +40,34 @@ const ProductCard = ({
   function handleEdit(data) {
     setIsOpenSidebar(true);
     setIsEditMode(true);
+    dispatch(setProduct(data));
   }
 
   // ====Delete handler====
-  function handleDelete() {
-    console.log("deleing>>>");
+  async function handleDelete() {
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await deleteProduct(product._id);
+          console.log(res.data.data);
+          toast.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // ====Wishlist handler====
@@ -61,14 +92,13 @@ const ProductCard = ({
       {!isLoading ? (
         //======== The CARD  ==========
         <div className="card bg-base-100 shadow-lg hover:shadow-2xl rounded-none font-josefin_sans border rounded-b-lg overflow-hidden group/parent">
-          {/* floating buttons inside image  */}
           <div className="absolute -top-2 -right-2 cursor-pointer">
             {/* the visible icon  */}
             <div className="bg-accent-color w-12 h-12 text-white rounded-bl-full flex justify-center items-center absolute top-0 right-0 z-20 isolate group/inner">
               {userRole === "admin" ? (
                 <button
                   type="button"
-                  onClick={handleDelete}
+                  onClick={() => handleDelete(product)}
                   className="group-hover/inner:scale-110 transition-all duration-300 group-hover/inner:text-red-600"
                 >
                   <RiDeleteBin5Line className="text-lg" />
@@ -84,6 +114,7 @@ const ProductCard = ({
               )}
             </div>
 
+            {/* floating buttons inside image  */}
             <div className="absolute top-3 -right-5 flex z-10 transform isolate group-hover/parent:-translate-x-16 transition-all duration-300">
               {userRole === "admin"
                 ? adminIcons.map((item) => (
