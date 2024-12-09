@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-nav > .active {
+.active {
   background-color: transparent !important;
   border-radius: 0 !important;
   border-radius: 0 !important;
@@ -11,7 +11,7 @@ nav > .active {
   padding-right: 0 !important;
 }
 
-nav > .active p {
+.active p {
   color: #ffc75f !important;
 }
 

@@ -1,10 +1,16 @@
 import React from "react";
 import AddProductForm from "./AddProductForm";
 
-const Sidebar = ({ isOpenSidebar, toggleSidebar, setIsOpenSidebar }) => {
+const Sidebar = ({
+  isOpenSidebar,
+  toggleSidebar,
+  setIsOpenSidebar,
+  isEditMode,
+  setIsEditMode,
+}) => {
   return (
     <div>
-      <div className="drawer drawer-end">
+      <div className="drawer drawer-end z-50">
         <input
           id="my-drawer-4"
           type="checkbox"

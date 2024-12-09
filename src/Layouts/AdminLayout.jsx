@@ -55,8 +55,16 @@ const AdminLayout = () => {
       {sidebarContentLinks.map((item) => (
         <li key={item.id} onClick={toggleDrawer}>
           <NavLink to={item.path}>
-            {item.icon}
-            <p className="">{item.label}</p>
+            {({ isActive }) => (
+              <>
+                <span className={`${isActive ? "text-accent-color" : ""}`}>
+                  {item.icon}
+                </span>
+                <span className={`${isActive ? "text-black font-bold" : ""}`}>
+                  {item.label}
+                </span>
+              </>
+            )}
           </NavLink>
         </li>
       ))}
