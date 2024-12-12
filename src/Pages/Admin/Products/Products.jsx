@@ -76,7 +76,7 @@ const Products = () => {
         ) : (
           // ======= product card section =======
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-10 justify-center items-center">
-            {productData?.data.map((product, idx) => (
+            {productData?.data.map((product) => (
               <div key={product._id}>
                 <ProductCard
                   setIsEditMode={setIsEditMode}

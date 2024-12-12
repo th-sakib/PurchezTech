@@ -174,11 +174,29 @@ export const apiSlice = createApi({
         },
       }),
       invalidatesTags: ["Product"],
+
+      // optimistic update functionality
+      // async onQueryStarted(productData, { dispatch, queryFulfilled }) {
+      //   const patchResult = dispatch(
+      //     apiSlice.util.updateQueryData("getAllProduct", undefined, (draft) => {
+      //       console.log("Current draft:", JSON.stringify(draft, null, 2));
+      //       draft.data.unshift(productData);
+      //     })
+      //   );
+
+      //   try {
+      //     await queryFulfilled;
+      //   } catch (error) {
+      //     console.log(error);
+      //     patchResult.undo();
+      //   }
+      // },
     }),
 
     // to get all product list - GET
     getAllProduct: builder.query({
       query: () => `${ADMIN_URL}/get-product`,
+      // transformResponse: (products) => products.reverse(),
       providesTags: ["Product"],
     }),
 
@@ -190,6 +208,22 @@ export const apiSlice = createApi({
       }),
 
       invalidatesTags: ["Product"],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData("getAllProduct", undefined, (draft) => {
+            const productIndex = draft.data.findIndex(
+              (product) => product.id === id
+            );
+            draft.data.splice(productIndex, 1);
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
     }),
 
     // to update | edit product - PUT

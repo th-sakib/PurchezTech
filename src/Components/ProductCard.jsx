@@ -152,7 +152,10 @@ const ProductCard = ({
           <div className="flex flex-row p-2 h-20">
             {/* title & desc. part  */}
             <div className="overflow-hidden flex flex-col justify-around w-4/5">
-              <h2 className="text-sm font-semibold capitalize line leading-5">
+              <h2
+                className="text-sm font-semibold capitalize line leading-5 line-clamp-1"
+                title={title}
+              >
                 {title}
               </h2>
               <p
