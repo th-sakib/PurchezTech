@@ -18,16 +18,16 @@ const Navbar = () => {
 
   const navOptions = (
     <>
-      <li className="">
+      <li className="hover:text-[#FFC107]">
         <NavLink to="/">
           {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-1 px-1 ">
+            <div className="flex justify-center items-center space-x-1 px-1">
               {/* {isActive ? <IoHome /> : <IoHomeOutline />} */ <p>home</p>}
             </div>
           )}
         </NavLink>
       </li>
-      <li className="active:bg-transparent">
+      <li className="active:bg-transparent hover:text-[#FFC107]">
         <NavLink to={"/all-products"}>
           {({ isActive }) => (
             <div className="flex justify-center items-center space-x-1 px-1">
@@ -37,7 +37,7 @@ const Navbar = () => {
           )}
         </NavLink>
       </li>
-      <li>
+      <li className="hover:text-[#FFC107]">
         <NavLink to="/contact">
           {({ isActive }) => (
             <div className="flex justify-center items-center space-x-1 px-1">
@@ -47,7 +47,7 @@ const Navbar = () => {
           )}
         </NavLink>
       </li>
-      <li>
+      <li className="hover:text-[#FFC107]">
         <NavLink to="/about-us">
           {({ isActive }) => (
             <div className="flex justify-center items-center space-x-1 px-1">
@@ -61,17 +61,13 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar p-0 bg-base-100 text-black justify-between max-w-screen-xl mx-auto">
-      <section className="hidden md:inline-flex">
+    <div className="navbar p-0 bg-white text-black justify-center lg:max-w-full mx-auto items-center">
+      {/* navbar start  */}
+      <section className="hidden lg:flex">
         {/* logo section  */}
         <section className="flex">
           <Link>
-            <img
-              width={100}
-              src={logo}
-              alt="PurchezTech Logo"
-              className="h-9 w-9"
-            />
+            <img src={logo} alt="PurchezTech Logo" className="h-9 w-9" />
           </Link>
           <Link
             to={"/"}
@@ -89,10 +85,10 @@ const Navbar = () => {
       </section>
 
       {/* center of navbar  */}
-      <section className="w-full md:flex-1 px-6 md:px-0 box-border">
+      <section className="w-full lg:w-2/4 xl:w-7/12 px-6 lg:px-0 box-border">
         {/* search box  */}
         <div
-          className={`flex rounded-none items-center justify-center relative md:ml-6 w-full`}
+          className={`flex rounded-none items-center justify-center relative lg:ml-6 w-full`}
         >
           <input
             type="text"
@@ -110,20 +106,24 @@ const Navbar = () => {
               onClick={() => setSearch("")}
             />
           )}
-          <button className="px-3 bg-black border-black hover:border-on-hover  hover:bg-on-hover rounded-none min-h-10 h-10">
-            <IoSearchSharp className="text-base text-white" />
+          <button
+            className="px-3 bg-black border-black
+           rounded-none min-h-10 h-10 hover:border-additional-color group/search"
+          >
+            <IoSearchSharp className="text-base text-white group-hover/search:text-additional-color" />
           </button>
         </div>
       </section>
 
       {/* nav end  */}
-      <section className="hidden md:inline-flex">
+      <section className="hidden lg:inline-flex">
         {/* menu items */}
-        <nav className="uppercase mx-4 hidden md:inline-flex text-[#363634] ">
+        <nav className="uppercase lg:mx-2 xl:mx-4 hidden md:inline-flex text-[#363634] text-sm">
           {navOptions}
         </nav>
 
-        <div className="flex space-x-7 items-center">
+        {/* cart and login button  */}
+        <div className="flex lg:space-x-5 xl:space-x-7 items-center">
           {/* cart icon  */}
           <Link to="/cart" className="relative group hover:text-on-hover">
             <HiOutlineShoppingCart className={`text-xl cursor-pointer`} />

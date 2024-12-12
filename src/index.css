@@ -8,28 +8,28 @@
   border-radius: 0 !important;
   background-color: transparent !important;
   /* padding-left: 1rem !important; */
-  padding-right: 0 !important;
+  /* padding-right: 0 !important; */
 }
 
 li {
   list-style-type: none !important;
 }
 
-li a:active {
+nav>li a:active {
   background: transparent !important;
-  color: black !important;
+  color: #ffc107 !important;
 }
 
 .active p {
-  color: #ffc75f !important;
+  color: #ffa500 !important;
 }
 
 li a {
-  display: flex;
-  font-size: small;
-  padding-right: 0 !important;
-  padding: 0 0.3rem;
-  position: relative;
+  /* display: flex; */
+  /* font-size: small; */
+  /* padding-right: 0 !important; */
+  /* padding: 0 0.3rem; */
+  /* position: relative; */
 }
 
 li svg {
