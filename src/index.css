@@ -15,7 +15,7 @@ li {
   list-style-type: none !important;
 }
 
-nav>li a:active {
+nav > li a:active {
   background: transparent !important;
   color: #ffc107 !important;
 }
@@ -38,4 +38,13 @@ li svg {
 
 ul li {
   position: relative;
+}
+
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Edge */
 }

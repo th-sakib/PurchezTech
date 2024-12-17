@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 
 const USER_URL = "api/v1/user";
 const ADMIN_URL = "api/v1/admin";
+const GLOBAL_URL = "api/v1";
 
 // default base query
 const baseQuery = fetchBaseQuery({
@@ -200,6 +201,11 @@ export const apiSlice = createApi({
       providesTags: ["Product"],
     }),
 
+    getProduct: builder.query({
+      query: () => `${GLOBAL_URL}/get-product`,
+      providesTags: ["Product"],
+    }),
+
     // to delete individual product - POST
     deleteProduct: builder.mutation({
       query: (id) => ({
@@ -253,6 +259,7 @@ export const {
   useUploadProductMutation,
 
   useGetAllProductQuery,
+  useGetProductQuery,
   useDeleteProductMutation,
   useUpdateProductMutation,
   useDeleteUploadedProductMutation,

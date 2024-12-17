@@ -79,6 +79,7 @@ const Products = () => {
             {productData?.data.map((product) => (
               <div key={product._id}>
                 <ProductCard
+                  isLoading={isLoading}
                   setIsEditMode={setIsEditMode}
                   setIsOpenSidebar={setIsOpenSidebar}
                   product={product}
