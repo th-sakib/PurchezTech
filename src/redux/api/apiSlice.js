@@ -196,13 +196,32 @@ export const apiSlice = createApi({
 
     // to get all product list - GET
     getAllProduct: builder.query({
-      query: () => `${ADMIN_URL}/get-product`,
+      query: ({ category, brand, sortByPrice, sortByDate }) => {
+        let queryString = "?";
+        console.log("strung", queryString);
+        if (category) queryString += `category=${category}&`;
+        if (brand) queryString += `brand=${brand}&`;
+        if (sortByPrice) queryString += `sortByPrice=${sortByPrice}&`;
+        if (sortByDate) queryString += `sortByDate=${sortByDate}&`;
+        return `${ADMIN_URL}/get-product${queryString}`;
+      },
+
       // transformResponse: (products) => products.reverse(),
       providesTags: ["Product"],
     }),
 
     getProduct: builder.query({
-      query: () => `${GLOBAL_URL}/get-product`,
+      query: ({ category, brand, sortByPrice, sortByDate }) => {
+        let queryString = "?";
+
+        if (category) queryString += `category=${category}&`;
+        if (brand) queryString += `brand=${brand}&`;
+        if (sortByPrice) queryString += `sortByPrice=${sortByPrice}&`;
+        if (sortByDate) queryString += `sortByDate=${sortByDate}&`;
+
+        return `${GLOBAL_URL}/get-product${queryString}`;
+      },
+
       providesTags: ["Product"],
     }),
 
