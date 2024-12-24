@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TbArrowsSort } from "react-icons/tb";
 import FilterOptions from "../FilterOptions/FilterOptions";
 import ProductCard from "../../../Components/ProductCard";
 import { useGetProductQuery } from "../../../redux/api/apiSlice";
 import NoProduct from "../../../Components/NoProduct";
+import { useSelector } from "react-redux";
 
 const AllProducts = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [sortOption, setSortOption] = useState("");
+
+  // price range states
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
+
+  // Track the last known initial price range to detect category changes
+  const [lastInitialPriceRange, setLastInitialPriceRange] = useState(null);
+
+  //search term
+  const search = useSelector((state) => state.search.term);
 
   const sortByPrice =
     sortOption === "asc" || sortOption === "desc" ? sortOption : "";
@@ -22,7 +32,7 @@ const AllProducts = () => {
 
   // fetching product to view
   const {
-    data: productData,
+    data: productInfo,
     isLoading,
     isFetching,
     isUninitialized,
@@ -31,12 +41,40 @@ const AllProducts = () => {
     brand,
     sortByPrice,
     sortByDate,
+    search,
+    minPrice,
+    maxPrice,
   });
+
+  const productData = productInfo?.data?.listOfProduct; // product data from server
+  const initialPriceRange = productInfo?.data?.priceRange; // price range from server
+
+  useEffect(() => {
+    // Detect if the `initialPriceRange` has changed
+    if (
+      initialPriceRange &&
+      (lastInitialPriceRange?.initialMinPrice !==
+        initialPriceRange.initialMinPrice ||
+        lastInitialPriceRange?.initialMaxPrice !==
+          initialPriceRange.initialMaxPrice)
+    ) {
+      setMinPrice(initialPriceRange.initialMinPrice || 0);
+      setMaxPrice(initialPriceRange.initialMaxPrice || 1000);
+      setLastInitialPriceRange(initialPriceRange); // Update the tracker
+    }
+  }, [initialPriceRange, lastInitialPriceRange]);
+
+  const handleMinPriceChange = (value) => {
+    setMinPrice(Math.min(value, maxPrice - 1)); // Ensure minPrice is less than maxPrice
+  };
+
+  const handleMaxPriceChange = (value) => {
+    setMaxPrice(Math.max(value, minPrice + 1)); // Ensure maxPrice is greater than minPrice
+  };
 
   if (isUninitialized) {
     return <p>Waiting to fetch data...</p>;
   }
-
   return (
     <div className="font-secondaryFont w-[98%] mx-auto py-4 bg-background-color flex gap-6">
       {/* filter section  */}
@@ -45,6 +83,13 @@ const AllProducts = () => {
           setSelectedCategory={setSelectedCategory}
           setBrand={setBrand}
           brand={brand}
+          initialPriceRange={initialPriceRange}
+          setMaxPrice={handleMaxPriceChange}
+          setMinPrice={handleMinPriceChange}
+          isLoading={isLoading}
+          isFetching={isFetching}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
         />
       </section>
 
@@ -52,14 +97,14 @@ const AllProducts = () => {
       <div className="drawer-content z-50 lg:hidden">
         <label
           htmlFor="my-drawer1"
-          className="drawer-button btn btn-outline fixed bottom-2 right-2"
+          className="drawer-button btn btn-outline border-accent-color fixed bottom-2 right-2"
         >
           {/* button  */}
           open
         </label>
       </div>
 
-      {/* the sidebar for mid devices */}
+      {/* mid device - the sidebar */}
       <section className="block lg:hidden">
         <div className="drawer">
           <input
@@ -76,7 +121,18 @@ const AllProducts = () => {
             ></label>
             <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
               {/* Sidebar content here */}
-              <FilterOptions />
+              <FilterOptions
+                setSelectedCategory={setSelectedCategory}
+                setBrand={setBrand}
+                brand={brand}
+                initialPriceRange={initialPriceRange}
+                setMaxPrice={handleMaxPriceChange}
+                setMinPrice={handleMinPriceChange}
+                isLoading={isLoading}
+                isFetching={isFetching}
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+              />
             </ul>
           </div>
         </div>
@@ -91,7 +147,7 @@ const AllProducts = () => {
           {/* sort by option  */}
           <div
             className={`flex gap-1 items-center font-bold ${
-              productData?.data.length === 0 ? "invisible" : "block"
+              productData?.length === 0 ? "invisible" : "block"
             }`}
           >
             <TbArrowsSort />
@@ -150,14 +206,14 @@ const AllProducts = () => {
           </div>
 
           {/* product view section  */}
-          {productData?.data.length === 0 ? (
+          {productData?.length === 0 ? (
             <div className="flex justify-center items-center w-[80vw] h-[70vh]">
               <NoProduct />
             </div>
           ) : (
             // ======= product card section =======
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 justify-center items-center">
-              {productData?.data.map((product) => (
+              {productData?.map((product) => (
                 <div key={product._id}>
                   <ProductCard isLoading={isLoading} product={product} />
                 </div>

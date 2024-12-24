@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/Logo/main-logo-fn.png";
 import { IoSearchSharp } from "react-icons/io5";
 import { HiOutlineShoppingCart } from "react-icons/hi";
@@ -6,15 +6,23 @@ import { RxCross2 } from "react-icons/rx";
 import Button from "../../../Components/Button";
 import { useState } from "react";
 import { selectIsAuthenticated } from "../../../redux/features/user/userSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Avatar from "./Avatar";
+import { setSearchTerm } from "../../../redux/features/user/searchSlice.js";
 
 const Navbar = () => {
-  const [search, setSearch] = useState("");
+  const [localSearch, setLocalSearch] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
 
   // rtk / rtk query
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const dispatch = useDispatch();
+
+  const handleSearch = () => {
+    dispatch(setSearchTerm(localSearch));
+    if (localSearch) navigate("all-products");
+  };
 
   const navOptions = (
     <>
@@ -97,18 +105,24 @@ const Navbar = () => {
               "input rounded-none focus:outline-none w-full h-10 border-black focus:border-on-hover"
             }
             placeholder="Search for your desired Products"
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
+            onChange={(e) => setLocalSearch(e.target.value)}
+            value={localSearch}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
           />
-          {search && (
+          {localSearch && (
             <RxCross2
-              className="absolute right-14 cursor-pointer text-primary-color"
-              onClick={() => setSearch("")}
+              className="absolute right-12 cursor-pointer text-primary-color"
+              onClick={() => setLocalSearch("")}
             />
           )}
           <button
             className="px-3 bg-black border-black
            rounded-none min-h-10 h-10 hover:border-additional-color group/search"
+            onClick={handleSearch}
           >
             <IoSearchSharp className="text-base text-white group-hover/search:text-additional-color" />
           </button>

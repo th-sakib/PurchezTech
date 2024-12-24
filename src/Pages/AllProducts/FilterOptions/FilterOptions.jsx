@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 import { techProductWithBrands } from "../../../constant";
 
 const FilterOptions = ({
   setSelectedCategory,
   setBrand,
   brand: brandState,
+  initialPriceRange,
+  setMaxPrice,
+  setMinPrice,
+  isFetching,
+  isLoading,
+  maxPrice,
+  minPrice,
 }) => {
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [selectedBrands, setSelectedBrands] = useState([]);
-  const [rangeValue, setRangeValue] = useState([0]);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false); // for the arrow toggle
+  const [selectedBrands, setSelectedBrands] = useState([]); // for selecting all brands in one category
 
   const categories = Object.keys(techProductWithBrands);
 
@@ -23,26 +29,91 @@ const FilterOptions = ({
     setSelectedBrands(brands);
     setSelectedCategory(currentCategory);
     setBrand("");
-  };
-
-  const handleRangeChange = (e) => {
-    setRangeValue();
-    console.log(e);
+    setIsCategoryOpen(false);
+    if (!isLoading) {
+      setMaxPrice(initialPriceRange?.maxPrice);
+      setMinPrice(initialPriceRange?.minPrice);
+    }
   };
 
   return (
     <div className="overflow-hidden">
       {/* filter with price  */}
-      <section className="my-2">
-        <p className="text-lg font-bold capitalize">price range: </p>
+      <section className="mb-4 ">
+        <p className="text-lg font-bold capitalize mb-2">price range: </p>
 
-        <input
-          type="range"
-          min={0}
-          max="100"
-          onChange={() => handleRangeChange()}
-          className="range range-success"
-        />
+        {/* text range price section  */}
+        <div className="capitalize flex justify-center items-center mb-3">
+          <div className="w-full h-full">
+            <input
+              className="w-full h-full ml-1 text-center text-sm text-gray-700 py-1.5 border border-accent-color"
+              type="number"
+              name="min"
+              autoComplete="off"
+              min={initialPriceRange?.initialMinPrice}
+              max={initialPriceRange?.initialMaxPrice}
+              value={minPrice || 0}
+              onChange={(e) => setMinPrice(Number(e.target.value))}
+            />
+          </div>
+          <span className="mx-2 text-2xl">-</span>
+          <div className="w-full h-full mr-2">
+            <input
+              className="w-full h-full ml-1 text-center text-sm text-gray-700 py-1.5 border border-accent-color"
+              type="number"
+              name="max"
+              autoComplete="off"
+              min={initialPriceRange?.initialMinPrice}
+              max={initialPriceRange?.initialMaxPrice}
+              value={maxPrice || 0}
+              onChange={(e) => setMaxPrice(Number(e.target.value))}
+            />
+          </div>
+        </div>
+
+        {/* price range progress bar  */}
+        <div className="h-0.5 bg-[#ddd] rounded w-full relative">
+          {/* the slider body range */}
+          <div
+            className="absolute h-0.5 left-1/4 right-1/4 rounded bg-additional-color/80"
+            style={{
+              left: `${
+                ((minPrice - initialPriceRange?.initialMinPrice) /
+                  (initialPriceRange?.initialMaxPrice -
+                    initialPriceRange?.initialMinPrice)) *
+                100
+              }%`,
+              right: `${
+                ((initialPriceRange?.initialMaxPrice - maxPrice) /
+                  (initialPriceRange?.initialMaxPrice -
+                    initialPriceRange?.initialMinPrice)) *
+                100
+              }%`,
+            }}
+          ></div>
+          {/* min range thumb */}
+          <input
+            className={`absolute w-full bg-transparent pointer-events-none -top-[5px] appearance-none ${
+              isLoading || isFetching ? "cursor-wait" : "cursor-auto"
+            }`}
+            type="range"
+            name="minRange"
+            min={initialPriceRange?.initialMinPrice}
+            max={initialPriceRange?.initialMaxPrice}
+            value={minPrice || 0}
+            onChange={(e) => setMinPrice(Number(e.target.value))}
+          />
+          {/* max range thumb */}
+          <input
+            className="absolute w-full bg-transparent pointer-events-none -top-[5px] appearance-none"
+            type="range"
+            name="maxRange"
+            min={initialPriceRange?.initialMinPrice}
+            max={initialPriceRange?.initialMaxPrice}
+            value={maxPrice || 0}
+            onChange={(e) => setMaxPrice(Number(e.target.value))}
+          />
+        </div>
       </section>
 
       {/* Category list */}
@@ -53,8 +124,14 @@ const FilterOptions = ({
           onClick={toggleCategory}
         >
           <GiHamburgerMenu className="text-xl" />
-          <h2 className="text-lg font-bold ml-2 flex-1 w-28">Category</h2>
-          {!isCategoryOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
+          <h2 className="text-lg font-bold ml-2 flex-1 w-28 transition-all duration-300">
+            Category
+          </h2>
+          {!isCategoryOpen ? (
+            <IoIosArrowDown className="rotate-360 transition-all duration-300" />
+          ) : (
+            <IoIosArrowDown className="rotate-180 transition-all duration-300" />
+          )}
         </div>
 
         {/* view categories  */}
@@ -63,6 +140,12 @@ const FilterOptions = ({
             isCategoryOpen ? "max-h-[50vh]" : "max-h-0"
           }`}
         >
+          <li
+            className="px-3 bg-white rounded-sm py-2 hover:text-additional-color cursor-pointer text-sm text-[#666] mb-0.5 capitalize"
+            onClick={() => handleCategory("default")}
+          >
+            all
+          </li>
           {categories.map((category) => (
             <li
               key={category}
@@ -101,9 +184,6 @@ const FilterOptions = ({
           )}
         </div>
       </section>
-
-      {/* price section  */}
-      <section></section>
     </div>
   );
 };

@@ -211,13 +211,24 @@ export const apiSlice = createApi({
     }),
 
     getProduct: builder.query({
-      query: ({ category, brand, sortByPrice, sortByDate }) => {
+      query: ({
+        category,
+        brand,
+        sortByPrice,
+        sortByDate,
+        search,
+        minPrice,
+        maxPrice,
+      }) => {
         let queryString = "?";
 
         if (category) queryString += `category=${category}&`;
         if (brand) queryString += `brand=${brand}&`;
         if (sortByPrice) queryString += `sortByPrice=${sortByPrice}&`;
         if (sortByDate) queryString += `sortByDate=${sortByDate}&`;
+        if (minPrice) queryString += `minPrice=${minPrice}&`;
+        if (maxPrice) queryString += `maxPrice=${maxPrice}&`;
+        if (search) queryString += `search=${search}`;
 
         return `${GLOBAL_URL}/get-product${queryString}`;
       },

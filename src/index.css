@@ -48,3 +48,43 @@ ul li {
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Edge */
 }
+
+/* For all browsers */
+input[type="number"] {
+  appearance: none; /* Standard property */
+}
+
+/* For WebKit browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* WebKit-specific */
+  margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox-specific */
+}
+
+/* styling the range thumb */
+input[type="range"]::-webkit-slider-thumb {
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 50%;
+  background: #23a7eefe;
+  border: 2px solid #f4a261;
+  pointer-events: auto;
+  appearance: none;
+  cursor: pointer;
+  box-shadow: 0 0.125rem 0.5625rem -0.125rem rgba(0, 0, 0, 0.25);
+}
+input[type="range"]::-moz-range-thumb {
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 50%;
+  background: #f4a261;
+  pointer-events: auto;
+  -moz-appearance: none;
+  cursor: pointer;
+  box-shadow: 0 0.125rem 0.5625rem -0.125rem rgba(0, 0, 0, 0.25);
+}
