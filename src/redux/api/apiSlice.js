@@ -196,21 +196,6 @@ export const apiSlice = createApi({
 
     // to get all product list - GET
     getAllProduct: builder.query({
-      query: ({ category, brand, sortByPrice, sortByDate }) => {
-        let queryString = "?";
-        console.log("strung", queryString);
-        if (category) queryString += `category=${category}&`;
-        if (brand) queryString += `brand=${brand}&`;
-        if (sortByPrice) queryString += `sortByPrice=${sortByPrice}&`;
-        if (sortByDate) queryString += `sortByDate=${sortByDate}&`;
-        return `${ADMIN_URL}/get-product${queryString}`;
-      },
-
-      // transformResponse: (products) => products.reverse(),
-      providesTags: ["Product"],
-    }),
-
-    getProduct: builder.query({
       query: ({
         category,
         brand,
@@ -219,6 +204,8 @@ export const apiSlice = createApi({
         search,
         minPrice,
         maxPrice,
+        page,
+        limit,
       }) => {
         let queryString = "?";
 
@@ -228,9 +215,11 @@ export const apiSlice = createApi({
         if (sortByDate) queryString += `sortByDate=${sortByDate}&`;
         if (minPrice) queryString += `minPrice=${minPrice}&`;
         if (maxPrice) queryString += `maxPrice=${maxPrice}&`;
+        if (page) queryString += `page=${page}&`;
+        if (limit) queryString += `limit=${limit}&`;
         if (search) queryString += `search=${search}`;
 
-        return `${GLOBAL_URL}/get-product${queryString}`;
+        return `${GLOBAL_URL}/get-products${queryString}`;
       },
 
       providesTags: ["Product"],
@@ -289,7 +278,6 @@ export const {
   useUploadProductMutation,
 
   useGetAllProductQuery,
-  useGetProductQuery,
   useDeleteProductMutation,
   useUpdateProductMutation,
   useDeleteUploadedProductMutation,

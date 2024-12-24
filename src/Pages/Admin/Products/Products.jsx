@@ -1,21 +1,37 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Button from "../../../Components/Button";
 import Sidebar from "./Sidebar";
 import { useGetAllProductQuery } from "../../../redux/api/apiSlice";
 import NoProduct from "../../../Components/NoProduct";
 import ProductCard from "../../../Components/ProductCard";
+import { useSelector } from "react-redux";
+import { TbArrowsSort } from "react-icons/tb";
 
 const Products = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [page, setPage] = useState(1);
+  const [limit] = useState(12);
 
   // fetching product to view
   const {
-    data: productData,
+    data: productInfo,
     isLoading,
     isFetching,
     isUninitialized,
-  } = useGetAllProductQuery();
+  } = useGetAllProductQuery({
+    category: "default",
+    brand: "",
+    sortByPrice: "",
+    sortByDate: "",
+    search: "",
+    minPrice: "",
+    maxPrice: "",
+    page,
+    limit,
+  });
+
+  const productData = productInfo?.data?.listOfProduct; // product data from server
 
   if (isUninitialized) {
     return <p>Waiting to fetch data...</p>;
@@ -26,9 +42,14 @@ const Products = () => {
     setIsEditMode(false);
   };
 
+  const handlePageChange = useCallback((newPage) => {
+    setPage(newPage);
+  }, []);
+
   return (
     <div className="">
-      <div className="flex mt-4 mx-5 items-center">
+      {/* title section */}
+      <section className="flex mt-4 mx-5 items-center">
         <h1 className="capitalize text-2xl font-bold">manage products</h1>
         <Button
           btnHandler={toggleSidebar}
@@ -37,11 +58,11 @@ const Products = () => {
         >
           Add Product
         </Button>
-      </div>
+      </section>
 
-      <div className="flex mx-5 flex-wrap justify-center mb-3">
+      <section className="flex mx-5 flex-wrap justify-center mb-3">
         {/* if loading or fetching  */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-10 my-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-5">
           {isLoading || isFetching
             ? Array(8)
                 .fill()
@@ -69,14 +90,14 @@ const Products = () => {
         </div>
 
         {/* product view section  */}
-        {productData?.data.length === 0 ? (
+        {productData?.length === 0 ? (
           <div className="flex justify-center items-center w-full h-[70vh]">
             <NoProduct />
           </div>
         ) : (
           // ======= product card section =======
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-10 justify-center items-center">
-            {productData?.data.map((product) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 justify-center items-center mt-4">
+            {productData?.map((product) => (
               <div key={product._id}>
                 <ProductCard
                   isLoading={isLoading}
@@ -88,7 +109,28 @@ const Products = () => {
             ))}
           </div>
         )}
-      </div>
+        {/* pagination div */}
+        <div className="w-full flex justify-center items-center my-3">
+          {/* pagination */}
+          <section className="join">
+            {/*<button className="join-item btn btn-sm btn-active">2</button>*/}
+            {Array.from(
+              { length: productInfo?.data?.totalPages },
+              (_, idx) => idx + 1
+            ).map((pageNumber) => (
+              <button
+                key={pageNumber}
+                className={`join-item btn btn-sm ${
+                  page === pageNumber ? "btn-active" : ""
+                }`}
+                onClick={() => handlePageChange(pageNumber)}
+              >
+                {pageNumber}
+              </button>
+            ))}
+          </section>
+        </div>
+      </section>
       {/* add product functionality is inside sidebar  */}
       <Sidebar
         setIsEditMode={setIsEditMode}

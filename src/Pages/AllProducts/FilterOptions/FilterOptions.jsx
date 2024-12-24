@@ -14,6 +14,7 @@ const FilterOptions = ({
   isLoading,
   maxPrice,
   minPrice,
+  setPage,
 }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false); // for the arrow toggle
   const [selectedBrands, setSelectedBrands] = useState([]); // for selecting all brands in one category
@@ -30,10 +31,7 @@ const FilterOptions = ({
     setSelectedCategory(currentCategory);
     setBrand("");
     setIsCategoryOpen(false);
-    if (!isLoading) {
-      setMaxPrice(initialPriceRange?.maxPrice);
-      setMinPrice(initialPriceRange?.minPrice);
-    }
+    setPage(1);
   };
 
   return (

@@ -12,6 +12,7 @@ import { setProduct } from "../redux/features/admin/updateProductSlice";
 import { useDeleteProductMutation } from "../redux/api/apiSlice";
 import { toast } from "../lib/sweetAlert/toast";
 import Swal from "sweetalert2";
+import { replace, useNavigate } from "react-router-dom";
 
 const ProductCard = ({
   product, // this is coming from product component
@@ -19,6 +20,8 @@ const ProductCard = ({
   setIsOpenSidebar,
   setIsEditMode,
 }) => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const userRole = useSelector(selectUserRole);
 
@@ -34,7 +37,9 @@ const ProductCard = ({
   ];
 
   // ====Preview handler====
-  function handlePreview() {}
+  function handlePreview() {
+    navigate(`/product-details/${product._id}`);
+  }
 
   // ====Edit handler====
   function handleEdit(data) {
@@ -96,6 +101,7 @@ const ProductCard = ({
             {/* the visible icon  */}
             <div className="bg-accent-color w-12 h-12 text-white rounded-bl-full flex justify-center items-center absolute top-0 right-0 z-20 isolate group/inner">
               {userRole === "admin" ? (
+                // delete button
                 <button
                   type="button"
                   onClick={() => handleDelete(product)}
@@ -104,6 +110,7 @@ const ProductCard = ({
                   <RiDeleteBin5Line className="text-lg" />
                 </button>
               ) : (
+                // wishlist button
                 <button
                   type="button"
                   onClick={handleWishlist}
@@ -143,7 +150,7 @@ const ProductCard = ({
           {/* image section  */}
           <figure className="h-48 group">
             <img
-              className="h-56 group-hover:scale-105 transition-all duration-300"
+              className="h-44 group-hover:scale-105 transition-all duration-300"
               src={imageURL}
               alt="Shoes"
             />
@@ -169,9 +176,13 @@ const ProductCard = ({
             {/* price part  */}
             <div className="text-right self-center absolute right-2">
               <div className="text-xl font-bold relative w-fit">
-                <p className="text-xs line-through text-faded-text w-fit absolute -top-3 right-0">
-                  ${price}
-                </p>
+                {price !== salePrice ? (
+                  <p className="text-sm line-through text-faded-text w-fit absolute -top-3.5 right-0">
+                    ${price}
+                  </p>
+                ) : (
+                  ""
+                )}
                 <div className="text-xl font-bold text-accent-color">
                   <span className="text-xs absolute top-0 -left-2">$</span>
                   {salePrice}
