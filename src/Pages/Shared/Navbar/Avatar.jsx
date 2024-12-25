@@ -31,7 +31,7 @@ const Avatar = () => {
   };
 
   return (
-    <div>
+    <div className="md:ml-4">
       {/* drawer  */}
       <div className="drawer drawer-end">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />

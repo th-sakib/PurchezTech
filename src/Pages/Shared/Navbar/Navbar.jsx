@@ -71,7 +71,7 @@ const Navbar = () => {
   return (
     <div className="navbar p-0 bg-white text-black justify-center lg:max-w-full mx-auto items-center">
       {/* navbar start  */}
-      <section className="hidden lg:flex">
+      <section className="hidden md:flex">
         {/* logo section  */}
         <section className="flex">
           <Link>
@@ -93,7 +93,7 @@ const Navbar = () => {
       </section>
 
       {/* center of navbar  */}
-      <section className="w-full lg:w-2/4 xl:w-7/12 px-6 lg:px-0 box-border">
+      <section className="w-full md:w-2/5 lg:w-2/4 xl:w-7/12 px-6 lg:px-0 box-border">
         {/* search box  */}
         <div
           className={`flex rounded-none items-center justify-center relative lg:ml-6 w-full`}
@@ -130,7 +130,7 @@ const Navbar = () => {
       </section>
 
       {/* nav end  */}
-      <section className="hidden lg:inline-flex">
+      <section className="hidden md:inline-flex md:-ml-4 lg:ml-0">
         {/* menu items */}
         <nav className="uppercase lg:mx-2 xl:mx-4 hidden md:inline-flex text-[#363634] text-sm">
           {navOptions}

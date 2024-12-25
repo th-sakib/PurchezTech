@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./api/apiSlice";
 import userReducer from "./features/user/userSlice";
-import updateProductReducer from "./features/admin/updateProductSlice";
+import productReducer from "./features/common/productSlice";
 import searchReducer from "./features/user/searchSlice";
 
 const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     user: userReducer,
-    updateProduct: updateProductReducer,
+    product: productReducer,
     search: searchReducer,
   },
   middleware: (getDefaultMiddleware) =>

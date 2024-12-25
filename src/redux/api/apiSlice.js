@@ -225,6 +225,12 @@ export const apiSlice = createApi({
       providesTags: ["Product"],
     }),
 
+    // to get individual product - GET
+    getProduct: builder.query({
+      query: ({ id }) => `${GLOBAL_URL}/get-product/${id}`,
+      providesTags: ["Product"],
+    }),
+
     // to delete individual product - POST
     deleteProduct: builder.mutation({
       query: (id) => ({
@@ -278,6 +284,7 @@ export const {
   useUploadProductMutation,
 
   useGetAllProductQuery,
+  useGetProductQuery,
   useDeleteProductMutation,
   useUpdateProductMutation,
   useDeleteUploadedProductMutation,

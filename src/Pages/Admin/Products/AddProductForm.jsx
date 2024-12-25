@@ -21,7 +21,7 @@ const AddProductForm = ({
   const [localImg, setLocalImg] = useState([]);
 
   // from updateSlice
-  const productData = useSelector((state) => state.updateProduct.product);
+  const productData = useSelector((state) => state.product.product);
 
   // from apiSlice
   const [createProduct, { isLoading: submitting }] = useCreateProductMutation();

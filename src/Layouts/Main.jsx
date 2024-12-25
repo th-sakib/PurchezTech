@@ -4,16 +4,10 @@ import Navbar from "../Pages/Shared/Navbar/Navbar";
 import { useEffect } from "react";
 import { useLazyGetAuthenticityQuery } from "../redux/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearUser,
-  selectIsAuthenticated,
-  selectUserRole,
-} from "../redux/features/user/userSlice";
+import { clearUser, selectUserRole } from "../redux/features/user/userSlice";
 
 const Main = () => {
   const dispatch = useDispatch();
-  // selectors from redux-slice
-  const isAuthenticated = useSelector(selectIsAuthenticated);
   const userRole = useSelector(selectUserRole);
 
   // refresh token endpoint

@@ -8,7 +8,7 @@ import Button from "./Button";
 import LoaderSpinner from "./LoaderSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserRole } from "../redux/features/user/userSlice";
-import { setProduct } from "../redux/features/admin/updateProductSlice";
+import { setProduct } from "../redux/features/common/productSlice";
 import { useDeleteProductMutation } from "../redux/api/apiSlice";
 import { toast } from "../lib/sweetAlert/toast";
 import Swal from "sweetalert2";
@@ -38,7 +38,11 @@ const ProductCard = ({
 
   // ====Preview handler====
   function handlePreview() {
-    navigate(`/product-details/${product._id}`);
+    if (userRole !== "admin") {
+      navigate(`/product-details/${product._id}`);
+    } else {
+      navigate(`/admin/product-details/${product._id}`, replace);
+    }
   }
 
   // ====Edit handler====

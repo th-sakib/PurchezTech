@@ -13,6 +13,7 @@ import NoAccess from "../Components/NonAdmin";
 import AdminLayout from "../Layouts/AdminLayout";
 import Profile from "../Pages/Shared/Profile/Profile";
 import Products from "../Pages/Admin/Products/Products";
+import ProductDetails from "../Components/ProductDetails";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "about-us",
         element: <AboutUs />,
+      },
+      {
+        path: "product-details/:id",
+        element: <ProductDetails />,
       },
       {
         path: "/cart",
@@ -76,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "orders",
         element: <h1>hello world</h1>,
+      },
+      {
+        path: "product-details/:id",
+        element: <ProductDetails />,
       },
     ],
   },

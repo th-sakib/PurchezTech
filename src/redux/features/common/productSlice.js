@@ -4,8 +4,8 @@ const initialState = {
   product: null,
 };
 
-const updateProductSlice = createSlice({
-  name: "updateProduct",
+const productSlice = createSlice({
+  name: "product",
   initialState,
   reducers: {
     setProduct: (state, action) => {
@@ -17,5 +17,5 @@ const updateProductSlice = createSlice({
   },
 });
 
-export const { setProduct, removeProduct } = updateProductSlice.actions;
-export default updateProductSlice.reducer;
+export const { setProduct, removeProduct } = productSlice.actions;
+export default productSlice.reducer;
