@@ -1,16 +1,30 @@
-import { useParams } from "react-router-dom";
-import { useGetProductQuery } from "../redux/api/apiSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useAddToCartMutation,
+  useGetProductQuery,
+  useLazyGetAuthenticityQuery,
+} from "../redux/api/apiSlice";
 import { GiSelfLove } from "react-icons/gi";
 import Button from "./Button";
 import LoaderSpinner from "./LoaderSpinner";
+import { useSelector } from "react-redux";
+import { toast } from "../lib/sweetAlert/toast";
 
 const ProductDetails = () => {
   const { id } = useParams();
+
+  const navigate = useNavigate();
+
   const {
     data: productInfo,
     isLoading,
     isFetching,
   } = useGetProductQuery({ id });
+
+  const userInfo = useSelector((state) => state.user.userInfo);
+
+  const [triggerAuthenticity] = useLazyGetAuthenticityQuery();
+  const [addToCart] = useAddToCartMutation();
 
   if (isLoading || isFetching) {
     return (
@@ -29,18 +43,59 @@ const ProductDetails = () => {
 
   const inStock = Boolean(Number(product?.totalStock));
 
+  // add to cart handler
+  async function handleCart() {
+    try {
+      const res = await triggerAuthenticity().unwrap();
+
+      if (res.statusCode === 200) {
+        try {
+          const res = await addToCart({
+            userId: userInfo._id,
+            productId: id,
+            quantity: 1,
+          }).unwrap();
+          if (res.statusCode === 200) {
+            toast.fire({
+              title: "Product is added to the Cart",
+              icon: "success",
+              timer: 3000,
+            });
+          }
+        } catch (error) {
+          if (error?.data?.message === "Product is out of stock") {
+            toast.fire({
+              title: `${error?.data?.message}`,
+              icon: "warning",
+              timer: 4000,
+            });
+          } else {
+            toast.fire({
+              title: "Failed: Add product to cart",
+              icon: "warning",
+              timer: 4000,
+            });
+          }
+        }
+      }
+    } catch (error) {
+      navigate("/auth/login");
+    }
+  }
+
   return (
-    <div className="flex flex-col lg:flex-row lg:items-center my-2 w-[90%] mx-auto gap-5 md:gap-10 font-secondaryFont bg-white border border-accent-color">
+    <div className="flex flex-col md:flex-row md:items-center my-2 w-[90%] mx-auto gap-5 font-secondaryFont md:bg-white md:border border-accent-color">
       {/* image section */}
-      <section className="shadow-lg">
+      <section className="md:shadow-lg">
         <img
           src={product?.imageURL}
           alt={product?.title}
-          className="bg-accent-color/30 h-full w-full"
+          className="bg-accent-color/30 h-auto w-96"
         />
       </section>
+
       {/* text section */}
-      <section className="text-left space-y-3 px-5 lg:px-0 mb-4 lg:mb-0">
+      <section className="text-left space-y-3 px-5 md:px-0 mb-4 md:mb-0">
         {/* title  */}
         <p className="text-2xl font-extrabold">{product?.title}</p>
         {/* price  */}
@@ -75,7 +130,7 @@ const ProductDetails = () => {
           >
             <GiSelfLove />
           </button>
-          <Button>Add to Cart</Button>
+          <Button btnHandler={handleCart}>Add to Cart</Button>
         </div>
       </section>
     </div>

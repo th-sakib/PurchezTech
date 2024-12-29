@@ -71,6 +71,7 @@ const AllProducts = () => {
     }
   }, [initialPriceRange, lastInitialPriceRange]);
 
+  // handlers
   const handleMinPriceChange = (value) => {
     setMinPrice(Math.min(value, maxPrice - 1)); // Ensure minPrice is less than maxPrice
   };
@@ -187,7 +188,10 @@ const AllProducts = () => {
               <select
                 className="h-8 rounded-sm bg-transparent border border-additional-color cursor-pointer capitalize"
                 name="sortBy"
-                onChange={(e) => setSortOption(e.target.value)}
+                onChange={(e) => {
+                  setPage(1);
+                  setSortOption(e.target.value);
+                }}
                 id="sortBy"
               >
                 <option className="cursor-pointer">default</option>
@@ -255,42 +259,46 @@ const AllProducts = () => {
           </div>
 
           {/* pagination div */}
-          <div className="w-full flex justify-center items-center mb-3">
-            {/* pagination */}
-            <section className="join rounded-sm flex justify-center items-center">
-              {/* prev button  */}
-              <button
-                className={`px-2 font-bold  border border-accent-color hover:bg-[#6daef405]/50 shadow-md w-full h-full flex justify-center items-center py-1`}
-                onClick={() => handlePrev()}
-              >
-                <HiArrowSmLeft />
-              </button>
-              {productInfo?.data?.totalProducts > 12 &&
-                Array.from(
-                  { length: productInfo?.data?.totalPages },
-                  (_, idx) => idx + 1
-                ).map((pageNumber) => (
-                  <button
-                    key={pageNumber}
-                    className={`px-2 font-bold rounded-sm  border border-accent-color shadow-md ${
-                      page === pageNumber
-                        ? "bg-accent-color text-white"
-                        : "bg-white hover:bg-[#6daef405]/50"
-                    }`}
-                    onClick={() => handlePageChange(pageNumber)}
-                  >
-                    {pageNumber}
-                  </button>
-                ))}
-              {/* next button  */}
-              <button
-                className={`px-2 font-bold  border border-accent-color hover:bg-[#6daef405]/50 shadow-md w-full h-full flex justify-center items-center py-1`}
-                onClick={() => handleNext()}
-              >
-                <HiArrowSmRight />
-              </button>
-            </section>
-          </div>
+          {productInfo?.data?.totalProducts > 12 ? (
+            <div className="w-full flex justify-center items-center mb-3">
+              {/* pagination */}
+              <section className="join rounded-sm flex justify-center items-center">
+                {/* prev button  */}
+                <button
+                  className={`px-2 font-bold  border border-accent-color hover:bg-[#6daef405]/50 shadow-md w-full h-full flex justify-center items-center py-1`}
+                  onClick={() => handlePrev()}
+                >
+                  <HiArrowSmLeft />
+                </button>
+                {productInfo?.data?.totalProducts > 12 &&
+                  Array.from(
+                    { length: productInfo?.data?.totalPages },
+                    (_, idx) => idx + 1
+                  ).map((pageNumber) => (
+                    <button
+                      key={pageNumber}
+                      className={`px-2 font-bold rounded-sm  border border-accent-color shadow-md ${
+                        page === pageNumber
+                          ? "bg-accent-color text-white"
+                          : "bg-white hover:bg-[#6daef405]/50"
+                      }`}
+                      onClick={() => handlePageChange(pageNumber)}
+                    >
+                      {pageNumber}
+                    </button>
+                  ))}
+                {/* next button  */}
+                <button
+                  className={`px-2 font-bold  border border-accent-color hover:bg-[#6daef405]/50 shadow-md w-full h-full flex justify-center items-center py-1`}
+                  onClick={() => handleNext()}
+                >
+                  <HiArrowSmRight />
+                </button>
+              </section>
+            </div>
+          ) : (
+            ""
+          )}
         </section>
       </div>
     </>

@@ -1,11 +1,8 @@
 import errorRobo from "../assets/images/error-page.png";
 
-const NoProduct = () => {
+const NoProduct = ({ textContent }) => {
   return (
     <div className="flex flex-col justify-center items-center font-mono text-black selection:bg-accent-color/30">
-      {" "}
-      {/* TODO: text-color */}
-      {/* image */}
       <div className="">
         <img
           className="h-40"
@@ -16,7 +13,15 @@ const NoProduct = () => {
       {/* texts  */}
       <div className="leading-10">
         <h1 className="text-4xl uppercase font-josefin_sans font-bold">
-          <span className="text-red-500">No</span> Product found
+          {textContent ? (
+            <>
+              <span className="text-red-500">No</span> {textContent}
+            </>
+          ) : (
+            <>
+              <span className="text-red-500">No</span> Product found
+            </>
+          )}
         </h1>
       </div>
     </div>

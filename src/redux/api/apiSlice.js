@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 const USER_URL = "api/v1/user";
 const ADMIN_URL = "api/v1/admin";
 const GLOBAL_URL = "api/v1";
+const SHOP_URL = "api/v1/shop";
 
 // default base query
 const baseQuery = fetchBaseQuery({
@@ -21,7 +22,6 @@ extraOptions: Any additional options you might want to pass to modify the reques
 */
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  // console.log(result);
 
   result?.error && console.log(result?.error?.data?.message);
 
@@ -81,7 +81,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReAuth,
-  tagTypes: ["User", "Product"], // For cache management
+  tagTypes: ["User", "Product", "Cart"], // For cache management
   endpoints: (builder) => ({
     // refresh access token - POST
     refreshAccessToken: builder.mutation({
@@ -175,23 +175,6 @@ export const apiSlice = createApi({
         },
       }),
       invalidatesTags: ["Product"],
-
-      // optimistic update functionality
-      // async onQueryStarted(productData, { dispatch, queryFulfilled }) {
-      //   const patchResult = dispatch(
-      //     apiSlice.util.updateQueryData("getAllProduct", undefined, (draft) => {
-      //       console.log("Current draft:", JSON.stringify(draft, null, 2));
-      //       draft.data.unshift(productData);
-      //     })
-      //   );
-
-      //   try {
-      //     await queryFulfilled;
-      //   } catch (error) {
-      //     console.log(error);
-      //     patchResult.undo();
-      //   }
-      // },
     }),
 
     // to get all product list - GET
@@ -267,6 +250,91 @@ export const apiSlice = createApi({
 
       invalidatesTags: ["Product"],
     }),
+
+    // cart related endpoints
+    addToCart: builder.mutation({
+      query: ({ productId, userId, quantity }) => ({
+        url: `${SHOP_URL}/add-to-cart`,
+        method: "POST",
+        body: { productId, userId, quantity },
+      }),
+
+      invalidatesTags: ["Cart"],
+    }),
+
+    //fetch cart
+    fetchCart: builder.query({
+      query: ({ userId }) => `${SHOP_URL}/get-cart/${userId}`,
+
+      providesTags: ["Cart"],
+    }),
+
+    // delete cart item
+    deleteCartItem: builder.mutation({
+      query: ({ productId, userId }) => ({
+        url: `${SHOP_URL}/delete-cart/${productId}/${userId}`,
+        method: "DELETE",
+      }),
+
+      invalidatesTags: ["Cart"],
+      async onQueryStarted(
+        { productId, userId },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData("fetchCart", { userId }, (draft) => {
+            const productIndex = draft.data.items.findIndex(
+              (item) => item.productId === productId
+            );
+            if (productIndex >= 0) {
+              draft.data.items.splice(productIndex, 1);
+            }
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          // Undo changes in case of error
+          console.error("Error during mutation:", error); // Log the error
+          patchResult.undo();
+        }
+      },
+    }),
+
+    // update cart quantity
+    updateCartQuantity: builder.mutation({
+      query: ({ productId, userId, quantity }) => ({
+        url: `${SHOP_URL}/update-cart`,
+        method: "PATCH",
+        body: { productId, userId, quantity },
+      }),
+
+      invalidatesTags: ["Cart"],
+      async onQueryStarted(
+        { productId, quantity, userId },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData("fetchCart", { userId }, (draft) => {
+            const productIndex = draft.data.items.findIndex(
+              (item) => item.productId === productId
+            );
+            if (productIndex >= 0) {
+              draft.data.items[productIndex].quantity = quantity;
+            }
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          // Undo changes in case of error
+          console.error("Error during mutation:", error); // Log the error
+          patchResult.undo();
+        }
+      },
+    }),
   }),
 });
 
@@ -288,4 +356,10 @@ export const {
   useDeleteProductMutation,
   useUpdateProductMutation,
   useDeleteUploadedProductMutation,
+
+  useAddToCartMutation,
+  useFetchCartQuery,
+  useLazyFetchCartQuery,
+  useDeleteCartItemMutation,
+  useUpdateCartQuantityMutation,
 } = apiSlice;

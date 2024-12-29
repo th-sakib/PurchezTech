@@ -1,15 +1,5 @@
 export const techProductWithBrands = {
   laptops: ["dell", "hp", "apple", "lenovo", "asus", "acer", "msi", "razer"],
-  desktops: [
-    "dell",
-    "hp",
-    "lenovo",
-    "apple",
-    "asus",
-    "acer",
-    "cyberpowerpc",
-    "ibuypower",
-  ],
   smartphones: [
     "apple",
     "samsung",
@@ -75,7 +65,7 @@ export const techProductWithBrands = {
     "nest",
     "tp-link",
   ],
-  "gaming consoles": ["sony", "microsoft", "nintendo", "steam", "XBox"],
+  "gaming consoles": ["sony", "microsoft", "nintendo", "steam", "xbox"],
   "audio equipment": [
     "bose",
     "sony",

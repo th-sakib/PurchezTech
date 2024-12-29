@@ -14,6 +14,7 @@ import AdminLayout from "../Layouts/AdminLayout";
 import Profile from "../Pages/Shared/Profile/Profile";
 import Products from "../Pages/Admin/Products/Products";
 import ProductDetails from "../Components/ProductDetails";
+import Cart from "../Pages/Cart/Cart";
 
 export const router = createBrowserRouter([
   {
@@ -45,7 +46,7 @@ export const router = createBrowserRouter([
         path: "/cart",
         element: (
           <ProtectedRoute>
-            <h1>cart</h1>
+            <Cart />
           </ProtectedRoute>
         ),
       },

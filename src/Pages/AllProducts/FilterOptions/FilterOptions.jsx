@@ -42,7 +42,7 @@ const FilterOptions = ({
 
         {/* text range price section  */}
         <div className="capitalize flex justify-center items-center mb-3">
-          <div className="w-full h-full">
+          <div className="w-full h-full mr-3">
             <input
               className="w-full h-full ml-1 text-center text-sm text-gray-700 py-1.5 border border-accent-color"
               type="number"
@@ -54,8 +54,8 @@ const FilterOptions = ({
               onChange={(e) => setMinPrice(Number(e.target.value))}
             />
           </div>
-          <span className="mx-2 text-2xl">-</span>
-          <div className="w-full h-full mr-2">
+          <span className="text-2xl">-</span>
+          <div className="w-full h-full mx-2">
             <input
               className="w-full h-full ml-1 text-center text-sm text-gray-700 py-1.5 border border-accent-color"
               type="number"

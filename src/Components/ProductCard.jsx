@@ -9,7 +9,11 @@ import LoaderSpinner from "./LoaderSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserRole } from "../redux/features/user/userSlice";
 import { setProduct } from "../redux/features/common/productSlice";
-import { useDeleteProductMutation } from "../redux/api/apiSlice";
+import {
+  useAddToCartMutation,
+  useDeleteProductMutation,
+  useLazyGetAuthenticityQuery,
+} from "../redux/api/apiSlice";
 import { toast } from "../lib/sweetAlert/toast";
 import Swal from "sweetalert2";
 import { replace, useNavigate } from "react-router-dom";
@@ -24,8 +28,13 @@ const ProductCard = ({
 
   const dispatch = useDispatch();
   const userRole = useSelector(selectUserRole);
+  const userData = useSelector((state) => state.user.userInfo);
+  const userId = userData?._id;
 
-  const [deleteProduct, { isLoading: deleting }] = useDeleteProductMutation();
+  // api endPoints from apiSlice
+  const [deleteProduct] = useDeleteProductMutation();
+  const [triggerAuthenticity] = useLazyGetAuthenticityQuery();
+  const [addToCart, { isLoading: cartIsLoading }] = useAddToCartMutation();
 
   const adminIcons = [
     { id: 1, icon: <PiEye />, handler: handlePreview },
@@ -80,10 +89,53 @@ const ProductCard = ({
   }
 
   // ====Wishlist handler====
-  function handleWishlist() {}
+  async function handleWishlist() {
+    try {
+      const res = await triggerAuthenticity().unwrap();
+    } catch (error) {
+      navigate("/auth/login");
+    }
+  }
 
   // ====Cart handler====
-  function handleCart() {}
+  async function handleCart() {
+    try {
+      const res = await triggerAuthenticity().unwrap();
+
+      if (res.statusCode === 200) {
+        try {
+          const res = await addToCart({
+            userId,
+            productId: product._id,
+            quantity: 1,
+          }).unwrap();
+          if (res.statusCode === 200) {
+            toast.fire({
+              title: "Product is added to the Cart",
+              icon: "success",
+              timer: 3000,
+            });
+          }
+        } catch (error) {
+          if (error?.data?.message === "Product is out of stock") {
+            toast.fire({
+              title: `${error?.data?.message}`,
+              icon: "warning",
+              timer: 4000,
+            });
+          } else {
+            toast.fire({
+              title: "Failed: Add product to cart",
+              icon: "warning",
+              timer: 4000,
+            });
+          }
+        }
+      }
+    } catch (error) {
+      navigate("/auth/login");
+    }
+  }
 
   const {
     title,
@@ -100,7 +152,7 @@ const ProductCard = ({
     <>
       {!isLoading ? (
         //======== The CARD  ==========
-        <div className="card bg-base-100 shadow-lg hover:shadow-2xl rounded-none font-josefin_sans border rounded-b-lg overflow-hidden group/parent">
+        <div className="card bg-base-100 shadow-lg hover:shadow-2xl rounded-none font-josefin_sans border rounded-b-lg overflow-hidden group/parent relative">
           <div className="absolute -top-2 -right-2 cursor-pointer">
             {/* the visible icon  */}
             <div className="bg-accent-color w-12 h-12 text-white rounded-bl-full flex justify-center items-center absolute top-0 right-0 z-20 isolate group/inner">
