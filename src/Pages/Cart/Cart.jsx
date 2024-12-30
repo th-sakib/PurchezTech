@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
 import {
   useDeleteCartItemMutation,
   useFetchCartQuery,
-  useGetAllProductQuery,
   useUpdateCartQuantityMutation,
 } from "../../redux/api/apiSlice";
 import { useSelector } from "react-redux";

@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { clearUser } from "../features/user/userSlice";
 import Swal from "sweetalert2";
+import { useId } from "react";
 
 const USER_URL = "api/v1/user";
 const ADMIN_URL = "api/v1/admin";
@@ -81,7 +82,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReAuth,
-  tagTypes: ["User", "Product", "Cart"], // For cache management
+  tagTypes: ["User", "Product", "Cart", "Wishlist"], // For cache management
   endpoints: (builder) => ({
     // refresh access token - POST
     refreshAccessToken: builder.mutation({
@@ -251,7 +252,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["Product"],
     }),
 
-    // cart related endpoints
+    // cart related endpoints - POST
     addToCart: builder.mutation({
       query: ({ productId, userId, quantity }) => ({
         url: `${SHOP_URL}/add-to-cart`,
@@ -262,14 +263,14 @@ export const apiSlice = createApi({
       invalidatesTags: ["Cart"],
     }),
 
-    //fetch cart
+    //fetch cart - GET
     fetchCart: builder.query({
       query: ({ userId }) => `${SHOP_URL}/get-cart/${userId}`,
 
       providesTags: ["Cart"],
     }),
 
-    // delete cart item
+    // delete cart item - DELETE
     deleteCartItem: builder.mutation({
       query: ({ productId, userId }) => ({
         url: `${SHOP_URL}/delete-cart/${productId}/${userId}`,
@@ -302,7 +303,7 @@ export const apiSlice = createApi({
       },
     }),
 
-    // update cart quantity
+    // update cart quantity - PATCH
     updateCartQuantity: builder.mutation({
       query: ({ productId, userId, quantity }) => ({
         url: `${SHOP_URL}/update-cart`,
@@ -324,6 +325,62 @@ export const apiSlice = createApi({
               draft.data.items[productIndex].quantity = quantity;
             }
           })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          // Undo changes in case of error
+          console.error("Error during mutation:", error); // Log the error
+          patchResult.undo();
+        }
+      },
+    }),
+
+    // add to wishlist - POST
+    addToWishlist: builder.mutation({
+      query: ({ productId, userId }) => ({
+        url: `${SHOP_URL}/add-to-wishlist`,
+        method: "POST",
+        body: { productId, userId },
+      }),
+
+      invalidatesTags: ["Wishlist"],
+    }),
+
+    //fetch wishlist - GET
+    fetchWishlist: builder.query({
+      query: ({ userId }) => `${SHOP_URL}/fetch-wishlist/${userId}`,
+
+      providesTags: ["Wishlist"],
+    }),
+
+    // delete wishlist item - DELETE
+    deleteWishlistItem: builder.mutation({
+      query: ({ productId, userId }) => ({
+        url: `${SHOP_URL}/delete-wishlist`,
+        method: "DELETE",
+        body: { productId, userId },
+      }),
+
+      invalidatesTags: ["Wishlist"],
+      async onQueryStarted(
+        { productId, userId },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData(
+            "fetchWishlist",
+            { userId },
+            (draft) => {
+              const productIndex = draft.data.list.findIndex(
+                (item) => item.productId === productId
+              );
+              if (productIndex >= 0) {
+                draft?.data?.items?.splice(productIndex, 1);
+              }
+            }
+          )
         );
 
         try {
@@ -362,4 +419,8 @@ export const {
   useLazyFetchCartQuery,
   useDeleteCartItemMutation,
   useUpdateCartQuantityMutation,
+
+  useAddToWishlistMutation,
+  useFetchWishlistQuery,
+  useDeleteWishlistItemMutation,
 } = apiSlice;

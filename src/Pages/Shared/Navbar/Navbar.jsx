@@ -4,12 +4,15 @@ import { IoSearchSharp } from "react-icons/io5";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { RxCross2 } from "react-icons/rx";
 import Button from "../../../Components/Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { selectIsAuthenticated } from "../../../redux/features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "./Avatar";
 import { setSearchTerm } from "../../../redux/features/user/searchSlice.js";
-import { useFetchCartQuery } from "../../../redux/api/apiSlice.js";
+import {
+  useFetchCartQuery,
+  useFetchWishlistQuery,
+} from "../../../redux/api/apiSlice.js";
 import { HiHeart } from "react-icons/hi2";
 
 const Navbar = () => {
@@ -28,6 +31,12 @@ const Navbar = () => {
     isLoading: cartLoading,
     isFetching: cartFetching,
   } = useFetchCartQuery({ userId: userInfo?._id });
+
+  const {
+    data: wishlistInfo,
+    isLoading: wishlistLoading,
+    isFetching: wishlistFetching,
+  } = useFetchWishlistQuery({ userId: userInfo?._id });
 
   const handleSearch = () => {
     dispatch(setSearchTerm(localSearch));
@@ -167,7 +176,7 @@ const Navbar = () => {
           >
             <HiHeart className={`text-xl cursor-pointer`} />
             <span className="absolute -top-2 -right-2 text-xs bg-black text-white w-4 h-4 rounded-full font-extrabold group-hover:bg-on-hover group-hover:text-white text-center ">
-              0
+              {wishlistInfo?.data?.list?.length || "0"}
             </span>
           </Link>
 

@@ -16,6 +16,7 @@ import Products from "../Pages/Admin/Products/Products";
 import ProductDetails from "../Components/ProductDetails";
 import Cart from "../Pages/Cart/Cart";
 import NavOptions from "../Pages/Shared/Navbar/SmallDNav/NavOptions";
+import Wishlist from "../Pages/Wishlist/Wishlist";
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Cart />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/wishlist",
+        element: (
+          <ProtectedRoute>
+            <Wishlist />
           </ProtectedRoute>
         ),
       },

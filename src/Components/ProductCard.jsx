@@ -11,6 +11,7 @@ import { selectUserRole } from "../redux/features/user/userSlice";
 import { setProduct } from "../redux/features/common/productSlice";
 import {
   useAddToCartMutation,
+  useAddToWishlistMutation,
   useDeleteProductMutation,
   useLazyGetAuthenticityQuery,
 } from "../redux/api/apiSlice";
@@ -35,6 +36,8 @@ const ProductCard = ({
   const [deleteProduct] = useDeleteProductMutation();
   const [triggerAuthenticity] = useLazyGetAuthenticityQuery();
   const [addToCart, { isLoading: cartIsLoading }] = useAddToCartMutation();
+  const [addToWishlist, { isLoading: wishlistIsLoading }] =
+    useAddToWishlistMutation();
 
   const adminIcons = [
     { id: 1, icon: <PiEye />, handler: handlePreview },
@@ -92,6 +95,37 @@ const ProductCard = ({
   async function handleWishlist() {
     try {
       const res = await triggerAuthenticity().unwrap();
+
+      if (res.statusCode === 200) {
+        try {
+          const res = await addToWishlist({
+            userId,
+            productId: product._id,
+          }).unwrap();
+          if (res.statusCode === 200) {
+            toast.fire({
+              title: "Product is added to Wishlist",
+              icon: "success",
+              timer: 3000,
+            });
+          }
+        } catch (error) {
+          if (error?.data?.message === "Product already exist in wishlist") {
+            toast.fire({
+              title: `${error?.data?.message}`,
+              icon: "warning",
+              timer: 4000,
+            });
+          } else {
+            navigate("/auth/login");
+            toast.fire({
+              title: "Failed: Add product to cart",
+              icon: "warning",
+              timer: 4000,
+            });
+          }
+        }
+      }
     } catch (error) {
       navigate("/auth/login");
     }
