@@ -124,6 +124,7 @@ const ProductCard = ({
               timer: 4000,
             });
           } else {
+            navigate("/auth/login");
             toast.fire({
               title: "Failed: Add product to cart",
               icon: "warning",

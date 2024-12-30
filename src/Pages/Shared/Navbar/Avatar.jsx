@@ -19,15 +19,14 @@ const Avatar = () => {
     try {
       await logoutUser().unwrap();
       dispatch(clearUser());
+
+      toast.fire({
+        icon: "warning",
+        title: "You are logged out!",
+      });
     } catch (err) {
-      console.log(err);
-      console.log(err?.data?.stack);
       console.log(err?.data?.message);
     }
-    toast.fire({
-      icon: "warning",
-      title: "You are logged out!",
-    });
   };
 
   return (
@@ -55,20 +54,20 @@ const Avatar = () => {
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 drawer-end">
             {/* Sidebar content here */}
             <li>
-              <Link to="/your-profile">
+              <Link to="/my-profile">
                 {location?.pathname.includes("/admin") ? (
-                  <FaUserGear className="text-base" />
+                  <FaUserGear />
                 ) : (
-                  <FaUser className="text-base" />
+                  <FaUser />
                 )}
-                Your Profile
+                My Profile
               </Link>
             </li>
 
             {/* logout button  */}
             <li>
               <button onClick={logoutHandler}>
-                <FaSignOutAlt className="text-base" />
+                <FaSignOutAlt />
                 {isLoading ? "Logging out" : "Logout"}
               </button>
             </li>

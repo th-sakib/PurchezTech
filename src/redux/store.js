@@ -3,6 +3,7 @@ import { apiSlice } from "./api/apiSlice";
 import userReducer from "./features/user/userSlice";
 import productReducer from "./features/common/productSlice";
 import searchReducer from "./features/user/searchSlice";
+import filterCategoryReducer from "./features/user/filterCategorySlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     user: userReducer,
     product: productReducer,
     search: searchReducer,
+    category: filterCategoryReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

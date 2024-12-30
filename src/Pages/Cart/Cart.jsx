@@ -12,6 +12,7 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import NoProduct from "../../Components/NoProduct";
 import { useNavigate } from "react-router-dom";
 import { toast } from "../../lib/sweetAlert/toast";
+import CartLoading from "./CartLoading";
 
 const Cart = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -137,7 +138,10 @@ const Cart = () => {
       <div className="flex flex-col justify-center items-center">
         <div className="h-[80vh] flex flex-col justify-center items-center">
           <NoProduct textContent={"Cart items is available"} />
-          <Button className="mt-3" btnHandler={() => navigate("/all-products")}>
+          <Button
+            className="mt-3 hidden md:block"
+            btnHandler={() => navigate("/all-products")}
+          >
             Back to shopping
           </Button>
         </div>
@@ -146,7 +150,7 @@ const Cart = () => {
   }
 
   return (
-    <div className="flex gap-5 justify-center my-4 capitalize">
+    <div className="flex flex-col md:flex-row gap-5 justify-center my-4 capitalize px-3 md:px-0">
       <section className="space-y-2">
         {/* header text section  */}
         <div className="flex justify-between items-center px-2 h-12">
@@ -158,67 +162,75 @@ const Cart = () => {
         </div>
 
         {/* product view section */}
-        {cartInfo?.data?.items?.map((cartItem) => (
-          <div
-            key={cartItem?.productId}
-            className="flex bg-white shadow-lg items-center justify-between md:w-[40vw] gap-5 rounded-sm pr-3 relative"
-          >
-            {/* image  */}
-            <div className="bg-accent-color/10">
-              <img
-                src={cartItem?.image}
-                alt={cartItem?.title}
-                className="w-40 h-auto"
-              />
-            </div>
-            {/* text-part  */}
-            <div className="w-full">
-              <p className="font-bold">{cartItem?.title}</p>
-              <p className="font-bold">price: ${cartItem?.salePrice}</p>
-              <div className="flex items-center">
-                <p>quantity :</p>
-                <input
-                  type="number"
-                  name="quantity"
-                  id={`${cartItem?.productId}`}
-                  min="1"
-                  max={cartItem?.maxStock}
-                  className="border border-accent-color w-6 h-7 ml-2 text-center"
-                  value={cartItem?.quantity || 1}
-                  onFocus={(e) => e.target.select()}
-                  onChange={(e) =>
-                    handleQuantityChange(cartItem, e.target.value)
-                  }
+        {!cartFetching && !cartLoading ? (
+          cartInfo?.data?.items?.map((cartItem) => (
+            <div
+              key={cartItem?.productId}
+              className="flex bg-white shadow-lg items-center justify-between md:w-[40vw] gap-5 rounded-sm pr-3 relative"
+            >
+              {/* image  */}
+              <div className="bg-accent-color/10">
+                <img
+                  src={cartItem?.image}
+                  alt={cartItem?.title}
+                  className="w-40 h-auto"
                 />
-                <div className="">
-                  <FaAngleUp
-                    className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
-                    onClick={() => handlePlus(cartItem)}
+              </div>
+              {/* text-part  */}
+              <div className="w-full">
+                <p className="font-bold">{cartItem?.title}</p>
+                <p className="font-bold">price: ${cartItem?.salePrice}</p>
+                <div className="flex items-center">
+                  <p>quantity :</p>
+                  <input
+                    type="number"
+                    name="quantity"
+                    id={`${cartItem?.productId}`}
+                    min="1"
+                    max={cartItem?.maxStock}
+                    className="border border-accent-color w-6 h-7 ml-2 text-center"
+                    value={cartItem?.quantity || 1}
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) =>
+                      handleQuantityChange(cartItem, e.target.value)
+                    }
                   />
-                  <FaAngleDown
-                    className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
-                    onClick={() => handleMinus(cartItem)}
-                  />
+                  <div className="">
+                    <FaAngleUp
+                      className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
+                      onClick={() => handlePlus(cartItem)}
+                    />
+                    <FaAngleDown
+                      className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
+                      onClick={() => handleMinus(cartItem)}
+                    />
+                  </div>
                 </div>
               </div>
+              {/* delete button  */}
+              <div className="">
+                <button
+                  type="button"
+                  className="absolute top-2 right-2"
+                  onClick={() => handleDelete(cartItem)}
+                >
+                  <TiDelete className="text-red-600 text-xl" />
+                </button>
+                <p className="line-through text-accent-color/40 absolute bottom-2 right-2">
+                  {cartItem?.price !== cartItem?.salePrice
+                    ? "$" + cartItem?.price
+                    : ""}
+                </p>
+              </div>
             </div>
-            {/* delete button  */}
-            <div className="">
-              <button
-                type="button"
-                className="absolute top-2 right-2"
-                onClick={() => handleDelete(cartItem)}
-              >
-                <TiDelete className="text-red-600 text-xl" />
-              </button>
-              <p className="line-through text-accent-color/40 absolute bottom-2 right-2">
-                {cartItem?.price !== cartItem?.salePrice
-                  ? "$" + cartItem?.price
-                  : ""}
-              </p>
-            </div>
+          ))
+        ) : (
+          <div>
+            <CartLoading />
+            <CartLoading />
+            <CartLoading />
           </div>
-        ))}
+        )}
       </section>
       {/* checkout section  */}
       <section className="mt-14">

@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosArrowDown } from "react-icons/io";
 import { techProductWithBrands } from "../../../constant";
+import { useDispatch } from "react-redux";
+import { setCategory } from "../../../redux/features/user/filterCategorySlice";
 
 const FilterOptions = ({
-  setSelectedCategory,
   setBrand,
   brand: brandState,
   initialPriceRange,
@@ -19,6 +20,8 @@ const FilterOptions = ({
   const [isCategoryOpen, setIsCategoryOpen] = useState(false); // for the arrow toggle
   const [selectedBrands, setSelectedBrands] = useState([]); // for selecting all brands in one category
 
+  const dispatch = useDispatch();
+
   const categories = Object.keys(techProductWithBrands);
 
   const toggleCategory = () => {
@@ -28,7 +31,7 @@ const FilterOptions = ({
   const handleCategory = (currentCategory) => {
     const brands = techProductWithBrands[currentCategory] || [];
     setSelectedBrands(brands);
-    setSelectedCategory(currentCategory);
+    dispatch(setCategory(currentCategory));
     setBrand("");
     setIsCategoryOpen(false);
     setPage(1);
@@ -73,7 +76,7 @@ const FilterOptions = ({
         <div className="h-0.5 bg-[#ddd] rounded w-full relative">
           {/* the slider body range */}
           <div
-            className="absolute h-0.5 left-1/4 right-1/4 rounded bg-additional-color/80"
+            className="absolute h-0.5 left-0 right-0 rounded bg-additional-color/80"
             style={{
               left: `${
                 ((minPrice - initialPriceRange?.initialMinPrice) /
@@ -122,7 +125,7 @@ const FilterOptions = ({
           onClick={toggleCategory}
         >
           <GiHamburgerMenu className="text-xl" />
-          <h2 className="text-lg font-bold ml-2 flex-1 w-28 transition-all duration-300">
+          <h2 className="text-base xl:text-lg font-bold mx-2 flex-1 w-28 transition-all duration-300">
             Category
           </h2>
           {!isCategoryOpen ? (

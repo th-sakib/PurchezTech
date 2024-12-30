@@ -41,29 +41,35 @@ ul li {
 }
 
 .no-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Edge */
+  display: none;
+  /* Chrome, Safari, and Edge */
 }
 
 /* For all browsers */
 input[type="number"] {
-  appearance: none; /* Standard property */
+  appearance: none;
+  /* Standard property */
 }
 
 /* For WebKit browsers */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none; /* WebKit-specific */
+  -webkit-appearance: none;
+  /* WebKit-specific */
   margin: 0;
 }
 
 /* For Firefox */
 input[type="number"] {
-  -moz-appearance: textfield; /* Firefox-specific */
+  -moz-appearance: textfield;
+  /* Firefox-specific */
 }
 
 /* styling the range thumb */
@@ -78,6 +84,7 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
   box-shadow: 0 0.125rem 0.5625rem -0.125rem rgba(0, 0, 0, 0.25);
 }
+
 input[type="range"]::-moz-range-thumb {
   height: 0.75rem;
   width: 0.75rem;
@@ -87,4 +94,12 @@ input[type="range"]::-moz-range-thumb {
   -moz-appearance: none;
   cursor: pointer;
   box-shadow: 0 0.125rem 0.5625rem -0.125rem rgba(0, 0, 0, 0.25);
+}
+
+.drawer-toggle:checked ~ .drawer-content {
+  --tw-translate-x: auto !important;
+}
+
+.drawer-side {
+  z-index: 99999 !important;
 }

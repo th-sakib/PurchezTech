@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Avatar from "./Avatar";
 import { setSearchTerm } from "../../../redux/features/user/searchSlice.js";
 import { useFetchCartQuery } from "../../../redux/api/apiSlice.js";
+import { HiHeart } from "react-icons/hi2";
 
 const Navbar = () => {
   const [localSearch, setLocalSearch] = useState("");
@@ -69,16 +70,16 @@ const Navbar = () => {
           )}
         </NavLink>
       </li>
-      <li className="hover:text-[#FFC107]">
+      {/* <li className="hover:text-[#FFC107]">
         <NavLink to="/about-us">
           {({ isActive }) => (
             <div className="flex justify-center items-center space-x-1 px-1">
-              {/* {isActive ? <BiSolidInfoSquare /> : <BiInfoSquare />}  */}
+              {/* {isActive ? <BiSolidInfoSquare /> : <BiInfoSquare />}  }
               <p>About</p>
             </div>
           )}
         </NavLink>
-      </li>
+      </li> */}
     </>
   );
 
@@ -157,6 +158,16 @@ const Navbar = () => {
             <HiOutlineShoppingCart className={`text-xl cursor-pointer`} />
             <span className="absolute -top-2 -right-2 text-xs bg-black text-white w-4 h-4 rounded-full font-extrabold group-hover:bg-on-hover group-hover:text-white text-center ">
               {cartInfo?.data?.items?.length || "0"}
+            </span>
+          </Link>
+          {/* wishlist icon */}
+          <Link
+            to="/wishlist"
+            className="relative group hover:text-on-hover mx-3"
+          >
+            <HiHeart className={`text-xl cursor-pointer`} />
+            <span className="absolute -top-2 -right-2 text-xs bg-black text-white w-4 h-4 rounded-full font-extrabold group-hover:bg-on-hover group-hover:text-white text-center ">
+              0
             </span>
           </Link>
 

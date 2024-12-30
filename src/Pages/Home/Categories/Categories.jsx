@@ -1,22 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useRef } from "react";
 import { cn } from "../../../lib/cn";
+import { useDispatch } from "react-redux";
 
 // swiper import
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
+import { useNavigate } from "react-router-dom";
+import { setCategory } from "../../../redux/features/user/filterCategorySlice";
+import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 
 // category list
 const categories = [
-  {
-    title: "AirPods",
-    imageURL: "https://i.ibb.co.com/d2k30Tk/airpods-icon.png",
-  },
-  {
-    title: "Mobile Accessories",
-    imageURL: "https://i.ibb.co.com/q7KRDV2/charger.png",
-  },
   {
     title: "Drones",
     imageURL: "https://i.ibb.co.com/6PkxWtH/drone.png",
@@ -24,10 +19,6 @@ const categories = [
   {
     title: "Gaming Consoles",
     imageURL: "https://i.ibb.co.com/s6jjQh7/game-console.png",
-  },
-  {
-    title: "Headphones",
-    imageURL: "https://i.ibb.co.com/nMwFWPT/headphones.png",
   },
   {
     title: "Smartphones",
@@ -38,16 +29,20 @@ const categories = [
     imageURL: "https://i.ibb.co.com/x7NTqm9/laptop.png",
   },
   {
-    title: "PC Components",
-    imageURL: "https://i.ibb.co.com/Lz31tR4/processor.png",
-  },
-  {
-    title: "Camera",
+    title: "camera & photography",
     imageURL: "https://i.ibb.co.com/vDR4qJs/camera.png",
   },
   {
-    title: "Smartwatch",
-    imageURL: "https://i.ibb.co.com/FVkCVGf/smartwatch.png",
+    title: "VR System",
+    imageURL: "https://i.ibb.co.com/2vS9PHv/vr.png",
+  },
+  {
+    title: "tablets",
+    imageURL: "https://i.ibb.co.com/84x2wYQ/tablet-8683980.png",
+  },
+  {
+    title: "monitors",
+    imageURL: "https://i.ibb.co.com/8KDP5fS/computer-887108.png",
   },
 ];
 
@@ -71,7 +66,7 @@ const breakPoints = {
     centeredSlides: false,
   },
   750: {
-    slidesPerView: 4,
+    slidesPerView: 3,
     spaceBetween: 0,
     centeredSlides: false,
   },
@@ -98,10 +93,45 @@ const breakPoints = {
 };
 
 const Categories = ({ className }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const swiperRef = useRef(null);
+
+  const handleCategory = (category) => {
+    navigate("/all-products");
+    const categoryTitle = category.title.toLowerCase();
+    dispatch(setCategory(categoryTitle));
+  };
+
   return (
-    <div
-      className={(cn("px-4 lg:px-0 max-w-screen-xl mx-auto my-5"), className)}
-    >
+    <div className={(cn("lg:px-0 my-5 relative"), className)}>
+      {/* swiper buttons  */}
+      <div className="flex items-center justify-between gap-2 my-2">
+        <h1 className="text-xl font-bold border-l-8 border-l-additional-color font-secondaryFont pl-3 bg-gradient-to-r from-additional-color/10 to-background-color">
+          Popular Categories:
+        </h1>
+        {/* left arrow - swiper */}
+        <div className="flex gap-2">
+          <button
+            type="button"
+            className="w-8 h-8 border hover:text-additional-color rounded-full bg-accent-color hover:bg-on-hover flex justify-center items-center text-white text-2xl"
+            onClick={() => swiperRef.current?.slidePrev()}
+          >
+            <FaCaretLeft className="-ml-1" />
+          </button>
+          {/* right arrow - swiper */}
+          <button
+            type="button"
+            className="w-8 h-8 border hover:text-additional-color rounded-full bg-accent-color hover:bg-on-hover flex justify-center items-center text-white text-2xl"
+            onClick={() => swiperRef.current?.slideNext()}
+          >
+            <FaCaretRight className="-mr-1" />
+          </button>
+        </div>
+      </div>
+
+      {/* slider start  */}
       <Swiper
         slidesPerView="1"
         spaceBetween="0"
@@ -109,20 +139,22 @@ const Categories = ({ className }) => {
         breakpoints={breakPoints}
         resistanceRatio={0.5}
         className="mySwiper"
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        speed={500}
       >
         {categories.map((category) => (
-          <SwiperSlide className="!m-0" key={category.title}>
-            <Link
-              // to={category.title} //TODO: change the path
-              className="flex flex-col justify-center items-center border border-gray-500 w-40 h-40"
+          <SwiperSlide className="m-0 ml-2" key={category.title}>
+            <div
+              className="flex flex-col justify-center items-center border border-gray-500 w-40 h-40 gap-2 hover:border-accent-color cursor-pointer transition-all duration-300 group"
+              onClick={() => handleCategory(category)}
             >
               <img
-                className="h-20"
+                className="h-20 w-auto group-hover:scale-110 duration-300 transition-all"
                 src={category.imageURL}
                 alt={category.title}
               />
               <p className="text-center">{category.title}</p>
-            </Link>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

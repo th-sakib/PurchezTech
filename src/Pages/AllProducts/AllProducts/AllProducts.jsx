@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 
 const AllProducts = () => {
-  const [selectedCategory, setSelectedCategory] = useState("default");
+  const selectedCategory = useSelector((state) => state.category.category);
   const [brand, setBrand] = useState("");
   const [sortOption, setSortOption] = useState("");
 
@@ -101,11 +101,10 @@ const AllProducts = () => {
   }
   return (
     <>
-      <div className="font-secondaryFont w-[98%] mx-auto py-4 bg-background-color flex gap-6">
+      <div className="font-secondaryFont w-[98%] mx-auto py-4 bg-background-color flex lg:gap-6">
         {/* filter section  */}
-        <section className="hidden lg:block w-[14%]">
+        <section className="hidden lg:block w-[15%]">
           <FilterOptions
-            setSelectedCategory={setSelectedCategory}
             setBrand={setBrand}
             brand={brand}
             initialPriceRange={initialPriceRange}
@@ -123,7 +122,7 @@ const AllProducts = () => {
         <div className="drawer-content z-50 lg:hidden">
           <label
             htmlFor="my-drawer1"
-            className="drawer-button btn bg-accent-color border-accent-color fixed bottom-3 right-3 hover:bg-on-hover rounded-sm"
+            className="drawer-button btn bg-accent-color border-accent-color fixed bottom-16 md:bottom-3 right-3 hover:bg-on-hover rounded-sm"
           >
             {/* button  */}
             <p className="text-base font-bold text-white">Filter</p>
@@ -148,7 +147,6 @@ const AllProducts = () => {
               <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                 {/* Sidebar content here */}
                 <FilterOptions
-                  setSelectedCategory={setSelectedCategory}
                   setBrand={setBrand}
                   brand={brand}
                   initialPriceRange={initialPriceRange}

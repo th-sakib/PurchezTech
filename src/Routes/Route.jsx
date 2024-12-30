@@ -15,6 +15,7 @@ import Profile from "../Pages/Shared/Profile/Profile";
 import Products from "../Pages/Admin/Products/Products";
 import ProductDetails from "../Components/ProductDetails";
 import Cart from "../Pages/Cart/Cart";
+import NavOptions from "../Pages/Shared/Navbar/SmallDNav/NavOptions";
 
 export const router = createBrowserRouter([
   {
@@ -51,7 +52,15 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/your-profile",
+        path: "/profile-options",
+        element: (
+          <ProtectedRoute>
+            <NavOptions />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/my-profile",
         element: (
           <ProtectedRoute>
             <Profile />
