@@ -60,6 +60,17 @@ const Cart = () => {
     }
   };
 
+  if (cartLoading && cartFetching) {
+    // Show skeleton loader only on first load
+    return (
+      <div className="flex flex-col gap-5 justify-center items-center my-4 capitalize px-3 w-screen mt-20 -translate-x-[15%]">
+        <CartLoading />
+        <CartLoading />
+        <CartLoading />
+      </div>
+    );
+  }
+
   const handlePlus = async (cartItem) => {
     if (cartItem?.maxStock > cartItem?.quantity) {
       try {
@@ -160,75 +171,67 @@ const Cart = () => {
         </div>
 
         {/* product view section */}
-        {!cartFetching && !cartLoading ? (
-          cartInfo?.data?.items?.map((cartItem) => (
-            <div
-              key={cartItem?.productId}
-              className="flex bg-white shadow-lg items-center justify-between md:w-[40vw] gap-5 rounded-sm pr-3 relative"
-            >
-              {/* image  */}
-              <div className="bg-accent-color/10">
-                <img
-                  src={cartItem?.image}
-                  alt={cartItem?.title}
-                  className="w-40 h-auto"
+        {cartInfo?.data?.items?.map((cartItem) => (
+          <div
+            key={cartItem?.productId}
+            className="flex bg-white shadow-lg items-center justify-between md:w-[40vw] gap-5 rounded-sm pr-3 relative"
+          >
+            {/* image  */}
+            <div className="bg-accent-color/10">
+              <img
+                src={cartItem?.image}
+                alt={cartItem?.title}
+                className="w-40 h-auto"
+              />
+            </div>
+            {/* text-part  */}
+            <div className="w-full">
+              <p className="font-bold">{cartItem?.title}</p>
+              <p className="font-bold">price: ${cartItem?.salePrice}</p>
+              <div className="flex items-center">
+                <p>quantity :</p>
+                <input
+                  type="number"
+                  name="quantity"
+                  id={`${cartItem?.productId}`}
+                  min="1"
+                  max={cartItem?.maxStock}
+                  className="border border-accent-color w-6 h-7 ml-2 text-center"
+                  value={cartItem?.quantity || 1}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) =>
+                    handleQuantityChange(cartItem, e.target.value)
+                  }
                 />
-              </div>
-              {/* text-part  */}
-              <div className="w-full">
-                <p className="font-bold">{cartItem?.title}</p>
-                <p className="font-bold">price: ${cartItem?.salePrice}</p>
-                <div className="flex items-center">
-                  <p>quantity :</p>
-                  <input
-                    type="number"
-                    name="quantity"
-                    id={`${cartItem?.productId}`}
-                    min="1"
-                    max={cartItem?.maxStock}
-                    className="border border-accent-color w-6 h-7 ml-2 text-center"
-                    value={cartItem?.quantity || 1}
-                    onFocus={(e) => e.target.select()}
-                    onChange={(e) =>
-                      handleQuantityChange(cartItem, e.target.value)
-                    }
+                <div className="">
+                  <FaAngleUp
+                    className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
+                    onClick={() => handlePlus(cartItem)}
                   />
-                  <div className="">
-                    <FaAngleUp
-                      className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
-                      onClick={() => handlePlus(cartItem)}
-                    />
-                    <FaAngleDown
-                      className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
-                      onClick={() => handleMinus(cartItem)}
-                    />
-                  </div>
+                  <FaAngleDown
+                    className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
+                    onClick={() => handleMinus(cartItem)}
+                  />
                 </div>
               </div>
-              {/* delete button  */}
-              <div className="">
-                <button
-                  type="button"
-                  className="absolute top-2 right-2"
-                  onClick={() => handleDelete(cartItem)}
-                >
-                  <TiDelete className="text-red-600 text-xl" />
-                </button>
-                <p className="line-through text-accent-color/40 absolute bottom-2 right-2">
-                  {cartItem?.price !== cartItem?.salePrice
-                    ? "$" + cartItem?.price
-                    : ""}
-                </p>
-              </div>
             </div>
-          ))
-        ) : (
-          <div>
-            <CartLoading />
-            <CartLoading />
-            <CartLoading />
+            {/* delete button  */}
+            <div className="">
+              <button
+                type="button"
+                className="absolute top-2 right-2"
+                onClick={() => handleDelete(cartItem)}
+              >
+                <TiDelete className="text-red-600 text-xl" />
+              </button>
+              <p className="line-through text-accent-color/40 absolute bottom-2 right-2">
+                {cartItem?.price !== cartItem?.salePrice
+                  ? "$" + cartItem?.price
+                  : ""}
+              </p>
+            </div>
           </div>
-        )}
+        ))}
       </section>
       {/* checkout section  */}
       <section className="mt-14">

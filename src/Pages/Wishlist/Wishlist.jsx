@@ -60,6 +60,18 @@ const Wishlist = () => {
     );
   }
 
+  // if fetching or loading
+  if (wishlistFetching && wishlistLoading) {
+    // Show skeleton loader only on first load
+    return (
+      <div className="flex flex-col gap-5 justify-center items-center my-4 capitalize px-3 w-screen mt-20 -translate-x-[15%]">
+        <CartLoading />
+        <CartLoading />
+        <CartLoading />
+      </div>
+    );
+  }
+
   return (
     <div className="justify-center my-4 capitalize px-3 md:px-0 container mx-auto">
       <section className="space-y-2">
@@ -72,47 +84,39 @@ const Wishlist = () => {
         </div>
 
         {/* product view section */}
-        {!wishlistFetching && !wishlistLoading ? (
-          wishlistInfo?.data?.list?.map((item) => (
-            <div
-              key={item?.productId}
-              className="flex bg-white shadow-lg items-center justify-between gap-5 rounded-sm pr-3 relative"
-            >
-              {/* image  */}
-              <div className="bg-accent-color/10">
-                <img
-                  src={item?.image}
-                  alt={item?.title}
-                  className="w-40 h-auto"
-                />
-              </div>
-              {/* text-part  */}
-              <div className="w-full">
-                <p className="font-bold">{item?.title}</p>
-                <p className="font-bold">price: ${item?.salePrice}</p>
-              </div>
-              {/* delete button  */}
-              <div className="">
-                <button
-                  type="button"
-                  className="absolute top-2 right-2"
-                  onClick={() => handleDelete(item)}
-                >
-                  <TiDelete className="text-red-600 text-xl" />
-                </button>
-                <p className="line-through text-accent-color/40 absolute bottom-2 right-2">
-                  {item?.price !== item?.salePrice ? "$" + item?.price : ""}
-                </p>
-              </div>
+        {wishlistInfo?.data?.list?.map((item) => (
+          <div
+            key={item?.productId}
+            className="flex bg-white shadow-lg items-center justify-between gap-5 rounded-sm pr-3 relative"
+          >
+            {/* image  */}
+            <div className="bg-accent-color/10">
+              <img
+                src={item?.image}
+                alt={item?.title}
+                className="w-40 h-auto"
+              />
             </div>
-          ))
-        ) : (
-          <div>
-            <CartLoading />
-            <CartLoading />
-            <CartLoading />
+            {/* text-part  */}
+            <div className="w-full">
+              <p className="font-bold">{item?.title}</p>
+              <p className="font-bold">price: ${item?.salePrice}</p>
+            </div>
+            {/* delete button  */}
+            <div className="">
+              <button
+                type="button"
+                className="absolute top-2 right-2"
+                onClick={() => handleDelete(item)}
+              >
+                <TiDelete className="text-red-600 text-xl" />
+              </button>
+              <p className="line-through text-accent-color/40 absolute bottom-2 right-2">
+                {item?.price !== item?.salePrice ? "$" + item?.price : ""}
+              </p>
+            </div>
           </div>
-        )}
+        ))}
       </section>
     </div>
   );

@@ -373,11 +373,12 @@ export const apiSlice = createApi({
             "fetchWishlist",
             { userId },
             (draft) => {
-              const productIndex = draft.data.list.findIndex(
+              console.log(JSON.stringify(draft));
+              const productIndex = draft?.data?.list.findIndex(
                 (item) => item.productId === productId
               );
               if (productIndex >= 0) {
-                draft?.data?.items?.splice(productIndex, 1);
+                draft?.data?.list?.splice(productIndex, 1);
               }
             }
           )
