@@ -9,6 +9,7 @@ import NoProduct from "../../Components/NoProduct";
 import { useNavigate } from "react-router-dom";
 import { toast } from "../../lib/sweetAlert/toast";
 import CartLoading from "../Cart/CartLoading";
+import { IoHeartDislikeSharp } from "react-icons/io5";
 
 const Wishlist = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -44,11 +45,16 @@ const Wishlist = () => {
     }
   };
 
-  if (wishlistInfo === "undefined" || wishlistInfo?.data?.list?.length === 0) {
+  if (wishlistInfo === undefined || wishlistInfo?.data?.list?.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center">
         <div className="h-[80vh] flex flex-col justify-center items-center">
-          <NoProduct textContent={"Wishlist items is available"} />
+          <div className="flex flex-col gap-3 justify-center items-center">
+            <IoHeartDislikeSharp className="w-52 h-52 text-accent-color" />
+            <p className="text-2xl font-bold">
+              Your wishlist is <span className="text-error">Empty</span>
+            </p>
+          </div>
           <Button
             className="mt-3 hidden md:block"
             btnHandler={() => navigate("/all-products")}

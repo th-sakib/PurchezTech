@@ -17,6 +17,9 @@ import ProductDetails from "../Components/ProductDetails";
 import Cart from "../Pages/Cart/Cart";
 import NavOptions from "../Pages/Shared/Navbar/SmallDNav/NavOptions";
 import Wishlist from "../Pages/Wishlist/Wishlist";
+import Order from "../Pages/Order/Order";
+import UserDashboard from "../Layouts/UserDashboard";
+import Checkout from "../Pages/Checkout/Checkout";
 
 export const router = createBrowserRouter([
   {
@@ -69,12 +72,33 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/my-profile",
+        path: "/checkout",
         element: (
           <ProtectedRoute>
-            <Profile />
+            <Checkout />
           </ProtectedRoute>
         ),
+      },
+    ],
+  },
+
+  // user dashboard
+  {
+    path: "/user",
+    element: (
+      <ProtectedRoute>
+        <UserDashboard />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "manage-account",
+        element: <Profile />,
+      },
+      {
+        path: "orders",
+        element: <Order />,
       },
     ],
   },

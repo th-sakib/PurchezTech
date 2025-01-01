@@ -40,7 +40,7 @@ const Navbar = () => {
 
   const handleSearch = () => {
     dispatch(setSearchTerm(localSearch));
-    if (localSearch) navigate("all-products");
+    if (localSearch) navigate("/all-products");
   };
 
   const handleSearchClear = () => {

@@ -5,15 +5,23 @@ import { useLogoutUserMutation } from "../../../redux/api/apiSlice";
 import { clearUser } from "../../../redux/features/user/userSlice";
 import { Link, useLocation } from "react-router-dom";
 import { FaUser, FaUserGear } from "react-icons/fa6";
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt, FaShoppingBag } from "react-icons/fa";
+
+import { useState } from "react";
 
 const Avatar = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const dispatch = useDispatch();
   const [logoutUser, { isLoading }] = useLogoutUserMutation();
 
   const location = useLocation();
 
   const userInfo = useSelector((state) => state.user.userInfo);
+
+  // handlers
+  const toggleSidebar = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
 
   const logoutHandler = async () => {
     try {
@@ -33,10 +41,16 @@ const Avatar = () => {
     <div className="md:ml-4">
       {/* drawer  */}
       <div className="drawer drawer-end">
-        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+        <input
+          id="my-drawer-on-profile"
+          type="checkbox"
+          checked={isDrawerOpen}
+          onChange={toggleSidebar}
+          className="drawer-toggle"
+        />
         <div className="drawer-content">
           {/* Page content here */}
-          <label htmlFor="my-drawer" className="drawer-button">
+          <label htmlFor="my-drawer-on-profile" className="drawer-button">
             {/* avatar  */}
             <div className="avatar">
               <div className="ring-primary-color ring-offset-base-100 h-8 rounded-full ring-2 ring-offset-1 cursor-pointer">
@@ -47,14 +61,14 @@ const Avatar = () => {
         </div>
         <div className="drawer-side drawer-end">
           <label
-            htmlFor="my-drawer"
+            htmlFor="my-drawer-on-profile"
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 drawer-end">
             {/* Sidebar content here */}
-            <li>
-              <Link to="/my-profile">
+            <li onClick={() => setIsDrawerOpen(false)}>
+              <Link to="/user/manage-account">
                 {location?.pathname.includes("/admin") ? (
                   <FaUserGear />
                 ) : (
@@ -64,8 +78,19 @@ const Avatar = () => {
               </Link>
             </li>
 
+            <li onClick={() => setIsDrawerOpen(false)}>
+              <Link to="/user/orders">
+                {location?.pathname.includes("/admin") ? (
+                  <FaShoppingBag />
+                ) : (
+                  <FaShoppingBag />
+                )}
+                Orders
+              </Link>
+            </li>
+
             {/* logout button  */}
-            <li>
+            <li onClick={() => setIsDrawerOpen(false)}>
               <button onClick={logoutHandler}>
                 <FaSignOutAlt />
                 {isLoading ? "Logging out" : "Logout"}

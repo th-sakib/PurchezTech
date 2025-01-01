@@ -70,12 +70,21 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
     }
   }
 
+  // check if user exist in db
+  if (
+    result?.error?.status === 401 &&
+    result?.error?.data?.message === "Invalid Access Token"
+  ) {
+    api.dispatch(clearUser());
+  }
+
   // if jwt not found
   if (
     result?.error?.data?.message === "Access Token not found" ||
     result?.error?.status === "FETCH_ERROR"
   )
     api.dispatch(clearUser());
+
   return result;
 };
 
@@ -99,6 +108,16 @@ export const apiSlice = createApi({
         method: "POST",
         body: newUser,
       }),
+      invalidatesTags: ["User"],
+    }),
+
+    uploadAvatar: builder.mutation({
+      query: (formData) => ({
+        url: `${USER_URL}/upload-avatar`,
+        method: "PATCH",
+        body: formData,
+      }),
+
       invalidatesTags: ["User"],
     }),
 
@@ -400,6 +419,7 @@ export const {
   useRefreshAccessTokenMutation,
 
   useRegisterUserMutation,
+  useUploadAvatarMutation,
   useLoginUserMutation,
   useGoogleLoginMutation,
 

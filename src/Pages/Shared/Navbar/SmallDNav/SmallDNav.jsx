@@ -45,7 +45,7 @@ const SmallDNav = () => {
         <PiShoppingCartFill className="h-5 w-5" />
       </NavLink>
       <NavLink
-        to={`${isAuthenticated ? "/profile-options" : "/auth/login"}`}
+        to={`${isAuthenticated ? "/user/manage-account" : "/auth/login"}`}
         className={({ isActive }) =>
           isActive ? "text-accent-color" : "text-black"
         }

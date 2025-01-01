@@ -8,9 +8,10 @@ import { TiDelete } from "react-icons/ti";
 import Button from "../../Components/Button";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import NoProduct from "../../Components/NoProduct";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "../../lib/sweetAlert/toast";
 import CartLoading from "./CartLoading";
+import { BsCart4 } from "react-icons/bs";
 
 const Cart = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -142,11 +143,16 @@ const Cart = () => {
     }
   };
 
-  if (cartInfo === "undefined" || cartInfo?.data?.items?.length === 0) {
+  if (cartInfo === undefined || cartInfo?.data?.items?.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center">
         <div className="h-[80vh] flex flex-col justify-center items-center">
-          <NoProduct textContent={"Cart items is available"} />
+          <div className="flex flex-col gap-3 justify-center items-center">
+            <BsCart4 className="w-32 h-32" />
+            <p className="text-2xl font-bold">
+              Your cart is <span className="text-error">Empty</span>
+            </p>
+          </div>
           <Button
             className="mt-3 hidden md:block"
             btnHandler={() => navigate("/all-products")}
@@ -164,7 +170,7 @@ const Cart = () => {
         {/* header text section  */}
         <div className="flex justify-between items-center px-2 h-12">
           <p className="text-2xl font-bold">Cart</p>
-          <p className="text-lg">total: {cartInfo?.data?.items?.length}</p>
+          <p className="text-lg">total: {cartInfo?.data?.items?.length || 0}</p>
           <Button btnHandler={() => navigate("/all-products")}>
             Back to shopping
           </Button>
@@ -259,9 +265,11 @@ const Cart = () => {
             <p>${total}</p>
           </div>
 
-          <Button className={"w-full text-base font-secondaryFont mt-2"}>
-            Checkout
-          </Button>
+          <Link to="/checkout">
+            <Button className={"w-full text-base font-secondaryFont mt-2"}>
+              Checkout
+            </Button>
+          </Link>
         </div>
 
         <div className="bg-white p-2 shadow-lg">
