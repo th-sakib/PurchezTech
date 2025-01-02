@@ -49,9 +49,7 @@ const ProtectedRoute = ({ children }) => {
 
   // if user not authenticated
   if (!isAuthenticated) {
-    // console.log("not authenticated");
     if (isAuthPage()) {
-      // console.log("not authenticated");
       return children;
     }
 
@@ -60,7 +58,6 @@ const ProtectedRoute = ({ children }) => {
 
   // if user authenticated and still try to access auth pages and he is admin or customer
   if (isAuthenticated && isAuthPage()) {
-    // console.log("is authenticated and auth page");
     if (userRole === "admin") {
       return <Navigate to="/admin/dashboard" replace />;
     } else {
@@ -70,13 +67,11 @@ const ProtectedRoute = ({ children }) => {
 
   // if user authenticated and not admin but try to access admin pages
   if (isAuthenticated && userRole !== "admin" && isAdminPage()) {
-    // console.log("authenticated and admin and admin page");
     return <Navigate to="/no-access" replace />;
   }
 
   // if user authenticated and admin but try to shop pages
   if (isAuthenticated && userRole === "admin" && !isAdminPage()) {
-    // console.log("authenticated and admin");
     return <Navigate to="/admin/dashboard" replace />;
   }
 
