@@ -1,16 +1,37 @@
 import { useSelector } from "react-redux";
-import { useFetchOrderQuery } from "../../redux/api/apiSlice.js";
 import { useState } from "react";
+import {
+  useFetchAllOrderQuery,
+  useUpdateOrderStatusMutation,
+} from "../../../redux/api/apiSlice.js";
+import { toast } from "../../../lib/sweetAlert/toast.js";
 
-const Order = () => {
+const ManageOrder = () => {
+  const [currentStatus, setCurrentStatus] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const userInfo = useSelector((state) => state.user.userInfo);
 
-  const { data: orderList } = useFetchOrderQuery({ userId: userInfo?._id });
+  const [updateOrder, { isLoading: updating }] = useUpdateOrderStatusMutation();
+  const { data: orders } = useFetchAllOrderQuery();
 
   const handleDetailClick = (item) => {
     setSelectedOrder(item);
     document.getElementById("orderDetailsModal").showModal();
+  };
+
+  const handleUpdate = async (user, value) => {
+    try {
+      const res = await updateOrder({ userId: user, status: value });
+      setCurrentStatus(value);
+      if (res?.statusCode === 200) {
+        toast.fire({
+          title: "Status updated successfully",
+          icon: "success",
+          timer: 3000,
+        });
+      }
+    } catch (error) {
+      console.log(error?.data?.message);
+    }
   };
 
   return (
@@ -23,7 +44,7 @@ const Order = () => {
           {/* head */}
           <thead>
             <tr>
-              <th>Order Id</th>
+              <th>User Id</th>
               <th>Order Date</th>
               <th>Order Price(BDT)</th>
               <th>Order Items</th>
@@ -31,9 +52,9 @@ const Order = () => {
             </tr>
           </thead>
           <tbody>
-            {orderList?.data?.order?.map((item) => (
+            {orders?.data?.order?.map((item) => (
               <tr key={item?._id}>
-                <td>{item?._id}</td>
+                <td>{item?.user}</td>
                 <td>{item?.createdAt.split("T")[0]}</td>
                 <td>{item?.totalPrice}</td>
                 <td>{item?.orderItems.length}</td>
@@ -87,18 +108,22 @@ const Order = () => {
                     <p>order status</p>
                     <p
                       className={`badge badge-outline ${
-                        selectedOrder?.orderStatus === "Processing"
+                        selectedOrder?.orderStatus === "Processing" ||
+                        currentStatus === "Processing"
                           ? "text-warning"
-                          : selectedOrder?.orderStatus === "Cancelled"
+                          : selectedOrder?.orderStatus === "Cancelled" ||
+                            currentStatus === "Processing"
                           ? "text-error"
-                          : selectedOrder?.orderStatus === "Delivered"
+                          : selectedOrder?.orderStatus === "Delivered" ||
+                            currentStatus === "Processing"
                           ? "text-accent-color"
-                          : selectedOrder?.orderStatus === "Shipped"
+                          : selectedOrder?.orderStatus === "Shipped" ||
+                            currentStatus === "Processing"
                           ? "text-success"
                           : ""
                       }`}
                     >
-                      {selectedOrder?.orderStatus}
+                      {currentStatus || selectedOrder?.orderStatus}
                     </p>
                   </div>
                 </div>
@@ -133,7 +158,23 @@ const Order = () => {
                 </div>
               </>
             )}
+            {/* admin update status button  */}
+            <div>
+              <select
+                name="orderStatus"
+                id="orderStatus"
+                onChange={(e) =>
+                  handleUpdate(selectedOrder?.user, e.target.value)
+                }
+              >
+                <option value="Processing">Processing</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
           </div>
+
           <form method="dialog" className="modal-backdrop">
             <button>close</button>
           </form>
@@ -143,4 +184,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default ManageOrder;

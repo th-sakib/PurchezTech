@@ -20,6 +20,10 @@ import Wishlist from "../Pages/Wishlist/Wishlist";
 import Order from "../Pages/Order/Order";
 import UserDashboard from "../Layouts/UserDashboard";
 import Checkout from "../Pages/Checkout/Checkout";
+import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
+import PaymentFails from "../Pages/Payment/PaymentFails";
+import PaymentCancel from "../Pages/Payment/PaymentCancel";
+import ManageOrder from "../Pages/Admin/ManageOrder/ManageOrder";
 
 export const router = createBrowserRouter([
   {
@@ -123,7 +127,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "orders",
-        element: <h1>hello world</h1>,
+        element: <ManageOrder />,
       },
       {
         path: "product-details/:id",
@@ -161,5 +165,32 @@ export const router = createBrowserRouter([
         element: <Signup />,
       },
     ],
+  },
+
+  // payment success
+
+  {
+    path: "/payment/success",
+    element: (
+      <ProtectedRoute>
+        <PaymentSuccess />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/payment/fails",
+    element: (
+      <ProtectedRoute>
+        <PaymentFails />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/payment/cancel",
+    element: (
+      <ProtectedRoute>
+        <PaymentCancel />
+      </ProtectedRoute>
+    ),
   },
 ]);

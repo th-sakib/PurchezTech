@@ -61,8 +61,6 @@ const Login = () => {
       navigate(from);
     } catch (error) {
       console.log(error?.data?.errors?.[0]?.message);
-      // console.log(error?.data?.stack);
-      // console.log(error?.stack);
     }
   };
 

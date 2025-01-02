@@ -1,9 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { useRef } from "react";
-import { useFetchCartQuery } from "../../redux/api/apiSlice";
+import { useEffect, useRef, useState } from "react";
+import {
+  useCreateOrderMutation,
+  useFetchCartQuery,
+} from "../../redux/api/apiSlice";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
+  const [getRates, setGetRates] = useState();
   const userInfo = useSelector((state) => state.user.userInfo);
 
   const {
@@ -12,10 +17,12 @@ const Checkout = () => {
     isFetching: cartFetching,
   } = useFetchCartQuery({ userId: userInfo?._id });
 
+  const [createOrder, { isLoading: orderIsLoading }] = useCreateOrderMutation();
+
   const cartItems = cartInfo?.data?.items;
-  console.log(cartItems);
 
   const formRef = useRef(); // ref to the form
+  const navigate = useNavigate();
 
   // calculations
   const subTotal =
@@ -30,7 +37,35 @@ const Checkout = () => {
 
   const total = subTotal - (subTotal / 100) * discount;
 
-  // const totalInBD =
+  // getting exchange rates
+  async function fetchExchangeRates() {
+    const url =
+      "https://v6.exchangerate-api.com/v6/069f4c363f25d47f4447d358/latest/USD";
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      return data.conversion_rates;
+    } catch (error) {
+      console.error("Error fetching exchange rates:", error.message);
+    }
+  }
+
+  useEffect(() => {
+    async function getRates() {
+      const fetchedRates = await fetchExchangeRates();
+      setGetRates(fetchedRates);
+    }
+    getRates();
+  }, []);
+
+  const BDExchangeRate = getRates?.BDT || 100;
+  const totalInBD = (BDExchangeRate * total).toFixed(2);
 
   const formData = [
     {
@@ -79,8 +114,22 @@ const Checkout = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("hola", data);
+  const onSubmit = async (data) => {
+    const newData = {
+      ...data,
+      totalAmount: totalInBD,
+      userId: userInfo?._id,
+      cartItems,
+    };
+
+    try {
+      const res = await createOrder(newData).unwrap();
+      if (res.statusCode === 200) {
+        window.location.href = res?.data?.url;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="container mx-auto px-4 grid gap-3 md:gap-10 md:grid-cols-2 items-start font-secondaryFont mt-6">
@@ -169,9 +218,15 @@ const Checkout = () => {
             </div>
             <div className="divider my-1" />
 
-            <div className="flex justify-between mb-4">
+            <div className="flex justify-between">
               <p>Total</p>
               <p>${total}</p>
+            </div>
+            <div className="divider my-1" />
+
+            <div className="flex justify-between mb-4">
+              <p>In Bangladesh</p>
+              <p>BDT {totalInBD}</p>
             </div>
 
             <button

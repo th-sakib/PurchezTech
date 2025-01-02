@@ -42,12 +42,6 @@ const NavOptions = () => {
         >
           my order
         </NavLink>
-        <NavLink
-          to="/my-cancellation"
-          className="text-center py-3 my-4 bg-accent-color/80 w-72 block"
-        >
-          my cancellations
-        </NavLink>
         <button
           onClick={handleLogout}
           className="text-center py-3 my-4 bg-accent-color/80 w-72 block"

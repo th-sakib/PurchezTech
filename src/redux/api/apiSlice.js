@@ -24,8 +24,6 @@ extraOptions: Any additional options you might want to pass to modify the reques
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  result?.error && console.log(result?.error?.data?.message);
-
   if (
     result?.error?.status === 401 &&
     result?.error?.data?.message === "jwt expired"
@@ -41,13 +39,10 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
       extraOptions
     );
 
-    // console.log("refresh result : ", refreshResult); // clear this
-
     if (refreshResult?.data) {
       console.log("Token refreshed, Retrying the original request...");
 
       result = await baseQuery(args, api, extraOptions);
-      // console.log("inner result", result);
     } else {
       // logout user
       await baseQuery(
@@ -91,7 +86,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReAuth,
-  tagTypes: ["User", "Product", "Cart", "Wishlist"], // For cache management
+  tagTypes: ["User", "Product", "Cart", "Wishlist", "Order"], // For cache management
   endpoints: (builder) => ({
     // refresh access token - POST
     refreshAccessToken: builder.mutation({
@@ -392,7 +387,6 @@ export const apiSlice = createApi({
             "fetchWishlist",
             { userId },
             (draft) => {
-              console.log(JSON.stringify(draft));
               const productIndex = draft?.data?.list.findIndex(
                 (item) => item.productId === productId
               );
@@ -411,6 +405,41 @@ export const apiSlice = createApi({
           patchResult.undo();
         }
       },
+    }),
+
+    // order
+    createOrder: builder.mutation({
+      query: (data) => ({
+        url: `${SHOP_URL}/create-order`,
+        method: "POST",
+        body: { ...data },
+      }),
+
+      invalidatesTags: ["Order"],
+    }),
+
+    //fetch order - GET
+    fetchOrder: builder.query({
+      query: ({ userId }) => `${SHOP_URL}/fetch-order/${userId}`,
+
+      providesTags: ["Order"],
+    }),
+    //fetch all order - GET
+    fetchAllOrder: builder.query({
+      query: () => `${SHOP_URL}/fetch-all-order`,
+
+      providesTags: ["Order"],
+    }),
+
+    // update order status - PATCH
+    updateOrderStatus: builder.mutation({
+      query: ({ userId, status }) => ({
+        url: `${SHOP_URL}/update-status`,
+        method: "PATCH",
+        body: { userId, status },
+      }),
+
+      invalidatesTags: ["Order"],
     }),
   }),
 });
@@ -444,4 +473,9 @@ export const {
   useAddToWishlistMutation,
   useFetchWishlistQuery,
   useDeleteWishlistItemMutation,
+
+  useCreateOrderMutation,
+  useFetchOrderQuery,
+  useUpdateOrderStatusMutation,
+  useFetchAllOrderQuery,
 } = apiSlice;

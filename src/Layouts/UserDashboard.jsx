@@ -1,9 +1,14 @@
 import { BsFillCartCheckFill } from "react-icons/bs";
+import { IoLogOut } from "react-icons/io5";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
 import SmallDNav from "../Pages/Shared/Navbar/SmallDNav/SmallDNav";
 import { FaUser } from "react-icons/fa";
+import { useLogoutUserMutation } from "../redux/api/apiSlice";
+import { useDispatch } from "react-redux";
+import { clearUser } from "../redux/features/user/userSlice";
+import { toast } from "../lib/sweetAlert/toast";
 
 const UserDashboard = () => {
   const sidebarContentLinks = [
@@ -11,21 +16,32 @@ const UserDashboard = () => {
       id: "manage-account",
       path: "manage-account",
       label: "Manage Account",
-      icon: <FaUser />,
+      icon: <FaUser className="h-4 w-4" />,
     },
     {
       id: "orders",
       path: "orders",
       label: "Orders",
-      icon: <BsFillCartCheckFill />,
-    },
-    {
-      id: "cancellation",
-      path: "cancellation",
-      label: "Cancellation",
-      icon: <MdRemoveShoppingCart />,
+      icon: <BsFillCartCheckFill className="h-4 w-4" />,
     },
   ];
+
+  const [logoutUser, { isLoading }] = useLogoutUserMutation();
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser().unwrap();
+      dispatch(clearUser());
+
+      toast.fire({
+        icon: "warning",
+        title: "You are logged out!",
+      });
+    } catch (err) {
+      console.log(err?.data?.message);
+    }
+  };
 
   return (
     <>
@@ -65,6 +81,14 @@ const UserDashboard = () => {
               </NavLink>
             </li>
           ))}
+
+          <button
+            className="flex justify-center items-center hover:text-accent-color md:hidden mt-2 ml-1"
+            type="button"
+            onClick={handleLogout}
+          >
+            <IoLogOut className="h-4 w-4" />
+          </button>
         </nav>
       </div>
     </>

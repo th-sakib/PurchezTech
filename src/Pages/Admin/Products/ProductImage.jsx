@@ -17,9 +17,7 @@ const ProductImage = memo(
     useEffect(() => {
       async function deleteCloud() {
         try {
-          console.log(imageInfo.publicID);
           const res = await deleteUploadedProduct(imageInfo?.publicID);
-          console.log(res.data.message);
           setLocalImg([]);
           setImageInfo({});
         } catch (error) {

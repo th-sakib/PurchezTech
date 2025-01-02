@@ -116,7 +116,6 @@ const AddProductForm = ({
     };
     try {
       const res = await updateProduct(currentData).unwrap();
-      console.log(res.message);
       setIsEditMode(false);
       setIsOpenSidebar(false);
       toast.fire({

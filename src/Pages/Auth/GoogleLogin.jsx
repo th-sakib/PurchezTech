@@ -33,7 +33,7 @@ const GoogleLogin = () => {
         navigate(from);
       }
     } catch (error) {
-      console.log("Error while requesting google code: ", error);
+      console.log("Error while requesting google code: ", error?.data?.message);
     }
   };
 

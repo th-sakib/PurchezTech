@@ -15,8 +15,6 @@ const Header = ({ toggleDrawer }) => {
       await logoutUser().unwrap();
       dispatch(clearUser());
     } catch (err) {
-      console.log(err);
-      console.log(err?.data?.stack);
       console.log(err?.data?.message);
     }
     toast.fire({

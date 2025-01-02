@@ -42,7 +42,7 @@ const Profile = () => {
         });
       }
     } catch (error) {
-      console.log(error);
+      console.log(error?.data?.message);
       console.log("Error while uploading avatar");
     }
   };

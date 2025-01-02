@@ -78,7 +78,6 @@ const ProductCard = ({
       }).then(async (result) => {
         if (result.isConfirmed) {
           const res = await deleteProduct(product._id);
-          console.log(res.data.data);
           toast.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
