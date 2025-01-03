@@ -83,7 +83,7 @@ const UserDashboard = () => {
           ))}
 
           <button
-            className="flex justify-center items-center hover:text-accent-color md:hidden mt-2 ml-1"
+            className="flex justify-center items-center hover:text-error md:hidden mt-2 ml-1"
             type="button"
             onClick={handleLogout}
           >

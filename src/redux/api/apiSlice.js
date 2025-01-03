@@ -159,6 +159,24 @@ export const apiSlice = createApi({
       providesTags: ["User"],
     }),
 
+    // update fullName
+    updateUserAccount: builder.mutation({
+      query: ({ fullName }) => ({
+        url: `${USER_URL}/update-user-account`,
+        method: "PATCH",
+        body: { fullName },
+      }),
+    }),
+
+    //update password
+    changeCurrentPassword: builder.mutation({
+      query: ({ oldPassword, newPassword }) => ({
+        url: `${USER_URL}/change-password`,
+        method: "PATCH",
+        body: { oldPassword, newPassword },
+      }),
+    }),
+
     // admin endpoints
     // upload image to cloudinary - POST this one is handled with xmlhttprequest in the productImage page
     // uploadProduct: builder.mutation({
@@ -451,8 +469,11 @@ export const {
   useUploadAvatarMutation,
   useLoginUserMutation,
   useGoogleLoginMutation,
+  useUpdateUserAccountMutation,
+  useChangeCurrentPasswordMutation,
 
   useGetUserQuery,
+  useLazyGetUserQuery,
   useLazyGetAuthenticityQuery,
   useLogoutUserMutation,
   useCreateProductMutation,
