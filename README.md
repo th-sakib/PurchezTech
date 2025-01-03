@@ -1,115 +1,111 @@
-#  PurchezTech
+PurchezTech
 
-PurchezTech is a modern e-commerce web application built with the MERN stack. This project focuses on selling technology products like computers, PCs, laptops, and accessories, offering a seamless shopping experience with features like live support and integration with payment systems.
+The frontend for PurchezTech, an e-commerce platform offering a variety of electronic devices and accessories. Built with modern technologies to ensure a seamless user experience, including real-time data fetching, efficient state management, and responsive design.
 
-## Features
+Features
 
-- **Dynamic User Interface**: Responsive design powered by Tailwind CSS and DaisyUI.
-- **Authentication**: Google OAuth and custom user authentication using React Hook Form.
-- **State Management**: Efficient state handling with Redux Toolkit.
-- **Media Uploads**: Drag-and-drop functionality for uploading media using `react-dropzone`.
-- **Interactive Design**: Styled with Swiper for carousels and SweetAlert2 for notifications.
-- **Live Support**: Real-time support chat.
-- **Secure Payments**: Integration with the bKash payment system.
+Real-Time Data Fetching: Utilizes RTK Query for efficient data fetching and caching.
 
-## Tech Stack
+State Management: Managed using Redux Toolkit for a scalable and predictable app state.
 
-### Frontend
+Authentication: Integration with Google OAuth for secure login.
 
-- **React**: For building the UI.
-- **Vite**: Fast development and build tool.
-- **React Router**: For navigation and routing.
-- **React Icons**: For beautiful and functional icons.
+Responsive Design: Built with Tailwind CSS for mobile-friendly and desktop-ready layouts.
 
-### Backend
+Interactive UI: Dynamic components powered by React and Swiper.
 
-- **Node.js**: Backend runtime environment.
-- **Express.js**: Server-side framework.
-- **MongoDB**: Database for storing user and product data.
+Prerequisites
 
-### Styling
+Node.js (v16 or higher)
 
-- **Tailwind CSS**: For modern, utility-first styling.
-- **DaisyUI**: Enhances Tailwind CSS with prebuilt components.
+Yarn (v1.22 or higher)
 
-### State Management
+If you don’t have Yarn installed, you can add it by following these steps:
 
-- **Redux Toolkit**: Simplifies state management.
+For macOS and Linux:
 
-### Form Management
+npm install -g yarn
 
-- **React Hook Form**: Streamlined form validation and submission.
+For Windows:
 
-### Additional Tools
+Download and install Yarn from the official Yarn website.
 
-- **SweetAlert2**: For clean and modern alerts.
-- **Swiper**: Interactive slides and carousels.
+Installation
 
-## Getting Started
+1. Clone the Repository
 
-### Prerequisites
+git clone <repository_url>
+cd purcheztech
 
-Ensure you have the following installed:
+2. Install Dependencies
 
-- Node.js
-- npm or yarn
+yarn install
 
-### Installation
+3. Environment Configuration
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/purcheztech.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd purcheztech
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
+Create a .env file in the root directory and add the following variables:
 
-### Running the Project
+VITE_API_BASE_URL=<your_api_base_url>
+VITE_GOOGLE_CLIENT_ID=<your_google_client_id>
 
-- Start the development server:
-  ```bash
-  npm run dev
-  ```
-- Build for production:
-  ```bash
-  npm run build
-  ```
-- Preview the production build:
-  ```bash
-  npm run preview
-  ```
+Development
 
-## Folder Structure
+To start the development server, run:
 
-- **src/**: Contains the main source code.
-  - **components/**: Reusable UI components.
-  - **features/**: Redux slices and state-related logic.
-  - **pages/**: Page-level components.
-  - **styles/**: CSS and Tailwind files.
+yarn dev
 
-## Contributing
+The app will be accessible at http://localhost:5173/ by default.
 
-Contributions are welcome! Please fork the repository and submit a pull request for any changes.
+Build for Production
 
-## License
+To build the project for production, run:
+
+yarn build
+
+The production-ready files will be available in the dist directory.
+
+Preview Production Build
+
+To preview the production build, run:
+
+yarn preview
+
+Technologies Used
+
+Frontend Framework: React
+
+State Management: Redux Toolkit
+
+Data Fetching: RTK Query
+
+Styling: Tailwind CSS, DaisyUI
+
+Authentication: Google OAuth
+
+Icons: React Icons
+
+Contributing
+
+We welcome contributions! To contribute:
+
+Fork the repository
+
+Create a new branch (git checkout -b feature-name)
+
+Commit your changes (git commit -m 'Add feature-name')
+
+Push to the branch (git push origin feature-name)
+
+Open a Pull Request
+
+License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Acknowledgments
+Contact
 
-- Inspired by the latest trends in e-commerce design and development.
-- Built with passion for providing cutting-edge technology solutions.
+For inquiries or support, reach out to TH Sakib:
 
----
+GitHub: @th-sakib
 
-## Contact
-
-For inquiries or support, reach out to **TH Sakib**:
-
-- GitHub: [@th-sakib](https://github.com/th-sakib)
-- Email: [th.sakib@example.com](mailto\:mdthamidulhasansakib@gmail.com)
+Email: th.sakib@example.com
