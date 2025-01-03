@@ -106,3 +106,10 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - Built with passion for providing cutting-edge technology solutions.
 
 ---
+
+## Contact
+
+For inquiries or support, reach out to **TH Sakib**:
+
+- GitHub: [@th-sakib](https://github.com/th-sakib)
+- Email: [th.sakib@example.com](mailto\:mdthamidulhasansakib@gmail.com)
