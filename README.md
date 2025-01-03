@@ -106,5 +106,3 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - Built with passion for providing cutting-edge technology solutions.
 
 ---
-
-Feel free to explore and enhance PurchezTech!
