@@ -15,6 +15,7 @@ import { BsCart4 } from "react-icons/bs";
 
 const Cart = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
+  console.log(userInfo);
 
   const navigate = useNavigate();
 

@@ -18,6 +18,7 @@ const Main = () => {
   // refresh token in component mount
   useEffect(() => {
     const checkAuth = async () => {
+      const token = JSON.parse(sessionStorage.getItem("token"));
       try {
         await getAuthenticityTrigger();
       } catch (error) {

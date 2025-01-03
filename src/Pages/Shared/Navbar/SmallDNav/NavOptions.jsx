@@ -17,6 +17,7 @@ const NavOptions = () => {
     try {
       await logoutUser().unwrap();
       dispatch(clearUser());
+      sessionStorage.clear();
 
       toast.fire({
         icon: "warning",

@@ -24,7 +24,14 @@ const GoogleLogin = () => {
         // or authResult?.code
         const res = await googleLogin(authResult?.code).unwrap();
 
-        dispatch(setUser({ ...res?.data.googleLoggedUser }));
+        dispatch(
+          setUser({
+            ...res?.data.googleLoggedUser,
+            accessToken: res.data.accessToken,
+          })
+        );
+        sessionStorage.setItem("token", JSON.stringify(res.data.accessToken));
+
         toast.fire({
           title: "You are successfully logged in",
           icon: "success",

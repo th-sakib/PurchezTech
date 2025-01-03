@@ -11,7 +11,14 @@ const SHOP_URL = "api/v1/shop";
 // default base query
 const baseQuery = fetchBaseQuery({
   baseUrl: `${import.meta.env.VITE_API_URL}`,
-  credentials: "include",
+  prepareHeaders: (headers, { getState }) => {
+    console.log(getState().user?.userInfo?.accessToken);
+    const sessionId = getState().user?.userInfo?.accessToken; // Retrieve session ID from the Redux state
+    if (sessionId) {
+      headers.set("Authorization", `Bearer ${sessionId}`);
+    }
+    return headers;
+  },
 });
 
 /*

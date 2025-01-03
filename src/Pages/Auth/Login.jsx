@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLoginUserMutation } from "../../redux/api/apiSlice";
 import {
   clearRegistrationEmail,
+  clearUser,
   selectRegistrationEmail,
   setUser,
 } from "../../redux/features/user/userSlice";
@@ -51,8 +52,12 @@ const Login = () => {
     try {
       const res = await loginUser(data).unwrap();
       reset();
+      console.log(res);
 
-      dispatch(setUser({ ...res.data.loggedInUser }));
+      dispatch(
+        setUser({ ...res.data.loggedInUser, accessToken: res.data.accessToken })
+      );
+      sessionStorage.setItem("token", JSON.stringify(res.data.accessToken));
       toast.fire({
         title: "You are successfully logged in",
         icon: "success",
@@ -60,6 +65,7 @@ const Login = () => {
       });
       navigate(from);
     } catch (error) {
+      dispatch(clearUser());
       console.log(error?.data?.errors?.[0]?.message);
     }
   };

@@ -14,6 +14,7 @@ const Header = ({ toggleDrawer }) => {
     try {
       await logoutUser().unwrap();
       dispatch(clearUser());
+      sessionStorage.clear();
     } catch (err) {
       console.log(err?.data?.message);
     }
