@@ -10,7 +10,7 @@ const SHOP_URL = "api/v1/shop";
 
 // default base query
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/",
+  baseUrl: `${import.meta.env.VITE_API_URL}`,
   credentials: "include",
 });
 
