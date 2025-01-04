@@ -293,10 +293,16 @@ const ProductCard = ({
             ) : (
               <Button
                 btnHandler={handleCart}
-                className="w-full bg-accent-color hover:bg-on-hover text-white border-none group rounded-b-md uppercase"
+                className="w-full bg-accent-color hover:bg-on-hover text-white border-none group rounded-b-md uppercase flex px-0"
               >
-                <MdAddShoppingCart className="text-xl" />
-                add to cart
+                {cartIsLoading ? (
+                  <span className="text-xs">Adding to cart...</span>
+                ) : (
+                  <span className="text-xs md:text-sm flex sm:gap-1">
+                    <MdAddShoppingCart className="text-base md:text-xl" />
+                    add to cart
+                  </span>
+                )}
               </Button>
             )}
           </div>

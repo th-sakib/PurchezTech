@@ -212,14 +212,14 @@ const AllProducts = () => {
           {/* product view section */}
           <div className="flex flex-wrap justify-center mb-3">
             {/* if loading or fetching  */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-5">
               {isLoading || isFetching
                 ? Array(8)
                     .fill()
                     .map((_, idx) => (
                       <div
                         key={idx}
-                        className="card bg-base-100 shadow-xl w-[19.5vw] gap-3 rounded-sm rounded-b-lg mb-3"
+                        className="card bg-base-100 shadow-xl w-[45vw] md:w-[30vw]  mx-auto lg:w-[19.5vw] gap-3 rounded-sm rounded-b-lg mb-3"
                       >
                         <div className="skeleton h-44 w-full rounded-none"></div>
                         <div className="px-2 overflow-hidden ">
@@ -246,7 +246,7 @@ const AllProducts = () => {
               </div>
             ) : (
               // ======= product card section =======
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 justify-center items-center">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-5 justify-center items-center">
                 {productData?.map((product) => (
                   <div key={product._id}>
                     <ProductCard isLoading={isLoading} product={product} />
