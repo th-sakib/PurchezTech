@@ -73,7 +73,7 @@ const Footer = () => {
           </fieldset>
         </form>
       </footer>
-      <footer className="footer p-10 bg-neutral text-[#c3c0c1] text-[.6rem] footer-center -mt-5">
+      <footer className="footer p-10 bg-neutral text-[#c3c0c1] text-[.6rem] footer-center md:-mt-12 pb-14 md:pb-0">
         <aside>
           <p className="tracking-normal">
             Copyright © {new Date().getFullYear()} - All right reserved to sakib

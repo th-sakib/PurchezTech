@@ -98,7 +98,7 @@ const Profile = () => {
   const handleFullNameUpdate = async (data) => {
     try {
       const res = await updateUserAccount({ fullName: data.fullName }).unwrap();
-      if (res?.data?.statusCode === 200) {
+      if (res?.statusCode === 200) {
         const updatedUser = { ...userInfo, fullName: data.fullName };
         dispatch(setUser(updatedUser));
         triggerGetUser();
@@ -144,7 +144,7 @@ const Profile = () => {
       {/* information showcase */}
       <div>
         {/* image  */}
-        <section className="h-32 w-32 border-additional-color border-2 rounded-full p-1 ring-2 ring-accent-color relative ml-auto mr-auto">
+        <section className="h-32 w-32 border-additional-color/40 border-2 rounded-full p-1 ring-2 ring-accent-color relative ml-auto mr-auto">
           {isLoading ? (
             <div className="w-full h-full flex justify-center items-center">
               <LoaderSpinner />
@@ -157,7 +157,7 @@ const Profile = () => {
             />
           )}
           {/* edit profile button */}
-          <div className="absolute right-1 bottom-1 rounded-full bg-accent-color ring-1 ring-additional-color cursor-pointer p-0.5 hover:bg-on-hover">
+          <div className="absolute right-1 bottom-1 rounded-full bg-accent-color ring-1 ring-additional-color/50 cursor-pointer p-0.5 hover:bg-on-hover">
             <IoIosReverseCamera className="h-5 w-5 text-white cursor-pointer" />
             <input
               type="file"
@@ -263,7 +263,7 @@ const Profile = () => {
             type={!passView ? "password" : "text"}
             name="password"
             autoComplete="current-password"
-            placeholder="Password"
+            placeholder="Current Password"
           />
 
           {/* eye icon button */}
@@ -287,7 +287,7 @@ const Profile = () => {
           </p>
         </div>
 
-        {/* confirm pass  */}
+        {/* new pass  */}
         <div className="relative group h-5 pb-10">
           <input
             className={`outline-none w-full bg-transparent border-b ${
@@ -319,7 +319,7 @@ const Profile = () => {
             type={!confirmPassView ? "password" : "text"}
             name="confirmPass"
             autoComplete="current-password"
-            placeholder="Confirm Password"
+            placeholder="New Password"
           />
 
           {/* eye icon button */}
