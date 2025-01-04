@@ -24,6 +24,7 @@ import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
 import PaymentFails from "../Pages/Payment/PaymentFails";
 import PaymentCancel from "../Pages/Payment/PaymentCancel";
 import ManageOrder from "../Pages/Admin/ManageOrder/ManageOrder";
+import Cancelled from "../Pages/Order/Cancelled";
 
 export const router = createBrowserRouter([
   {
@@ -103,6 +104,10 @@ export const router = createBrowserRouter([
       {
         path: "orders",
         element: <Order />,
+      },
+      {
+        path: "cancelled",
+        element: <Cancelled />,
       },
     ],
   },

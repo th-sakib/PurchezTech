@@ -1,31 +1,23 @@
 import { useSelector } from "react-redux";
 import {
   useCancelOderMutation,
+  useFetchCancelledOrderQuery,
   useFetchOrderQuery,
 } from "../../redux/api/apiSlice.js";
 import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 
-const Order = () => {
+const Cancelled = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const userInfo = useSelector((state) => state.user.userInfo);
 
-  const { data: orderList } = useFetchOrderQuery({ userId: userInfo?._id });
-
-  const [cancelOrder] = useCancelOderMutation();
+  const { data: orderList } = useFetchCancelledOrderQuery({
+    userId: userInfo?._id,
+  });
 
   const handleDetailClick = (item) => {
     setSelectedOrder(item);
     document.getElementById("orderDetailsModal").showModal();
-  };
-
-  const handleCancel = async (item) => {
-    try {
-      const res = await cancelOrder({ orderId: item._id }).unwrap();
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -33,12 +25,11 @@ const Order = () => {
       <h1 className="text-3xl font-bold mb-6 ml-4 md:text-center text-gray-700">
         My Orders
       </h1>
-      <div className="overflow-x-auto mr-16 md:mr-0">
+      <div className="overflow-x-auto mr-16 lg:mr-0">
         <table className="table">
           {/* head */}
           <thead>
             <tr>
-              <th></th>
               <th>Order Id</th>
               <th>Order Date</th>
               <th>Order Price(BDT)</th>
@@ -49,12 +40,6 @@ const Order = () => {
           <tbody>
             {orderList?.data?.order?.map((item) => (
               <tr key={item?._id}>
-                <td>
-                  <RxCross2
-                    className="text-error border border-error rounded-full cursor-pointer"
-                    onClick={() => handleCancel(item)}
-                  />
-                </td>
                 <td>{item?._id}</td>
                 <td>{item?.createdAt.split("T")[0]}</td>
                 <td>{item?.totalPrice}</td>
@@ -165,4 +150,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default Cancelled;

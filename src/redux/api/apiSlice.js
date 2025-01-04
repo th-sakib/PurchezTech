@@ -442,6 +442,13 @@ export const apiSlice = createApi({
 
       providesTags: ["Order"],
     }),
+
+    fetchCancelledOrder: builder.query({
+      query: ({ userId }) => `${SHOP_URL}/fetch-cancelled/${userId}`,
+
+      providesTags: ["Order"],
+    }),
+
     //fetch all order - GET
     fetchAllOrder: builder.query({
       query: () => `${SHOP_URL}/fetch-all-order`,
@@ -455,6 +462,16 @@ export const apiSlice = createApi({
         url: `${SHOP_URL}/update-status`,
         method: "PATCH",
         body: { tranId, status },
+      }),
+
+      invalidatesTags: ["Order"],
+    }),
+
+    // Cancel order status - PATCH
+    cancelOder: builder.mutation({
+      query: ({ orderId }) => ({
+        url: `${SHOP_URL}/cancel-order/${orderId}`,
+        method: "PATCH",
       }),
 
       invalidatesTags: ["Order"],
@@ -499,4 +516,6 @@ export const {
   useFetchOrderQuery,
   useUpdateOrderStatusMutation,
   useFetchAllOrderQuery,
+  useCancelOderMutation,
+  useFetchCancelledOrderQuery,
 } = apiSlice;

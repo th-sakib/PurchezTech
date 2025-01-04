@@ -194,11 +194,8 @@ const Profile = () => {
           {/* input fields */}
           {formData.map((data) => (
             <div key={data.label}>
-              <label htmlFor={data.name} className="text-gray-700 md:text-lg ">
-                {data.label}
-              </label>
               <input
-                className={`block w-full p-2 md:p-3 md:mt-1 border ${
+                className={`block outline-none w-full py-1 bg-transparent border-b border- ${
                   fullNameErrors?.[data.name]
                     ? "border-red-600"
                     : "border-secondary-color"
@@ -211,11 +208,12 @@ const Profile = () => {
                 })}
                 type={data.type}
                 id={data.name}
+                placeholder="Full Name"
                 name={data.name}
                 autoComplete="auto"
                 defaultValue={data.defaultValue || ""}
               />
-              <span className="text-error text-xs">
+              <span className="text-red-600 text-xs font-josefin_sans break-words">
                 {fullNameErrors?.[data.name]?.message}
               </span>
               <input

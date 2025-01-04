@@ -1,4 +1,4 @@
-import { BsFillCartCheckFill } from "react-icons/bs";
+import { BsCartXFill, BsFillCartCheckFill } from "react-icons/bs";
 import { IoLogOut } from "react-icons/io5";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
@@ -23,6 +23,12 @@ const UserDashboard = () => {
       path: "orders",
       label: "Orders",
       icon: <BsFillCartCheckFill className="h-4 w-4" />,
+    },
+    {
+      id: "cancelled",
+      path: "cancelled",
+      label: "Cancelled products",
+      icon: <BsCartXFill className="h-4 w-4" />,
     },
   ];
 
@@ -60,7 +66,7 @@ const UserDashboard = () => {
         </div>
 
         {/* Side bar - drawer */}
-        <nav className="menu text-base-content min-h-full py-9 md:py-4 px-2 bg-white h-fit m-2 md:m-0 shadow-2xl md:shadow-none  md:h-screen md:block md:w-[35%] lg:w-[30%] rounded-full md:rounded-none border border-accent-color md:border-none">
+        <nav className="menu text-base-content min-h-full py-9 md:py-4 px-2 bg-white h-fit m-2 md:m-0 shadow-2xl md:shadow-none  md:h-screen md:block md:min-w-[27%] lg:min-w-[25%] rounded-full md:rounded-none border border-accent-color md:border-none">
           {sidebarContentLinks.map((item) => (
             <li key={item.id}>
               <NavLink to={item.path}>
