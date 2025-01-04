@@ -238,7 +238,7 @@ const ProductCard = ({
           </div>
 
           {/* image section  */}
-          <figure className="h-48 group">
+          <figure className="h-36 md:h-48 group">
             <img
               className="h-44 group-hover:scale-105 transition-all duration-300"
               src={imageURL}

@@ -219,7 +219,7 @@ const AllProducts = () => {
                     .map((_, idx) => (
                       <div
                         key={idx}
-                        className="card bg-base-100 shadow-xl w-[45vw] md:w-[30vw]  mx-auto lg:w-[19.5vw] gap-3 rounded-sm rounded-b-lg mb-3"
+                        className="card bg-base-100 shadow-xl w-[46vw] md:w-[30vw]  mx-auto lg:w-[25.6vw] xl:w-[19vw] gap-3 rounded-sm rounded-b-lg mb-3"
                       >
                         <div className="skeleton h-44 w-full rounded-none"></div>
                         <div className="px-2 overflow-hidden ">
