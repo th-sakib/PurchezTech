@@ -110,7 +110,6 @@ const Checkout = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
 

@@ -170,7 +170,7 @@ export const router = createBrowserRouter([
   // payment success
 
   {
-    path: "/payment/success",
+    path: "/payment/success/",
     element: (
       <ProtectedRoute>
         <PaymentSuccess />
@@ -178,7 +178,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/payment/fails",
+    path: "/payment/fails/",
     element: (
       <ProtectedRoute>
         <PaymentFails />
@@ -186,7 +186,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/payment/cancel",
+    path: "/payment/cancel/",
     element: (
       <ProtectedRoute>
         <PaymentCancel />

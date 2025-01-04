@@ -451,10 +451,10 @@ export const apiSlice = createApi({
 
     // update order status - PATCH
     updateOrderStatus: builder.mutation({
-      query: ({ userId, status }) => ({
+      query: ({ tranId, status }) => ({
         url: `${SHOP_URL}/update-status`,
         method: "PATCH",
-        body: { userId, status },
+        body: { tranId, status },
       }),
 
       invalidatesTags: ["Order"],

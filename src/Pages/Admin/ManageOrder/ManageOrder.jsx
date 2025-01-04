@@ -18,26 +18,26 @@ const ManageOrder = () => {
     document.getElementById("orderDetailsModal").showModal();
   };
 
-  const handleUpdate = async (user, value) => {
-    try {
-      const res = await updateOrder({ userId: user, status: value });
-      setCurrentStatus(value);
-      if (res?.statusCode === 200) {
+  const handleUpdate = async (tranId, value) => {
+    if (value !== "default") {
+      try {
+        const res = await updateOrder({ tranId, status: value });
+        setCurrentStatus(value);
         toast.fire({
           title: "Status updated successfully",
           icon: "success",
           timer: 3000,
         });
+      } catch (error) {
+        console.log(error?.data?.message);
       }
-    } catch (error) {
-      console.log(error?.data?.message);
     }
   };
 
   return (
     <div className="m-4">
       <h1 className="text-3xl font-bold mb-6 ml-4 md:text-center text-gray-700">
-        My Orders
+        Manage Orders
       </h1>
       <div className="overflow-x-auto mr-16 md:mr-0">
         <table className="table">
@@ -163,10 +163,18 @@ const ManageOrder = () => {
               <select
                 name="orderStatus"
                 id="orderStatus"
+                defaultValue="default"
+                className="w-full border border-additional-color/80 mt-2"
                 onChange={(e) =>
-                  handleUpdate(selectedOrder?.user, e.target.value)
+                  handleUpdate(
+                    selectedOrder?.paymentDetails?.tranID,
+                    e.target.value
+                  )
                 }
               >
+                <option value="default" disabled className="capitalize">
+                  Select to change order status
+                </option>
                 <option value="Processing">Processing</option>
                 <option value="Shipped">Shipped</option>
                 <option value="Delivered">Delivered</option>
