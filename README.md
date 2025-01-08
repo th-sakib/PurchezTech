@@ -116,9 +116,11 @@ We welcome contributions! To contribute:
 
 ---
 
-## License
+## Useful Links
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Live Link: [purchezTech](https://purcheztech.onrender.com)
+Client repo: [purchezTech-client](https://github.com/th-sakib/PurchezTech)
+server repo: [purchezTech-server](https://github.com/th-sakib/PurchezTech-server)
 
 ---
 
@@ -127,5 +129,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 For inquiries or support, reach out to **TH Sakib**:
 
 - GitHub: [@th-sakib](https://github.com/th-sakib)
-- Email: [th.sakib@example.com](mailto:th.sakib@example.com)
-
+- Email: [mdthamidulhasansakib@gmail.com](mailto:mdthamidulhasansakib@gmail.com)
