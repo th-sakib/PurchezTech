@@ -163,6 +163,7 @@ const Profile = () => {
               type="file"
               name="avatar"
               id="avatar"
+              accept="image/png, image/gif, image/jpeg"
               className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
               onChange={handleFile}
             />
