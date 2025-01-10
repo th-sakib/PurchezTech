@@ -6,7 +6,7 @@ import {
 import { useSelector } from "react-redux";
 import { TiDelete } from "react-icons/ti";
 import Button from "../../Components/Button";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import { FaAngleDown, FaAngleUp, FaArrowRight } from "react-icons/fa";
 import NoProduct from "../../Components/NoProduct";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "../../lib/sweetAlert/toast";
@@ -272,13 +272,19 @@ const Cart = () => {
           </Link>
         </div>
 
-        <div className="bg-white p-2 shadow-lg">
+        <div className="bg-white p-2 shadow-lg flex join">
           <input
             type="text"
             name="coupon"
-            className="border border-accent-color w-full h-10 text-center"
+            className="border border-accent-color w-full h-10 pl-3 focus-visible:outline-none"
             placeholder="Enter your coupon here"
           />
+          <button
+            className="text-sm rounded-none bg-accent-color hover:bg-on-hover w-16 h-10 text-white px-1 flex justify-center items-center"
+            type="submit"
+          >
+            <FaArrowRight className="" />
+          </button>
         </div>
       </section>
     </div>
