@@ -21,14 +21,18 @@ const Main = () => {
       try {
         await getAuthenticityTrigger();
       } catch (error) {
+        console.log(error);
         dispatch(clearUser());
       }
     };
 
-    checkAuth();
-  }, [getAuthenticityTrigger, dispatch]);
+    if (!userRole) {
+      console.log("ssfs");
+      checkAuth();
+    }
+  }, [getAuthenticityTrigger, dispatch, userRole]);
 
-  if (isLoading || isUninitialized) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <span className="loading loading-infinity loading-lg"></span>

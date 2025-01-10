@@ -1,11 +1,6 @@
 import { useSelector } from "react-redux";
-import {
-  useCancelOderMutation,
-  useFetchCancelledOrderQuery,
-  useFetchOrderQuery,
-} from "../../redux/api/apiSlice.js";
+import { useFetchCancelledOrderQuery } from "../../redux/api/apiSlice.js";
 import { useState } from "react";
-import { RxCross2 } from "react-icons/rx";
 
 const Cancelled = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -23,7 +18,7 @@ const Cancelled = () => {
   return (
     <div className="m-4">
       <h1 className="text-3xl font-bold mb-6 ml-4 md:text-center text-gray-700">
-        My Orders
+        Cancelled Products
       </h1>
       <div className="overflow-x-auto mr-16 lg:mr-0">
         <table className="table">
