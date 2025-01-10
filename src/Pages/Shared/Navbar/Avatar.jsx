@@ -8,6 +8,7 @@ import { FaUser, FaUserGear } from "react-icons/fa6";
 import { FaSignOutAlt, FaShoppingBag } from "react-icons/fa";
 
 import { useState } from "react";
+import { BsCartXFill } from "react-icons/bs";
 
 const Avatar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -86,6 +87,17 @@ const Avatar = () => {
                   <FaShoppingBag />
                 )}
                 Orders
+              </Link>
+            </li>
+
+            <li onClick={() => setIsDrawerOpen(false)}>
+              <Link to="/user/cancelled">
+                {location?.pathname.includes("/admin") ? (
+                  <FaShoppingBag />
+                ) : (
+                  <BsCartXFill />
+                )}
+                Cancelled Products
               </Link>
             </li>
 

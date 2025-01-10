@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { useFetchCancelledOrderQuery } from "../../redux/api/apiSlice.js";
 import { useState } from "react";
+import { MdOutlineRemoveShoppingCart } from "react-icons/md";
+import { TbCurrencyTaka, TbListDetails } from "react-icons/tb";
 
 const Cancelled = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -17,40 +19,83 @@ const Cancelled = () => {
 
   return (
     <div className="m-4">
-      <h1 className="text-3xl font-bold mb-6 ml-4 md:text-center text-gray-700">
+      <h1 className="text-3xl font-bold mb-2 ml-4 md:text-center text-gray-700">
         Cancelled Products
       </h1>
-      <div className="overflow-x-auto mr-16 lg:mr-0">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>Order Id</th>
-              <th>Order Date</th>
-              <th>Order Price(BDT)</th>
-              <th>Order Items</th>
-              <th>action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orderList?.data?.order?.map((item) => (
-              <tr key={item?._id}>
-                <td>{item?._id}</td>
-                <td>{item?.createdAt.split("T")[0]}</td>
-                <td>{item?.totalPrice}</td>
-                <td>{item?.orderItems.length}</td>
-                <th>
-                  <button
-                    className="btn bg-accent-color text-white hover:bg-on-hover"
-                    onClick={() => handleDetailClick(item)}
+      <div className="">
+        {/* order cards */}
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 justify-center items-center capitalize">
+          {orderList?.data?.order?.map((item) => (
+            <div
+              key={item?._id}
+              className="rounded-lg border border-accent-color m-3 p-4 space-y-1 relative"
+            >
+              {/* items count  */}
+              <span className="absolute right-2 top-2 font-bold bg-accent-color rounded-full px-2 text-white text-sm">
+                {item?.orderItems.length} items
+              </span>
+              {/* order number */}
+              <div>
+                <h3 className="text-faded-text font-bold text-xs">
+                  Order number:
+                </h3>
+                <p className="font-bold text-sm">{item?._id}</p>
+              </div>
+              {/* order date */}
+              <div>
+                <h3 className="text-faded-text font-bold text-xs">
+                  Order date:
+                </h3>
+                <p className="font-bold text-sm">
+                  {item?.createdAt.split("T")[0]} -{" "}
+                  {item?.createdAt.split("T")[1].split(".")[0]}
+                </p>
+              </div>
+              {/* order status */}
+              <div className="flex justify-between items-end">
+                <div>
+                  <h3 className="text-faded-text font-bold text-xs mb-1">
+                    Order Status:
+                  </h3>
+                  <p
+                    className={`badge badge-outline ${
+                      item?.orderStatus === "Processing"
+                        ? "text-warning"
+                        : item?.orderStatus === "Cancelled"
+                        ? "text-error"
+                        : item?.orderStatus === "Delivered"
+                        ? "text-accent-color"
+                        : item?.orderStatus === "Shipped"
+                        ? "text-success"
+                        : ""
+                    }`}
                   >
-                    details
-                  </button>
-                </th>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    {item?.orderStatus}
+                  </p>
+                </div>
+                {/* price  */}
+                <div className="font-bold flex items-center">
+                  <TbCurrencyTaka className="text-xl" /> {item?.totalPrice}
+                </div>
+              </div>
+
+              <div className="divider" />
+              {/* buttons  */}
+              <div className="flex justify-around items-center">
+                <button
+                  type="button"
+                  className="flex flex-col justify-center items-center gap-0.5 hover:text-accent-color"
+                  onClick={() => handleDetailClick(item)}
+                >
+                  <TbListDetails />
+                  <p className="text-gray-500 font-bold font-secondaryFont text-xs">
+                    Details
+                  </p>
+                </button>
+              </div>
+            </div>
+          ))}
+        </section>
 
         {/* modal */}
         <dialog id="orderDetailsModal" className="modal capitalize">

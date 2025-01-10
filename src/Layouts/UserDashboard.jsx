@@ -58,14 +58,14 @@ const UserDashboard = () => {
         </div>
       </div>
 
-      <div className="font-sans text-primary-color flex flex-row-reverse justify-end overflow-hidden bg-white">
+      <div className="font-sans text-primary-color flex flex-row-reverse justify-end bg-white">
         {/* Second part of layout (non sidebar) */}
-        <div className="w-full h-[89.7vh] bg-white">
+        <div className="w-full bg-white">
           <Outlet />
         </div>
 
         {/* Side bar - drawer */}
-        <nav className="menu text-base-content py-9 md:py-4 px-2 bg-white h-fit m-2 md:ml-3  md:block md:min-w-[27%] lg:min-w-[20%] rounded-full md:rounded-lg border border-accent-color ">
+        <nav className="sticky  top-0 left-0 menu text-base-content py-9 md:py-4 px-2 bg-white h-fit m-2 md:ml-3  md:block md:min-w-[27%] lg:min-w-[20%] rounded-full md:rounded-lg border border-accent-color ">
           {sidebarContentLinks.map((item) => (
             <li key={item.id}>
               <NavLink to={item.path}>
