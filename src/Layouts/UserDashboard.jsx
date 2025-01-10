@@ -1,6 +1,5 @@
 import { BsCartXFill, BsFillCartCheckFill } from "react-icons/bs";
 import { IoLogOut } from "react-icons/io5";
-import { MdRemoveShoppingCart } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
 import SmallDNav from "../Pages/Shared/Navbar/SmallDNav/SmallDNav";
@@ -59,14 +58,14 @@ const UserDashboard = () => {
         </div>
       </div>
 
-      <div className="font-sans text-primary-color flex flex-row-reverse justify-end overflow-hidden">
+      <div className="font-sans text-primary-color flex flex-row-reverse justify-end overflow-hidden bg-white">
         {/* Second part of layout (non sidebar) */}
-        <div className="w-full h-[89.7vh]">
+        <div className="w-full h-[89.7vh] bg-white">
           <Outlet />
         </div>
 
         {/* Side bar - drawer */}
-        <nav className="menu text-base-content min-h-full py-9 md:py-4 px-2 bg-white h-fit m-2 md:m-0 shadow-2xl md:shadow-none  md:h-screen md:block md:min-w-[27%] lg:min-w-[25%] rounded-full md:rounded-none border border-accent-color md:border-none">
+        <nav className="menu text-base-content py-9 md:py-4 px-2 bg-white h-fit m-2 md:ml-3  md:block md:min-w-[27%] lg:min-w-[20%] rounded-full md:rounded-lg border border-accent-color ">
           {sidebarContentLinks.map((item) => (
             <li key={item.id}>
               <NavLink to={item.path}>
