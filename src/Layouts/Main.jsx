@@ -26,10 +26,7 @@ const Main = () => {
       }
     };
 
-    if (!userRole) {
-      console.log("ssfs");
-      checkAuth();
-    }
+    if (!userRole) checkAuth();
   }, [getAuthenticityTrigger, dispatch, userRole]);
 
   if (isLoading) {

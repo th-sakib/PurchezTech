@@ -1,51 +1,94 @@
-import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { toast } from "../../lib/sweetAlert/toast";
 
 const Contact = () => {
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+
+    formData.append("access_key", import.meta.env.VITE_WEB3Form_ACCESS_KEY);
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      toast.fire({
+        title: "Email sent!",
+        icon: "success",
+      });
+      event.target.reset();
+    } else {
+      console.log("error while sending mail");
+      console.log("Error", data);
+    }
+  };
+
   return (
-    <div className="min-h-[92vh] bg-[#fff] flex items-center justify-center px-4 py-12">
-      <div className="container mx-auto flex flex-wrap items-center justify-between">
+    <div className="min-h-[92vh] bg-[#fff] flex items-center justify-center px-4 py-12 lg:py-0 lg:-my-6">
+      <div className="container mx-auto flex flex-wrap justify-between">
         {/* Left Side Content */}
-        <div className="w-full lg:w-[30%] px-6 mb-8 lg:mb-0 ">
-          <h2 className="text-3xl font-extrabold text-gray-800 mb-4">
-            Connect With Us
+        <div className="w-full lg:w-[40%] px-6 mb-8 lg:mb-0 ">
+          <h2 className="text-2xl font-extrabold text-gray-800 mb-4">
+            Frequently asked questions
           </h2>
-          <p className="text-sm text-gray-600 mb-6">
-            Have questions or feedback? We're here to help. Use the form to send
-            us a message, or reach us directly via the provided contact details
-            below.
-          </p>
-          <div className="text-gray-700">
-            <p className="mb-4 flex items-center">
-              <FaEnvelope className="text-accent-color mr-2" />
-              <span className="font-semibold">Email:</span>
-              purcheztech@customercare.com
-            </p>
-            <p className="mb-4 flex items-center text-sm">
-              <FaPhoneAlt className="text-accent-color mr-2" />
-              <span className="font-semibold mr-1">Phone:</span> +1 (555)
-              123-4567
-            </p>
-            <p className="mb-4 flex items-center text-xs">
-              <FaMapMarkerAlt className="text-accent-color mr-2" />
-              <span className="font-semibold mr-1">Address: </span>Planet Earth,
-              Solar System, Milky Way Galaxy, Universe.
-            </p>
-            <p className="text-sm text-gray-500">
-              Our support team is available Monday through Friday from 9 AM to 5
-              PM PST.
-            </p>
+          <div className="collapse collapse-plus mb-2 bg-base-200 rounded-sm">
+            <input type="radio" name="my-accordion-3" defaultChecked />
+            <div className="collapse-title text-xl font-medium">
+              What is Purchez Tech?
+            </div>
+            <div className="collapse-content">
+              <p>
+                Purchez Tech is a leading e-commerce platform that offers a wide
+                range of technology products, including laptops, smartphones,
+                gadgets, accessories, and more.
+              </p>
+            </div>
+          </div>
+          <div className="collapse collapse-plus mb-2 bg-base-200 rounded-sm">
+            <input type="radio" name="my-accordion-3" />
+            <div className="collapse-title text-xl font-medium">
+              Where is Purchez Tech based?
+            </div>
+            <div className="collapse-content">
+              <p>
+                Purchez Tech operates online and serves customers globally. For
+                specific details about our offices or shipping warehouses,
+                contact us
+              </p>
+            </div>
+          </div>
+          <div className="collapse collapse-plus bg-base-200 rounded-sm">
+            <input type="radio" name="my-accordion-3" />
+            <div className="collapse-title text-xl font-medium">
+              Can I modify or cancel my order after placing it?
+            </div>
+            <div className="collapse-content">
+              <p>
+                Orders can be modified or canceled anytime them. After shipping,
+                the order is processed for shipping and cannot be changed.
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Right Side Form */}
-        <div className="w-full lg:w-[70%] px-6">
-          <div className="bg-transparent md:p-8">
-            <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="w-full lg:w-[60%] px-6">
+          <h2 className="text-2xl font-extrabold text-gray-800 mb-4">
+            Contact us
+          </h2>
+          <div className="bg-transparent">
+            <form
+              onSubmit={onSubmit}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+            >
               <div className="relative col-span-1">
                 <input
                   type="text"
                   id="firstName"
-                  name="firstName"
+                  name="name"
                   placeholder="First Name"
                   required
                   className="w-full px-4 py-3 bg-faded-text/20 focus:outline-none focus:ring-2 focus:border-accent-color/50 sm:text-base"
