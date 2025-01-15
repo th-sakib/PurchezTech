@@ -50,7 +50,7 @@ const Navbar = () => {
 
   const navOptions = (
     <>
-      <li className="hover:text-[#FFC107]">
+      <li className="hover:text-[#000000bb]">
         <NavLink to="/">
           {({ isActive }) => (
             <div className="flex justify-center items-center space-x-1 px-1">
@@ -59,7 +59,7 @@ const Navbar = () => {
           )}
         </NavLink>
       </li>
-      <li className="active:bg-transparent hover:text-[#FFC107]">
+      <li className="active:bg-transparent hover:text-[#000000bb]">
         <NavLink to={"/all-products"}>
           {({ isActive }) => (
             <div className="flex justify-center items-center space-x-1 px-1">
@@ -69,7 +69,7 @@ const Navbar = () => {
           )}
         </NavLink>
       </li>
-      <li className="hover:text-[#FFC107]">
+      <li className="hover:text-[#000000bb]">
         <NavLink to="/contact">
           {({ isActive }) => (
             <div className="flex justify-center items-center space-x-1 px-1">
@@ -79,31 +79,25 @@ const Navbar = () => {
           )}
         </NavLink>
       </li>
-      {/* <li className="hover:text-[#FFC107]">
-        <NavLink to="/about-us">
-          {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-1 px-1">
-              {/* {isActive ? <BiSolidInfoSquare /> : <BiInfoSquare />}  }
-              <p>About</p>
-            </div>
-          )}
-        </NavLink>
-      </li> */}
     </>
   );
 
   return (
-    <div className="navbar p-0 bg-white text-black justify-center lg:max-w-full mx-auto items-center">
+    <div className="navbar p-0 bg-white text-black justify-center xl:max-w-[1080px] mx-auto items-center">
       {/* navbar start  */}
       <section className="hidden md:flex">
         {/* logo section  */}
         <section className="flex">
           <Link>
-            <img src={logo} alt="PurchezTech Logo" className="h-9 w-9" />
+            <img
+              src={logo}
+              alt="PurchezTech Logo"
+              className="h-auto w-9 aspect-square"
+            />
           </Link>
           <Link
             to={"/"}
-            className="-mx-2 mt-[.6rem] text-xl font-josefin_sans font-extrabold"
+            className="-mx-4 logoMd:-mx-2 mt-[.7rem] logoMd:mt-[.6rem] text-xl font-josefin_sans font-extrabold"
           >
             <span className="">urch</span>
             {/* <span className="text-xl font-sankofa px-1 inline-block transform translate-y-[-2px] bg-textC text-white mt-2 font-normal">
@@ -117,7 +111,7 @@ const Navbar = () => {
       </section>
 
       {/* center of navbar  */}
-      <section className="w-full md:w-2/5 lg:w-2/4 xl:w-7/12 px-6 lg:px-0 box-border">
+      <section className="w-full md:w-[45%] lg:w-2/4 xl:w-7/12 px-6 lg:px-0 box-border">
         {/* search box  */}
         <div
           className={`flex rounded-none items-center justify-center relative lg:ml-6 w-full`}
@@ -156,12 +150,12 @@ const Navbar = () => {
       {/* nav end  */}
       <section className="hidden md:inline-flex md:-ml-4 lg:ml-0">
         {/* menu items */}
-        <nav className="uppercase lg:mx-2 xl:mx-4 hidden md:inline-flex text-[#363634] text-sm">
+        <nav className="uppercase lg:mx-2 xl:mx-4 hidden md:inline-flex text-[#00000088] font-secondaryFont font-extrabold text-sm">
           {navOptions}
         </nav>
 
         {/* cart and login button  */}
-        <div className="flex lg:space-x-5 xl:space-x-7 items-center">
+        <div className="flex lg:space-x-4 items-center">
           {/* cart icon  */}
           <Link to="/cart" className="relative group hover:text-on-hover">
             <HiOutlineShoppingCart className={`text-xl cursor-pointer`} />
@@ -172,7 +166,7 @@ const Navbar = () => {
           {/* wishlist icon */}
           <Link
             to="/wishlist"
-            className="relative group hover:text-on-hover mx-3"
+            className="relative group hover:text-on-hover mx-2"
           >
             <HiHeart className={`text-xl cursor-pointer`} />
             <span className="absolute -top-2 -right-2 text-xs bg-black text-white w-4 h-4 rounded-full font-extrabold group-hover:bg-on-hover group-hover:text-white text-center ">

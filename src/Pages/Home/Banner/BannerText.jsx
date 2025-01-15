@@ -14,7 +14,7 @@ const BannerText = () => {
           <br className="hidden md:inline " />
           at PurchezTech
         </h1>
-        <p className="text-balance leading-5 lg:leading-6 ">
+        <p className="text-balance">
           PurchezTech makes buying high-quality tech accessories easy, reliable,
           and convenient for work, gaming, and more.
         </p>

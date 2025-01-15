@@ -3,7 +3,7 @@ import bannerImg from "../../../assets/images/Banner-image/bannerImage.png";
 
 const Banner = () => {
   return (
-    <div className="flex flex-col md:flex-row w-full justify-center items-center md:max-w-[85%] mx-auto my-4">
+    <div className="flex flex-col md:flex-row w-full justify-center items-center my-4">
       {/* text section  */}
       <div className="w-full">
         <BannerText />

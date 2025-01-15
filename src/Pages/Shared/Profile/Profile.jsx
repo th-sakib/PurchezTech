@@ -139,7 +139,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="my-4 md:ml-7">
+    <div className="ml-8 my-4 md:ml-7">
       {/* information showcase */}
       <div className="flex flex-col sm:flex-row items-center sm:gap-10">
         {/* image  */}
@@ -229,7 +229,7 @@ const Profile = () => {
       </div>
 
       {/* password  */}
-      <div className="border border-accent-color rounded-lg px-10 py-5 mt-2 mr-10">
+      <div className="border border-accent-color rounded-lg px-3 sm:px-10 py-5 mt-2 mr-10">
         <form onSubmit={handlePassSubmit(handlePassUpdate)}>
           <h1 className="text-center font-bold text-lg my-4">
             Change Password

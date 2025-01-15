@@ -43,7 +43,7 @@ const Order = () => {
         <section className="">
           {isLoading ? (
             // loading
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 justify-center items-center">
+            <div className="grid grid-cols-1 orderSm:grid-cols-2 userDMd:grid-cols-1 userDLg:grid-cols-2 xl:grid-cols-3 gap-2 justify-center items-center">
               {Array(8)
                 .fill()
                 .map((_, idx) => (
@@ -104,13 +104,16 @@ const Order = () => {
               <h2 className="text-xl font-bold">
                 You didn't place any orders yet
               </h2>
-              <Link className="btn btn-outline rounded-lg border-accent-color hover:bg-accent-color">
+              <Link
+                to="/all-products"
+                className="btn btn-outline rounded-lg border-accent-color hover:bg-accent-color"
+              >
                 Go for shop
               </Link>
             </div>
           ) : (
-            // not loading
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 justify-center items-center w-full">
+            // actual orders
+            <div className="grid grid-cols-1 orderSm:grid-cols-2 userDMd:grid-cols-1 userDLg:grid-cols-2 xl:grid-cols-3 gap-0 md:gap-2 justify-center items-center w-full">
               {orderList?.data?.order?.map((item) => (
                 <div
                   key={item?._id}
@@ -197,7 +200,7 @@ const Order = () => {
 
         {/* modal */}
         <dialog id="orderDetailsModal" className="modal capitalize">
-          <div className="modal-box rounded-sm  overflow-auto">
+          <div className="modal-box rounded-sm text-white bg-gray-300/20 backdrop-blur-md overflow-auto">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button className="btn btn-sm btn-circle btn-ghost absolute right-1 top-0">
@@ -207,7 +210,7 @@ const Order = () => {
             {/* order details  */}
             {selectedOrder && (
               <>
-                <div className="flex gap-3 flex-col">
+                <div className="flex gap-3 flex-col mt-1">
                   <div className="flex justify-between">
                     <p>order number</p>
                     <p>{selectedOrder?._id}</p>

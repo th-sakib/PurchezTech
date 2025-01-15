@@ -26,7 +26,7 @@ const Main = () => {
       }
     };
 
-    if (!userRole) checkAuth();
+    if (!userRole || userRole === "admin") checkAuth();
   }, [getAuthenticityTrigger, dispatch, userRole]);
 
   if (isLoading) {
@@ -39,7 +39,7 @@ const Main = () => {
 
   return userRole !== "admin" ? (
     <div className="relative">
-      <div className="mx-auto sticky top-0 left-0 z-50 border-b border-slate-300 bg-white">
+      <div className="mx-auto sticky top-0 left-0 z-50 border-b bg-white/80 backdrop-blur-md">
         <Navbar></Navbar>
       </div>
       {/* small devices navbar  */}

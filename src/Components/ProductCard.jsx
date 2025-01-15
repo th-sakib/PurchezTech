@@ -17,7 +17,7 @@ import {
 } from "../redux/api/apiSlice";
 import { toast } from "../lib/sweetAlert/toast";
 import Swal from "sweetalert2";
-import { replace, useNavigate } from "react-router-dom";
+import { replace, useLocation, useNavigate } from "react-router-dom";
 
 const ProductCard = ({
   product, // this is coming from product component
@@ -26,6 +26,7 @@ const ProductCard = ({
   setIsEditMode,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const dispatch = useDispatch();
   const userRole = useSelector(selectUserRole);
@@ -238,9 +239,13 @@ const ProductCard = ({
           </div>
 
           {/* image section  */}
-          <figure className="h-36 md:h-48 group">
+          <figure
+            className={`h-36 md:h-44 group ${
+              location.pathname === "/all-products" ? "xl:h-36" : "xl:h-44"
+            }`}
+          >
             <img
-              className="h-44 group-hover:scale-105 transition-all duration-300"
+              className="h-40 group-hover:scale-105 transition-all duration-300"
               src={imageURL}
               alt="Shoes"
             />

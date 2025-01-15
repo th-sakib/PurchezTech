@@ -49,23 +49,24 @@ const UserDashboard = () => {
   };
 
   return (
-    <>
-      <div className="">
+    <div className="bg-white">
+      {/* lg devices nav  */}
+      <div className="mx-auto sticky top-0 left-0 z-50 border-b border-slate-300 bg-white">
         <Navbar />
-        {/* small devices navbar  */}
-        <div className="fixed z-50 bottom-2 left-2/4 -translate-x-2/4  md:hidden">
-          <SmallDNav />
-        </div>
+      </div>
+      {/* small devices navbar  */}
+      <div className="fixed z-50 bottom-2 left-2/4 -translate-x-2/4  md:hidden">
+        <SmallDNav />
       </div>
 
-      <div className="font-sans text-primary-color flex flex-row-reverse justify-end bg-white">
+      <div className="md:max-w-[88%] lg:max-w-[83%] xl:max-w-[1080px] mx-auto font-sans text-primary-color flex flex-row-reverse md:gap-12 justify-end bg-white pt-5">
         {/* Second part of layout (non sidebar) */}
         <div className="w-full bg-white">
           <Outlet />
         </div>
 
         {/* Side bar - drawer */}
-        <nav className="sticky  top-0 left-0 menu text-base-content py-9 md:py-4 px-2 bg-white h-fit m-2 md:ml-3  md:block md:min-w-[27%] lg:min-w-[20%] rounded-full md:rounded-lg border border-accent-color ">
+        <nav className="fixed top-16 menu text-base-content py-9 md:py-4 px-2 bg-white h-fit md:h-[85vh] m-2 md:ml-3  md:block md:min-w-48 rounded-full md:rounded-lg border border-accent-color">
           {sidebarContentLinks.map((item) => (
             <li key={item.id}>
               <NavLink to={item.path}>
@@ -95,8 +96,9 @@ const UserDashboard = () => {
             <IoLogOut className="h-4 w-4" />
           </button>
         </nav>
+        <div className="min-w-14 md:min-w-40"></div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -5,7 +5,7 @@ import NewlyArrivals from "../NewlyArrivals/NewlyArrivals";
 
 const Home = () => {
   return (
-    <div className="container mx-auto px-2">
+    <div className="mx-auto px-2 xs:px-0 xs:max-w-[82%] bannerMd:max-w-[78%] lg:max-w-[80%] xl:max-w-[1025px]">
       {/* bg-gradient-to-b from-backgroundC to-white */}
       <div className="relative overflow-hidden bg-background-color">
         <Banner />

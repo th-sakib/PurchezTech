@@ -27,10 +27,10 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-[92vh] bg-[#fff] flex items-center justify-center px-4 py-12 lg:py-0 lg:-my-6">
-      <div className="container mx-auto flex flex-wrap justify-between">
+    <div className="bg-[#fff] flex items-start justify-center px-4 py-4">
+      <div className="md:max-w-[82%] bannerMd:max-w-[78%] lg:max-w-[82%] xl:max-w-[1025px] mx-auto flex flex-wrap justify-between">
         {/* Left Side Content */}
-        <div className="w-full lg:w-[40%] px-6 mb-8 lg:mb-0 ">
+        <div className="w-full lg:w-[45%] px-6 mb-8 lg:mb-0 ">
           <h2 className="text-2xl font-extrabold text-gray-800 mb-4">
             Frequently asked questions
           </h2>
@@ -40,7 +40,7 @@ const Contact = () => {
               What is Purchez Tech?
             </div>
             <div className="collapse-content">
-              <p>
+              <p className="text-sm">
                 Purchez Tech is a leading e-commerce platform that offers a wide
                 range of technology products, including laptops, smartphones,
                 gadgets, accessories, and more.
@@ -53,7 +53,7 @@ const Contact = () => {
               Where is Purchez Tech based?
             </div>
             <div className="collapse-content">
-              <p>
+              <p className="text-sm">
                 Purchez Tech operates online and serves customers globally. For
                 specific details about our offices or shipping warehouses,
                 contact us
@@ -66,7 +66,7 @@ const Contact = () => {
               Can I modify or cancel my order after placing it?
             </div>
             <div className="collapse-content">
-              <p>
+              <p className="text-sm">
                 Orders can be modified or canceled anytime them. After shipping,
                 the order is processed for shipping and cannot be changed.
               </p>
@@ -75,7 +75,7 @@ const Contact = () => {
         </div>
 
         {/* Right Side Form */}
-        <div className="w-full lg:w-[60%] px-6">
+        <div className="w-full lg:w-[55%] px-6">
           <h2 className="text-2xl font-extrabold text-gray-800 mb-4">
             Contact us
           </h2>

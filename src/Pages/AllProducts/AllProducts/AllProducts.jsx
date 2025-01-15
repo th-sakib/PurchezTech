@@ -101,9 +101,9 @@ const AllProducts = () => {
   }
   return (
     <>
-      <div className="font-secondaryFont w-[98%] mx-auto py-4 bg-background-color flex lg:gap-6">
+      <div className="font-secondaryFont max-w-[82%] bannerMd:max-w-[78%] lg:max-w-[82%] xl:max-w-[1025px] mx-auto py-4 bg-background-color flex lg:gap-6">
         {/* filter section  */}
-        <section className="hidden lg:block w-[15%]">
+        <section className="hidden lg:block w-44">
           <FilterOptions
             setBrand={setBrand}
             brand={brand}
@@ -246,7 +246,7 @@ const AllProducts = () => {
               </div>
             ) : (
               // ======= product card section =======
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-5 justify-center items-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-5 justify-center items-center">
                 {productData?.map((product) => (
                   <div key={product._id}>
                     <ProductCard isLoading={isLoading} product={product} />

@@ -18,6 +18,14 @@ export default {
         "additional-color": "#F4A261", // Burnt Orange - for highlights, icons, and calls to action, adding a warm yet earthy contrast
         "faded-text": "#aaa", // for descriptions of product
       },
+      screens: {
+        xs: "400px",
+        orderSm: "615px",
+        bannerMd: "950px",
+        userDMd: "768px",
+        userDLg: "900px",
+        logoMd: "807px",
+      },
     },
   },
   plugins: [daisyui],
