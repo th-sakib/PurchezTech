@@ -9,6 +9,7 @@ import { FaSignOutAlt, FaShoppingBag } from "react-icons/fa";
 
 import { useState } from "react";
 import { BsCartXFill } from "react-icons/bs";
+import { HiHeart } from "react-icons/hi";
 
 const Avatar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -87,6 +88,17 @@ const Avatar = () => {
                   <FaShoppingBag />
                 )}
                 Orders
+              </Link>
+            </li>
+
+            <li onClick={() => setIsDrawerOpen(false)}>
+              <Link to="/wishlist">
+                {location?.pathname.includes("/admin") ? (
+                  <HiHeart />
+                ) : (
+                  <HiHeart />
+                )}
+                Wishlist
               </Link>
             </li>
 

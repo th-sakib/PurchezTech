@@ -13,10 +13,10 @@ import {
   useFetchCartQuery,
   useFetchWishlistQuery,
 } from "../../../redux/api/apiSlice.js";
-import { HiHeart } from "react-icons/hi2";
 
 const Navbar = () => {
   const [localSearch, setLocalSearch] = useState("");
+  const [searchEnabled, setSearchEnabled] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -32,15 +32,13 @@ const Navbar = () => {
     isFetching: cartFetching,
   } = useFetchCartQuery({ userId: userInfo?._id });
 
-  const {
-    data: wishlistInfo,
-    isLoading: wishlistLoading,
-    isFetching: wishlistFetching,
-  } = useFetchWishlistQuery({ userId: userInfo?._id });
-
   const handleSearch = () => {
-    dispatch(setSearchTerm(localSearch));
-    if (localSearch) navigate("/all-products");
+    if (localSearch !== "") {
+      dispatch(setSearchTerm(localSearch));
+      if (localSearch) navigate("/all-products");
+    } else {
+      setSearchEnabled(!searchEnabled);
+    }
   };
 
   const handleSearchClear = () => {
@@ -50,7 +48,7 @@ const Navbar = () => {
 
   const navOptions = (
     <>
-      <li className="hover:text-[#000000bb]">
+      <li className="hover:text-black text-[#000000c3]">
         <NavLink to="/">
           {({ isActive }) => (
             <div className="flex justify-center items-center space-x-1 px-1">
@@ -59,7 +57,7 @@ const Navbar = () => {
           )}
         </NavLink>
       </li>
-      <li className="active:bg-transparent hover:text-[#000000bb]">
+      <li className="active:bg-transparent hover:text-black text-[#000000c3]">
         <NavLink to={"/all-products"}>
           {({ isActive }) => (
             <div className="flex justify-center items-center space-x-1 px-1">
@@ -69,7 +67,7 @@ const Navbar = () => {
           )}
         </NavLink>
       </li>
-      <li className="hover:text-[#000000bb]">
+      <li className="hover:text-black text-[#000000c3]">
         <NavLink to="/contact">
           {({ isActive }) => (
             <div className="flex justify-center items-center space-x-1 px-1">
@@ -83,9 +81,9 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar p-0 bg-white text-black justify-center xl:max-w-[1080px] mx-auto items-center">
+    <div className="flex py-2 bg-white text-black justify-between max-w-[90vw] xl:max-w-[1080px] mx-auto items-center">
       {/* navbar start  */}
-      <section className="hidden md:flex">
+      <section className="hidden md:flex min-w-[15rem]">
         {/* logo section  */}
         <section className="flex">
           <Link>
@@ -111,17 +109,27 @@ const Navbar = () => {
       </section>
 
       {/* center of navbar  */}
-      <section className="w-full md:w-[45%] lg:w-2/4 xl:w-7/12 px-6 lg:px-0 box-border">
+      <section className="flex-grow mx-auto justify-center items-center flex mt-1 w-full transition-all duration-300">
+        {/* menu items */}
+        <nav className="uppercase hidden md:inline-flex text-sm font-bold md:mr-0 lg:mr-2 md:space-x-3">
+          {navOptions}
+        </nav>
+      </section>
+
+      {/* nav end  */}
+      <section className={`md:flex gap-2 ${!searchEnabled ? "w-full" : ""}`}>
         {/* search box  */}
         <div
-          className={`flex rounded-none items-center justify-center relative lg:ml-6 w-full`}
+          className={`flex rounded-none items-center justify-end relative ml-auto w-[90vw] md:w-auto ${
+            !searchEnabled ? "w-[80%]" : ""
+          }`}
         >
           <input
             type="text"
             name="search-box"
-            className={
-              "input rounded-none focus:outline-none w-full h-10 border-black focus:border-on-hover"
-            }
+            className={`input rounded-none focus:outline-none h-10 border-black focus:border-on-hover transition-all duration-300 ${
+              searchEnabled ? "w-full md:w-0 md:border-none " : "w-full "
+            }`}
             placeholder="Search for your desired Products"
             onChange={(e) => setLocalSearch(e.target.value)}
             value={localSearch}
@@ -138,24 +146,26 @@ const Navbar = () => {
             />
           )}
           <button
-            className="px-3 bg-black border-black
-           rounded-none min-h-10 h-10 hover:border-additional-color group/search"
+            className={`px-3 
+           rounded-none min-h-10 h-10 hover:border-additional-color group/search ${
+             !searchEnabled
+               ? "bg-black border-black"
+               : "bg-black text-white lg:bg-white lg:text-black"
+           }`}
             onClick={handleSearch}
           >
-            <IoSearchSharp className="text-base text-white group-hover/search:text-additional-color" />
+            <IoSearchSharp
+              className={`group-hover/search:text-additional-color ${
+                !searchEnabled
+                  ? "text-white text-base"
+                  : "lg:text-black lg:text-xl"
+              }`}
+            />
           </button>
         </div>
-      </section>
-
-      {/* nav end  */}
-      <section className="hidden md:inline-flex md:-ml-4 lg:ml-0">
-        {/* menu items */}
-        <nav className="uppercase lg:mx-2 xl:mx-4 hidden md:inline-flex text-[#00000088] font-secondaryFont font-extrabold text-sm">
-          {navOptions}
-        </nav>
 
         {/* cart and login button  */}
-        <div className="flex lg:space-x-4 items-center">
+        <div className="hidden md:flex space-x-4 items-center">
           {/* cart icon  */}
           <Link to="/cart" className="relative group hover:text-on-hover">
             <HiOutlineShoppingCart className={`text-xl cursor-pointer`} />
@@ -163,21 +173,11 @@ const Navbar = () => {
               {cartInfo?.data?.items?.length || "0"}
             </span>
           </Link>
-          {/* wishlist icon */}
-          <Link
-            to="/wishlist"
-            className="relative group hover:text-on-hover mx-2"
-          >
-            <HiHeart className={`text-xl cursor-pointer`} />
-            <span className="absolute -top-2 -right-2 text-xs bg-black text-white w-4 h-4 rounded-full font-extrabold group-hover:bg-on-hover group-hover:text-white text-center ">
-              {wishlistInfo?.data?.list?.length || "0"}
-            </span>
-          </Link>
 
           {/* login button */}
           {!isAuthenticated ? (
             <Link to="/auth/login" state={{ from: location.pathname }}>
-              <Button className="bg-transparent border-black text-accent-color hover:bg-on-hover hover:text-white">
+              <Button className="ml-4 bg-transparent border-black text-accent-color hover:bg-on-hover hover:text-white">
                 Login
               </Button>
             </Link>

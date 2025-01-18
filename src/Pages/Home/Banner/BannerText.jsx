@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 
 const BannerText = () => {
   return (
-    <div className="flex flex-col justify-center items-center md:items-start gap-3 lg:gap-5 text-center md:text-start mt-11 md:mt-0">
+    <div className="flex flex-col justify-center items-center lg:items-start gap-3 lg:gap-5 text-center lg:text-start mt-11 lg:mt-0">
       {/* header part  */}
       <div className="self-center space-y-2 lg:space-y-3">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-7">
+        <h1 className="text-2xl md:text-4xl xl:text-5xl font-bold leading-7">
           Shop Tech <span className="">&</span>{" "}
-          <br className="hidden md:inline " />{" "}
+          <br className="hidden lg:inline " />{" "}
           <span className="text-accent-color">Accessories</span> with Ease
-          <br className="hidden md:inline " />
+          <br className="hidden lg:inline " />
           at PurchezTech
         </h1>
         <p className="text-balance">
