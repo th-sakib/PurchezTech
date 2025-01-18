@@ -21,6 +21,8 @@ import { replace, useLocation, useNavigate } from "react-router-dom";
 
 const ProductCard = ({
   product, // this is coming from product component
+  productId, // from popularProduct
+  totalSold, // from popular product
   isLoading,
   setIsOpenSidebar,
   setIsEditMode,
@@ -140,7 +142,7 @@ const ProductCard = ({
         try {
           const res = await addToCart({
             userId,
-            productId: product._id,
+            productId: productId,
             quantity: 1,
           }).unwrap();
           if (res.statusCode === 200) {
@@ -151,6 +153,7 @@ const ProductCard = ({
             });
           }
         } catch (error) {
+          console.log(error);
           if (error?.data?.message === "Product is out of stock") {
             toast.fire({
               title: `${error?.data?.message}`,
@@ -251,7 +254,7 @@ const ProductCard = ({
             />
           </figure>
 
-          <div className="flex flex-row p-2 h-20">
+          <div className="flex flex-row p-2 h-20 relative">
             {/* title & desc. part  */}
             <div className="overflow-hidden flex flex-col justify-around w-4/5">
               <h2
@@ -267,6 +270,15 @@ const ProductCard = ({
                 {description}
               </p>
             </div>
+
+            {/* total sold  */}
+            {totalSold ? (
+              <div className="text-right self-center absolute right-2 bottom-0 font-bold text-accent-color">
+                {totalSold} Sold
+              </div>
+            ) : (
+              ""
+            )}
 
             {/* price part  */}
             <div className="text-right self-center absolute right-2">

@@ -241,6 +241,11 @@ export const apiSlice = createApi({
       providesTags: ["Product"],
     }),
 
+    // get popular products
+    getPopularProducts: builder.query({
+      query: () => `${GLOBAL_URL}/get-popular`,
+    }),
+
     // to get individual product - GET
     getProduct: builder.query({
       query: ({ id }) => `${GLOBAL_URL}/get-product/${id}`,
@@ -518,4 +523,5 @@ export const {
   useFetchAllOrderQuery,
   useCancelOderMutation,
   useFetchCancelledOrderQuery,
+  useGetPopularProductsQuery,
 } = apiSlice;
