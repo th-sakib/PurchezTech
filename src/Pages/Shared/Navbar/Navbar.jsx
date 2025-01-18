@@ -109,7 +109,7 @@ const Navbar = () => {
       </section>
 
       {/* center of navbar  */}
-      <section className="flex-grow mx-auto justify-center items-center flex mt-1 w-full transition-all duration-300">
+      <section className="flex-grow mx-auto justify-center items-center flex mt-1 w-full transition-all duration-300 ml-[10%]">
         {/* menu items */}
         <nav className="uppercase hidden md:inline-flex text-sm font-bold md:mr-0 lg:mr-2 md:space-x-3">
           {navOptions}
@@ -117,7 +117,7 @@ const Navbar = () => {
       </section>
 
       {/* nav end  */}
-      <section className={`md:flex gap-2 ${!searchEnabled ? "w-full" : ""}`}>
+      <section className={`md:flex gap-2 w-full`}>
         {/* search box  */}
         <div
           className={`flex rounded-none items-center justify-end relative ml-auto w-[90vw] md:w-auto ${
@@ -140,6 +140,7 @@ const Navbar = () => {
             }}
           />
           {localSearch && (
+            // cross button
             <RxCross2
               className="absolute right-12 cursor-pointer text-primary-color"
               onClick={() => handleSearchClear()}
@@ -149,8 +150,8 @@ const Navbar = () => {
             className={`px-3 
            rounded-none min-h-10 h-10 hover:border-additional-color group/search ${
              !searchEnabled
-               ? "bg-black border-black"
-               : "bg-black text-white lg:bg-white lg:text-black"
+               ? "bg-black mr-0"
+               : "bg-black md:bg-white text-white md:text-black -mr-2"
            }`}
             onClick={handleSearch}
           >
@@ -158,7 +159,7 @@ const Navbar = () => {
               className={`group-hover/search:text-additional-color ${
                 !searchEnabled
                   ? "text-white text-base"
-                  : "lg:text-black lg:text-xl"
+                  : "lg:text-black lg:text-xl text-base md:text-xl"
               }`}
             />
           </button>

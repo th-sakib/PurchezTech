@@ -142,7 +142,7 @@ const ProductCard = ({
         try {
           const res = await addToCart({
             userId,
-            productId: productId,
+            productId: productId || product._id,
             quantity: 1,
           }).unwrap();
           if (res.statusCode === 200) {
