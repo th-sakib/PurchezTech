@@ -109,7 +109,7 @@ const Navbar = () => {
       </section>
 
       {/* center of navbar  */}
-      <section className="flex-grow mx-auto justify-center items-center flex mt-1 w-full transition-all duration-300 ml-[10%]">
+      <section className="flex-grow mx-auto justify-center items-center flex mt-1 w-full transition-all duration-300 ml-[10%yarn]">
         {/* menu items */}
         <nav className="uppercase hidden md:inline-flex text-sm font-bold md:mr-0 lg:mr-2 md:space-x-3">
           {navOptions}
