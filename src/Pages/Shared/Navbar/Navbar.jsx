@@ -81,7 +81,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="flex py-2 bg-white text-black justify-between max-w-[90vw] xl:max-w-[1080px] mx-auto items-center">
+    <div className="flex py-2 bg-white text-black justify-between max-w-[90vw] lg:max-w-[95vw] xxl:max-w-[1450px] mx-auto items-center">
       {/* navbar start  */}
       <section className="hidden md:flex min-w-[15rem]">
         {/* logo section  */}

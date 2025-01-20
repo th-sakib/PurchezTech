@@ -42,7 +42,7 @@ const Slider = () => {
   return (
     <div ref={sliderRef}>
       {/* main section  */}
-      <section className="flex overflow-hidden h-[60vh] md:h-[80vh] w-[90vw] md:w-[62vw] lg:w-auto select-none relative">
+      <section className="flex overflow-hidden h-[30rem] xl:h-[30rem] w-[90vw] md:w-[62vw] xl:w-[30rem] lg:w-auto select-none relative">
         {slideImages?.map((item, index) => (
           <div
             key={item.id}

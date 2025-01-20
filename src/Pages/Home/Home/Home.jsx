@@ -6,7 +6,7 @@ import PopularProducts from "../PopularProducts/PopularProducts";
 
 const Home = () => {
   return (
-    <div className="mx-auto px-2 xs:px-0 xs:max-w-[82%] bannerMd:max-w-[78%] lg:max-w-[80%] xl:max-w-[1025px]">
+    <div className="mx-auto px-2 xs:px-0 xs:max-w-[88%] bannerMd:max-w-[78%] lg:max-w-[80%] xl:max-w-[1200px]">
       {/* bg-gradient-to-b from-backgroundC to-white */}
       <div className="relative overflow-hidden bg-background-color">
         <Banner />

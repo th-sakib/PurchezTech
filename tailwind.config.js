@@ -25,6 +25,7 @@ export default {
         userDMd: "768px",
         userDLg: "900px",
         logoMd: "807px",
+        xxl: "1500px",
       },
     },
   },
