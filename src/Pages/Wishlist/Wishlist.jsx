@@ -1,11 +1,12 @@
 import {
+  useAddToCartMutation,
   useDeleteWishlistItemMutation,
   useFetchWishlistQuery,
+  useLazyGetAuthenticityQuery,
 } from "../../redux/api/apiSlice";
 import { useSelector } from "react-redux";
 import { TiDelete } from "react-icons/ti";
 import Button from "../../Components/Button";
-import NoProduct from "../../Components/NoProduct";
 import { useNavigate } from "react-router-dom";
 import { toast } from "../../lib/sweetAlert/toast";
 import CartLoading from "../Cart/CartLoading";
@@ -13,11 +14,16 @@ import { IoHeartDislikeSharp } from "react-icons/io5";
 
 const Wishlist = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
+  const userData = useSelector((state) => state.user.userInfo);
+  const userId = userData?._id;
 
   const navigate = useNavigate();
 
   const [deleteWishlistItem, { isLoading: deleting }] =
     useDeleteWishlistItemMutation();
+
+  const [triggerAuthenticity] = useLazyGetAuthenticityQuery();
+  const [addToCart, { isLoading: cartIsLoading }] = useAddToCartMutation();
 
   const {
     data: wishlistInfo,
@@ -44,6 +50,47 @@ const Wishlist = () => {
       console.log("wishlist item deletion failed");
     }
   };
+
+  async function handleAddToCart(productId) {
+    try {
+      const res = await triggerAuthenticity().unwrap();
+
+      if (res.statusCode === 200) {
+        try {
+          const res = await addToCart({
+            userId,
+            productId: productId,
+            quantity: 1,
+          }).unwrap();
+          if (res.statusCode === 200) {
+            toast.fire({
+              title: "Product is added to the Cart",
+              icon: "success",
+              timer: 3000,
+            });
+          }
+        } catch (error) {
+          console.log(error);
+          if (error?.data?.message === "Product is out of stock") {
+            toast.fire({
+              title: `${error?.data?.message}`,
+              icon: "warning",
+              timer: 4000,
+            });
+          } else {
+            navigate("/auth/login");
+            toast.fire({
+              title: "Failed: Add product to cart",
+              icon: "warning",
+              timer: 4000,
+            });
+          }
+        }
+      }
+    } catch (error) {
+      navigate("/auth/login");
+    }
+  }
 
   if (wishlistInfo === undefined || wishlistInfo?.data?.list?.length === 0) {
     return (
@@ -117,9 +164,11 @@ const Wishlist = () => {
               >
                 <TiDelete className="text-red-600 text-xl" />
               </button>
-              <p className="line-through text-accent-color/40 absolute bottom-2 right-2">
-                {item?.price !== item?.salePrice ? "$" + item?.price : ""}
-              </p>
+              <div className="absolute bottom-2 right-2">
+                <Button btnHandler={() => handleAddToCart(item.productId)}>
+                  Add to Cart
+                </Button>
+              </div>
             </div>
           </div>
         ))}

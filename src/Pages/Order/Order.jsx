@@ -200,7 +200,7 @@ const Order = () => {
 
         {/* modal */}
         <dialog id="orderDetailsModal" className="modal capitalize">
-          <div className="modal-box rounded-sm text-white bg-gray-300/20 backdrop-blur-md overflow-auto">
+          <div className="modal-box rounded-sm text-white font-bold bg-gray-300/20 backdrop-blur-md overflow-auto">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button className="btn btn-sm btn-circle btn-ghost absolute right-1 top-0">
@@ -213,23 +213,29 @@ const Order = () => {
                 <div className="flex gap-3 flex-col mt-1">
                   <div className="flex justify-between">
                     <p>order number</p>
-                    <p>{selectedOrder?._id}</p>
+                    <p className="font-thin">{selectedOrder?._id}</p>
                   </div>
                   <div className="flex justify-between">
                     <p>order date</p>
-                    <p>{selectedOrder?.createdAt.split("T")[0]}</p>
+                    <p className="font-thin">
+                      {selectedOrder?.createdAt.split("T")[0]}
+                    </p>
                   </div>
                   <div className="flex justify-between">
                     <p>order price</p>
-                    <p>{selectedOrder?.totalPrice}</p>
+                    <p className="font-thin">{selectedOrder?.totalPrice}</p>
                   </div>
                   <div className="flex justify-between">
                     <p>payment method</p>
-                    <p>{selectedOrder?.paymentDetails?.cardIssuer}</p>
+                    <p className="font-thin">
+                      {selectedOrder?.paymentDetails?.cardIssuer}
+                    </p>
                   </div>
                   <div className="flex justify-between">
                     <p>payment status</p>
-                    <p>{selectedOrder?.paymentDetails?.status}</p>
+                    <p className="font-thin">
+                      {selectedOrder?.paymentDetails?.status}
+                    </p>
                   </div>
                   <div className="flex justify-between">
                     <p>order status</p>

@@ -11,15 +11,15 @@ const AuthLayout = () => {
   const from = location?.state?.from || location?.state || "/";
 
   return (
-    <div className="md:h-screen bg-background-color flex justify-center items-center">
+    <div className="md:h-screen xll:h-screen bg-background-color flex justify-center items-center">
       <div
-        className={`my-3 md:my-0 w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] flex flex-col-reverse overflow-hidden ${
+        className={`my-3 md:my-0 xxl:my-0 w-[90vw] md:w-[80vw] lg:w-[70vw] xxl:w-[80vw] xl:w-[60vw] flex flex-col-reverse overflow-hidden ${
           pathname === "/auth/register" ? "md:flex-row-reverse" : "md:flex-row"
-        } justify-between items-stretch border border-accent-color relative`}
+        } justify-between items-stretch xxl:items-center border border-accent-color relative`}
       >
         {/* login page animation - BLUE BOX */}
         <span
-          className={`hidden lg:block w-[100vw] h-[100vh] bg-accent-color absolute border-2 border-on-hover transition-all duration-300 ${
+          className={`hidden xxl:hidden lg:block w-[100vw] h-[100vh] bg-accent-color absolute border-2 border-on-hover transition-all duration-300 ${
             pathname === "/auth/login"
               ? "-top-[14rem] md:-right-[35rem] xl:-right-[40rem] rotate-[44deg]"
               : "top-4 md:right-[11rem] xl:right-[8rem] rotate-[44deg]"
@@ -38,7 +38,8 @@ const AuthLayout = () => {
 
         {/* form section  */}
         <section className={`p-10 w-full md:w-1/2 z-20`}>
-          <h1 className="self-stretch text-center text-3xl font-bold mb-4 uppercase">
+          <h1 className="self-stretch text-center text-3xl font-bold mb-4 uppercase xxl:text-[3rem]">
+            {/* login and sign up text  */}
             {pathname === "/auth/login" ? "login" : "signup"}
           </h1>
           <Outlet></Outlet>
@@ -48,7 +49,7 @@ const AuthLayout = () => {
         <section
           className={`w-full h-auto md:w-1/2 text-white  flex flex-col items-center ${
             pathname === "/auth/login" ? "md:items-end" : "md:items-start"
-          } justify-center overflow-hidden bg-accent-color lg:bg-transparent `}
+          } justify-center overflow-hidden bg-accent-color xxl:bg-accent-color lg:bg-transparent xxl:h-[50vh]`}
         >
           {/* text-div  */}
           <div
@@ -58,14 +59,16 @@ const AuthLayout = () => {
           >
             {pathname === "/auth/login" ? (
               <>
-                <h2 className="md:block hidden text-2xl lg:text-3xl font-bold mb-4 uppercase">
+                <h2 className="md:block hidden text-2xl lg:text-3xl font-bold mb-4 uppercase xxl:text-[4vw] xxl:leading-[4vw]">
                   Welcome <br /> back !
                 </h2>
-                <h2 className="text-2xl font-bold mb-2 uppercase">
+                <h2 className="xxl:hidden text-2xl font-bold mb-2 uppercase">
                   Welcome back !
                 </h2>
-                <div className="md:text-sm lg:text-base">
-                  <p className="tracking-[0.07rem]">log in to access your</p>
+                <div className="md:text-sm lg:text-base xxl:text-[2vw] xxl:space-y-[1.5vw] xxl:mt-9">
+                  <p className="tracking-[0.07rem] xxl:tracking-[.25rem]">
+                    log in to access your
+                  </p>
                   <p className="tracking-[0.023rem]">account and continue</p>
                   <p className="tracking-wide">enjoying a premium</p>
                   <p className="tracking-tighter">shopping experience !</p>
@@ -73,11 +76,11 @@ const AuthLayout = () => {
               </>
             ) : (
               <>
-                <h2 className="text-2xl lg:text-3xl font-bold mb-4 uppercase">
+                <h2 className="text-2xl lg:text-3xl font-bold mb-4 uppercase xxl:text-[4vw] xxl:leading-[4vw]">
                   Create <br />
                   an Account
                 </h2>
-                <div className="md:text-sm lg:text-base">
+                <div className="md:text-sm lg:text-base xxl:text-[2vw] xxl:space-y-[1.5vw] xxl:mt-12">
                   <p className="tracking-[0.01rem]">Sign up to create your</p>
                   <p className="tracking-[0.017rem]">account and get started</p>
                   <p className="tracking-[.01rem]">with an amazing shopping</p>

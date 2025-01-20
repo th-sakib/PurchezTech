@@ -141,7 +141,7 @@ const Profile = () => {
   return (
     <div className="ml-8 my-4 md:ml-7">
       {/* information showcase */}
-      <div className="flex flex-col sm:flex-row items-center sm:gap-10">
+      <div className="flex flex-col sm:flex-row justify-center items-center sm:gap-10">
         {/* image  */}
         <section className="h-32 w-32 rounded-full p-1 relative">
           {isLoading ? (

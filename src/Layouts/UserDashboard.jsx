@@ -59,16 +59,16 @@ const UserDashboard = () => {
         <SmallDNav />
       </div>
 
-      <div className="md:max-w-[88%] lg:max-w-[83%] xl:max-w-[1080px] mx-auto font-sans text-primary-color flex flex-row-reverse md:gap-12 justify-end bg-white pt-5">
+      <div className="md:max-w-[88%] max-w-[90vw] lg:max-w-[95vw] xxl:max-w-[1450px] mx-auto font-sans text-primary-color flex flex-row-reverse md:gap-12 justify-end bg-white relative">
         {/* Second part of layout (non sidebar) */}
         <div className="w-full bg-white">
           <Outlet />
         </div>
 
         {/* Side bar - drawer */}
-        <nav className="fixed top-16 menu text-base-content py-9 md:py-4 px-2 bg-white h-fit md:h-[85vh] m-2 md:ml-3  md:block md:min-w-48 rounded-full md:rounded-lg border border-accent-color">
+        <nav className="fixed top-12 left-1 md:left-auto menu text-base-content py-9 md:py-4 px-2 bg-white md:h-screen m-2 md:ml-3  md:block border-r border-slate-300 border-b md:border-b-0">
           {sidebarContentLinks.map((item) => (
-            <li key={item.id}>
+            <li key={item.id} className="text-base">
               <NavLink to={item.path}>
                 {({ isActive }) => (
                   <>

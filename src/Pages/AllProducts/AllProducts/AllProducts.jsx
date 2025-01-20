@@ -101,7 +101,7 @@ const AllProducts = () => {
   }
   return (
     <>
-      <div className="font-secondaryFont max-w-[82%] bannerMd:max-w-[78%] lg:max-w-[82%] xl:max-w-[1025px] mx-auto py-4 bg-background-color flex lg:gap-6">
+      <div className="font-secondaryFont max-w-[82%] bannerMd:max-w-[78%] lg:max-w-[82%] xl:max-w-[1200px] xxl:max-w-[1350px] mx-auto py-4 bg-background-color flex lg:gap-6">
         {/* filter section  */}
         <section className="hidden lg:block w-44">
           <FilterOptions
@@ -210,30 +210,42 @@ const AllProducts = () => {
           </div>
 
           {/* product view section */}
-          <div className="flex flex-wrap justify-center mb-3">
+          <div className="flex flex-wrap justify-start mb-3">
             {/* if loading or fetching  */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-start items-start gap-5">
               {isLoading || isFetching
                 ? Array(8)
                     .fill()
                     .map((_, idx) => (
                       <div
                         key={idx}
-                        className="card bg-base-100 shadow-xl w-[46vw] md:w-[30vw]  mx-auto lg:w-[25.6vw] xl:w-[19vw] gap-3 rounded-sm rounded-b-lg mb-3"
+                        className="card bg-base-100 shadow-xl w-[82vw] orderSm:w-[40vw] md:w-[25.5vw] lg:w-[20vw] xl:w-[17.5vw] gap-3 rounded-sm rounded-b-lg mb-3"
                       >
-                        <div className="skeleton h-44 w-full rounded-none"></div>
-                        <div className="px-2 overflow-hidden ">
-                          <div className="w-[70%] float-left overflow-hidden">
-                            <div className="skeleton h-4 w-28 mb-2 rounded-none"></div>
-                            <div className="skeleton h-4 w-full rounded-none"></div>
+                        {/* skeleton  */}
+                        <div class="card bg-white shadow-lg animate-pulse rounded-none border rounded-b-lg overflow-hidden group/parent relative">
+                          <div class="absolute -top-2 -right-2 cursor-pointer">
+                            <div class="bg-accent-color w-12 h-12 text-white rounded-bl-full flex justify-center items-center absolute top-0 right-0 z-20 isolate group/inner"></div>
+                            <div class="absolute top-3 -right-5 flex z-10 transform isolate group-hover/parent:-translate-x-16"></div>
                           </div>
-                          <div className="w-[30%] float-left">
-                            <div className="skeleton w-4/5 h-4 mb-2 rounded-none ml-2"></div>
-                            <div className="skeleton h-4 rounded-none ml-2"></div>
+                          <figure class="h-36 bg-gray-200 md:h-44 animate-pulse xl:h-44">
+                            <div class="h-40 rounded"></div>
+                          </figure>
+                          <div class="flex flex-row p-2 h-20 relative">
+                            <div class="overflow-hidden flex flex-col justify-around w-4/5 animate-pulse">
+                              <div class="h-4 bg-gray-200 rounded w-full"></div>
+                              <div class="h-4 bg-gray-200 rounded w-full"></div>
+                            </div>
+                            <div class="text-right self-center absolute right-2 bottom-0 font-bold text-accent-color animate-pulse"></div>
+                            <div class="text-right self-center absolute right-2 animate-pulse">
+                              <div class="text-xl font-bold relative w-fit">
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="w-full h-11 bg-accent-color hover:bg-on-hover text-white border-none group rounded-b-md uppercase">
+                            <div class="w-full bg-accent-color hover:bg-on-hover text-white border-none group rounded-b-md uppercase"></div>
                           </div>
                         </div>
-
-                        <div className="skeleton h-12 rounded-none w-full rounded-b-lg"></div>
                       </div>
                     ))
                 : ""}

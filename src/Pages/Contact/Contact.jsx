@@ -28,7 +28,7 @@ const Contact = () => {
 
   return (
     <div className="bg-[#fff] flex items-start justify-center px-4 py-4">
-      <div className="md:max-w-[82%] bannerMd:max-w-[78%] lg:max-w-[82%] xl:max-w-[1025px] mx-auto flex flex-wrap justify-between">
+      <div className="md:max-w-[82%] bannerMd:max-w-[78%] lg:max-w-[82%] xl:max-w-[1200px] xxl:max-w-[1350px] mx-auto flex flex-wrap justify-between">
         {/* Left Side Content */}
         <div className="w-full lg:w-[45%] px-6 mb-8 lg:mb-0 ">
           <h2 className="text-2xl font-extrabold text-gray-800 mb-4">
