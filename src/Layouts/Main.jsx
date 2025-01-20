@@ -15,19 +15,18 @@ const Main = () => {
   const [getAuthenticityTrigger, { isLoading, isUninitialized }] =
     useLazyGetAuthenticityQuery();
 
+  const refreshAthentication = async () => {
+    try {
+      await getAuthenticityTrigger();
+    } catch (error) {
+      dispatch(clearUser());
+    }
+  };
+
   // refresh token in component mount
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await getAuthenticityTrigger();
-      } catch (error) {
-        console.log(error);
-        dispatch(clearUser());
-      }
-    };
-
-    if (!userRole || userRole === "admin") checkAuth();
-  }, [getAuthenticityTrigger, dispatch, userRole]);
+    if (!userRole || userRole === "admin") refreshAthentication();
+  }, [userRole]);
 
   if (isLoading) {
     return (

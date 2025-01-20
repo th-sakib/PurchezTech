@@ -151,7 +151,7 @@ const Navbar = () => {
            rounded-none min-h-10 h-10 hover:border-additional-color group/search ${
              !searchEnabled
                ? "bg-black mr-0"
-               : "bg-black md:bg-white text-white md:text-black -mr-2"
+               : "bg-black md:bg-white text-white md:text-black md:-mr-2"
            }`}
             onClick={handleSearch}
           >
