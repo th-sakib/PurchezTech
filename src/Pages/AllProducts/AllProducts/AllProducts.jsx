@@ -222,28 +222,28 @@ const AllProducts = () => {
                         className="card bg-base-100 shadow-xl w-[82vw] orderSm:w-[40vw] md:w-[25.5vw] lg:w-[20vw] xl:w-[17.5vw] gap-3 rounded-sm rounded-b-lg mb-3"
                       >
                         {/* skeleton  */}
-                        <div class="card bg-white shadow-lg animate-pulse rounded-none border rounded-b-lg overflow-hidden group/parent relative">
-                          <div class="absolute -top-2 -right-2 cursor-pointer">
-                            <div class="bg-accent-color w-12 h-12 text-white rounded-bl-full flex justify-center items-center absolute top-0 right-0 z-20 isolate group/inner"></div>
-                            <div class="absolute top-3 -right-5 flex z-10 transform isolate group-hover/parent:-translate-x-16"></div>
+                        <div className="card bg-white shadow-lg animate-pulse rounded-none border rounded-b-lg overflow-hidden group/parent relative">
+                          <div className="absolute -top-2 -right-2 cursor-pointer">
+                            <div className="bg-accent-color w-12 h-12 text-white rounded-bl-full flex justify-center items-center absolute top-0 right-0 z-20 isolate group/inner"></div>
+                            <div className="absolute top-3 -right-5 flex z-10 transform isolate group-hover/parent:-translate-x-16"></div>
                           </div>
-                          <figure class="h-36 bg-gray-200 md:h-44 animate-pulse xl:h-44">
-                            <div class="h-40 rounded"></div>
+                          <figure className="h-36 bg-gray-200 md:h-44 animate-pulse xl:h-44">
+                            <div className="h-40 rounded"></div>
                           </figure>
-                          <div class="flex flex-row p-2 h-20 relative">
-                            <div class="overflow-hidden flex flex-col justify-around w-4/5 animate-pulse">
-                              <div class="h-4 bg-gray-200 rounded w-full"></div>
-                              <div class="h-4 bg-gray-200 rounded w-full"></div>
+                          <div className="flex flex-row p-2 h-20 relative">
+                            <div className="overflow-hidden flex flex-col justify-around w-4/5 animate-pulse">
+                              <div className="h-4 bg-gray-200 rounded w-full"></div>
+                              <div className="h-4 bg-gray-200 rounded w-full"></div>
                             </div>
-                            <div class="text-right self-center absolute right-2 bottom-0 font-bold text-accent-color animate-pulse"></div>
-                            <div class="text-right self-center absolute right-2 animate-pulse">
-                              <div class="text-xl font-bold relative w-fit">
-                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                            <div className="text-right self-center absolute right-2 bottom-0 font-bold text-accent-color animate-pulse"></div>
+                            <div className="text-right self-center absolute right-2 animate-pulse">
+                              <div className="text-xl font-bold relative w-fit">
+                                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
                               </div>
                             </div>
                           </div>
-                          <div class="w-full h-11 bg-accent-color hover:bg-on-hover text-white border-none group rounded-b-md uppercase">
-                            <div class="w-full bg-accent-color hover:bg-on-hover text-white border-none group rounded-b-md uppercase"></div>
+                          <div className="w-full h-11 bg-accent-color hover:bg-on-hover text-white border-none group rounded-b-md uppercase">
+                            <div className="w-full bg-accent-color hover:bg-on-hover text-white border-none group rounded-b-md uppercase"></div>
                           </div>
                         </div>
                       </div>

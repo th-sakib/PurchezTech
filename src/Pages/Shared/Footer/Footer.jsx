@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="bg-neutral box-border">
+    <footer className="bg-neutral box-border">
       <div className="max-w-[100vw] xl:max-w-[1080px] mx-auto">
         <footer className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-between overflow-hidden text-neutral-content p-10 mx-auto md:max-w-screen-xl text-sm gap-9">
           <nav className="">
@@ -87,7 +87,7 @@ const Footer = () => {
           </aside>
         </footer>
       </div>
-    </div>
+    </footer>
   );
 };
 

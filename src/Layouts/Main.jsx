@@ -11,13 +11,13 @@ const Main = () => {
 
   return userRole !== "admin" ? (
     <div className="relative">
-      <div className="mx-auto sticky top-0 left-0 z-50 border-b bg-white/80 backdrop-blur-md">
+      <header className="mx-auto sticky top-0 left-0 z-50 border-b bg-white/80 backdrop-blur-md">
         <Navbar></Navbar>
-      </div>
+      </header>
       {/* small devices navbar  */}
-      <div className="fixed z-50 bottom-2 left-2/4 -translate-x-2/4  md:hidden">
+      <nav className="fixed z-50 bottom-2 left-2/4 -translate-x-2/4  md:hidden">
         <SmallDNav />
-      </div>
+      </nav>
       <div className="text-primary-color">
         <Outlet></Outlet>
         <Footer></Footer>
