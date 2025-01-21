@@ -52,7 +52,17 @@ const Login = () => {
       const res = await loginUser(data).unwrap();
       reset();
 
-      dispatch(setUser({ ...res.data.loggedInUser }));
+      const userData = {
+        _id: res.data.loggedInUser._id,
+        avatar: res.data.loggedInUser.avatar,
+        avatarPublicId: res.data.loggedInUser.avatarPublicId,
+        username: res.data.loggedInUser.username,
+        email: res.data.loggedInUser.email,
+        fullName: res.data.loggedInUser.fullName,
+        role: res.data.loggedInUser.role,
+      };
+
+      dispatch(setUser({ ...userData }));
       toast.fire({
         title: "You are successfully logged in",
         icon: "success",

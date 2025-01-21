@@ -2,39 +2,12 @@ import { Navigate, Outlet } from "react-router-dom";
 import Footer from "../Pages/Shared/Footer/Footer";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
 import { useEffect } from "react";
-import { useLazyGetAuthenticityQuery } from "../redux/api/apiSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { clearUser, selectUserRole } from "../redux/features/user/userSlice";
+import { useSelector } from "react-redux";
+import { selectUserRole } from "../redux/features/user/userSlice";
 import SmallDNav from "../Pages/Shared/Navbar/SmallDNav/SmallDNav";
 
 const Main = () => {
-  const dispatch = useDispatch();
   const userRole = useSelector(selectUserRole);
-
-  // refresh token endpoint
-  const [getAuthenticityTrigger, { isLoading, isUninitialized }] =
-    useLazyGetAuthenticityQuery();
-
-  const refreshAthentication = async () => {
-    try {
-      await getAuthenticityTrigger();
-    } catch (error) {
-      dispatch(clearUser());
-    }
-  };
-
-  // refresh token in component mount
-  useEffect(() => {
-    if (!userRole || userRole === "admin") refreshAthentication();
-  }, [userRole]);
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-infinity loading-lg"></span>
-      </div>
-    );
-  }
 
   return userRole !== "admin" ? (
     <div className="relative">

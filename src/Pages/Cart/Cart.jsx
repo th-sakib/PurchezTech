@@ -15,6 +15,7 @@ import { BsCart4 } from "react-icons/bs";
 
 const Cart = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
+  const isAuthenticating = useSelector((state) => state.user.isAuthenticating);
 
   const navigate = useNavigate();
 
@@ -61,7 +62,7 @@ const Cart = () => {
     }
   };
 
-  if (cartLoading && cartFetching) {
+  if (cartLoading || cartFetching) {
     // Show skeleton loader only on first load
     return (
       <div className="flex flex-col gap-5 justify-center items-center my-4 capitalize px-3 w-screen mt-20 -translate-x-[15%]">
@@ -93,6 +94,7 @@ const Cart = () => {
       });
     }
   };
+
   const handleMinus = async (cartItem) => {
     if (cartItem?.quantity > 1) {
       try {

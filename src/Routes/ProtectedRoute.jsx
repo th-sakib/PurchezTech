@@ -2,9 +2,11 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useLazyGetAuthenticityQuery } from "../redux/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearIsAuthenticating,
   clearUser,
   selectIsAuthenticated,
   selectUserRole,
+  setIsAuthenticating,
 } from "../redux/features/user/userSlice";
 import { useEffect } from "react";
 
@@ -24,9 +26,19 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await getAuthenticityTrigger();
+        dispatch(setIsAuthenticating());
+        const res = await getAuthenticityTrigger();
+        if (res?.data?.statusCode === 200) {
+          dispatch(clearIsAuthenticating());
+        }
+        if (res?.status === "rejected") {
+          dispatch(clearUser());
+          dispatch(clearIsAuthenticating());
+        }
       } catch (error) {
+        console.log(error);
         dispatch(clearUser());
+        dispatch(clearIsAuthenticating());
       }
     };
 
