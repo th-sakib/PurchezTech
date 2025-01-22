@@ -9,7 +9,6 @@ const Home = () => {
     <>
       {/* meta tag start  */}
       <title>Buy the Best Tech Products Online | PurchezTech</title>
-      <link rel="author" href="https://plus.google.com/{{googlePlusId}}" />
       <link rel="canonical" href="https://purcheztech.onrender.com/" />
       {/* meta tag end  */}
 
