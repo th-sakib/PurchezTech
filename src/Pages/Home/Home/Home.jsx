@@ -9,15 +9,6 @@ const Home = () => {
     <>
       {/* meta tag start  */}
       <title>Buy the Best Tech Products Online | PurchezTech</title>
-      <meta
-        name="description"
-        content="Explore PurchezTech, your ultimate destination for the latest tech gadgets and accessories. Shop smart with unbeatable deals, fast shipping, and top-notch customer support. Upgrade your tech game today!"
-      />
-      <meta
-        name="keywords"
-        content="E-commerce, technology, online shopping, tech gadgets, Purcheztech, PurchEZTech, React, JavaScript"
-      />
-      <meta name="author" content="TH Sakib" />
       <link rel="author" href="https://plus.google.com/{{googlePlusId}}" />
       <link rel="canonical" href="https://purcheztech.onrender.com/" />
       {/* meta tag end  */}
