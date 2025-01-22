@@ -26,7 +26,7 @@ const UserDashboard = () => {
     {
       id: "cancelled",
       path: "cancelled",
-      label: "Cancelled products",
+      label: "Cancelled Orders",
       icon: <BsCartXFill className="h-4 w-4" />,
     },
   ];

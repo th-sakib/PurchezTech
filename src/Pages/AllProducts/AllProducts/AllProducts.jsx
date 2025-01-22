@@ -101,6 +101,18 @@ const AllProducts = () => {
   }
   return (
     <>
+      {/* meta tag start  */}
+      <meta
+        name="description"
+        content="Buy the latest tech gadgets and e-commerce deals. Shop with ease and enjoy top-notch customer support with purcheztech!"
+      />
+      <link
+        rel="canonical"
+        href="https://purcheztech.onrender.com/all-products"
+      />
+      <title>All Products | PurchezTech</title>
+      {/* meta tag end  */}
+
       <div className="font-secondaryFont max-w-[82%] bannerMd:max-w-[78%] lg:max-w-[82%] xl:max-w-[1200px] xxl:max-w-[1350px] mx-auto py-4 bg-background-color flex lg:gap-6">
         {/* filter section  */}
         <section className="hidden lg:block w-44">

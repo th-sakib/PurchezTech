@@ -126,54 +126,60 @@ const Wishlist = () => {
   }
 
   return (
-    <div className="justify-center my-4 capitalize px-3 md:px-0 container mx-auto">
-      <section className="space-y-2">
-        {/* header text section  */}
-        <div className="flex justify-between items-center px-2 h-12">
-          <p className="text-2xl font-bold">Wishlist</p>
-          <p className="text-lg">
-            total: {wishlistInfo?.data?.list?.length || 0}{" "}
-          </p>
-        </div>
+    <>
+      {/* meta tag start  */}
+      <link rel="canonical" href="https://purcheztech.onrender.com/wishlist" />
+      <title>Wishlist | PurchezTech</title>
+      {/* meta tag end  */}
+      <div className="justify-center my-4 capitalize px-3 md:px-0 container mx-auto">
+        <section className="space-y-2">
+          {/* header text section  */}
+          <div className="flex justify-between items-center px-2 h-12">
+            <p className="text-2xl font-bold">Wishlist</p>
+            <p className="text-lg">
+              total: {wishlistInfo?.data?.list?.length || 0}{" "}
+            </p>
+          </div>
 
-        {/* product view section */}
-        {wishlistInfo?.data?.list?.map((item) => (
-          <div
-            key={item?.productId}
-            className="flex bg-white shadow-lg items-center justify-between gap-5 rounded-sm pr-3 relative"
-          >
-            {/* image  */}
-            <div className="bg-accent-color/10">
-              <img
-                src={item?.image}
-                alt={item?.title}
-                className="w-40 h-auto"
-              />
-            </div>
-            {/* text-part  */}
-            <div className="w-full">
-              <p className="font-bold">{item?.title}</p>
-              <p className="font-bold">price: ${item?.salePrice}</p>
-            </div>
-            {/* delete button  */}
-            <div className="">
-              <button
-                type="button"
-                className="absolute top-2 right-2"
-                onClick={() => handleDelete(item)}
-              >
-                <TiDelete className="text-red-600 text-xl" />
-              </button>
-              <div className="absolute bottom-2 right-2">
-                <Button btnHandler={() => handleAddToCart(item.productId)}>
-                  Add to Cart
-                </Button>
+          {/* product view section */}
+          {wishlistInfo?.data?.list?.map((item) => (
+            <div
+              key={item?.productId}
+              className="flex bg-white shadow-lg items-center justify-between gap-5 rounded-sm pr-3 relative"
+            >
+              {/* image  */}
+              <div className="bg-accent-color/10">
+                <img
+                  src={item?.image}
+                  alt={item?.title}
+                  className="w-40 h-auto"
+                />
+              </div>
+              {/* text-part  */}
+              <div className="w-full">
+                <p className="font-bold">{item?.title}</p>
+                <p className="font-bold">price: ${item?.salePrice}</p>
+              </div>
+              {/* delete button  */}
+              <div className="">
+                <button
+                  type="button"
+                  className="absolute top-2 right-2"
+                  onClick={() => handleDelete(item)}
+                >
+                  <TiDelete className="text-red-600 text-xl" />
+                </button>
+                <div className="absolute bottom-2 right-2">
+                  <Button btnHandler={() => handleAddToCart(item.productId)}>
+                    Add to Cart
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </section>
-    </div>
+          ))}
+        </section>
+      </div>
+    </>
   );
 };
 

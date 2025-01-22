@@ -167,129 +167,138 @@ const Cart = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row gap-5 justify-center my-4 capitalize px-3 md:px-0">
-      <section className="space-y-2">
-        {/* header text section  */}
-        <div className="flex justify-between items-center px-2 h-12">
-          <p className="text-2xl font-bold">Cart</p>
-          <p className="text-lg">total: {cartInfo?.data?.items?.length || 0}</p>
-          <Button btnHandler={() => navigate("/all-products")}>
-            Back to shopping
-          </Button>
-        </div>
+    <>
+      {/* meta tag start  */}
+      <meta name="description" content="PurchezTech Cart" />
+      <link rel="canonical" href="https://purcheztech.onrender.com/cart" />
+      <title>Cart | PurchezTech</title>
+      {/* meta tag end  */}
+      <div className="flex flex-col md:flex-row gap-5 justify-center my-4 capitalize px-3 md:px-0">
+        <section className="space-y-2">
+          {/* header text section  */}
+          <div className="flex justify-between items-center px-2 h-12">
+            <p className="text-2xl font-bold">Cart</p>
+            <p className="text-lg">
+              total: {cartInfo?.data?.items?.length || 0}
+            </p>
+            <Button btnHandler={() => navigate("/all-products")}>
+              Back to shopping
+            </Button>
+          </div>
 
-        {/* product view section */}
-        {cartInfo?.data?.items?.map((cartItem) => (
-          <div
-            key={cartItem?.productId}
-            className="flex bg-white shadow-lg items-center justify-between md:w-[40vw] gap-5 rounded-sm pr-3 relative"
-          >
-            {/* image  */}
-            <div className="bg-accent-color/10">
-              <img
-                src={cartItem?.image}
-                alt={cartItem?.title}
-                className="w-40 h-auto"
-              />
-            </div>
-            {/* text-part  */}
-            <div className="w-full">
-              <p className="font-bold">{cartItem?.title}</p>
-              <p className="font-bold">price: ${cartItem?.salePrice}</p>
-              <div className="flex items-center">
-                <p>quantity :</p>
-                <input
-                  type="number"
-                  name="quantity"
-                  id={`${cartItem?.productId}`}
-                  min="1"
-                  max={cartItem?.maxStock}
-                  className="border border-accent-color w-6 h-7 ml-2 text-center"
-                  value={cartItem?.quantity || 1}
-                  onFocus={(e) => e.target.select()}
-                  onChange={(e) =>
-                    handleQuantityChange(cartItem, e.target.value)
-                  }
+          {/* product view section */}
+          {cartInfo?.data?.items?.map((cartItem) => (
+            <div
+              key={cartItem?.productId}
+              className="flex bg-white shadow-lg items-center justify-between md:w-[40vw] gap-5 rounded-sm pr-3 relative"
+            >
+              {/* image  */}
+              <div className="bg-accent-color/10">
+                <img
+                  src={cartItem?.image}
+                  alt={cartItem?.title}
+                  className="w-40 h-auto"
                 />
-                <div className="">
-                  <FaAngleUp
-                    className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
-                    onClick={() => handlePlus(cartItem)}
+              </div>
+              {/* text-part  */}
+              <div className="w-full">
+                <p className="font-bold">{cartItem?.title}</p>
+                <p className="font-bold">price: ${cartItem?.salePrice}</p>
+                <div className="flex items-center">
+                  <p>quantity :</p>
+                  <input
+                    type="number"
+                    name="quantity"
+                    id={`${cartItem?.productId}`}
+                    min="1"
+                    max={cartItem?.maxStock}
+                    className="border border-accent-color w-6 h-7 ml-2 text-center"
+                    value={cartItem?.quantity || 1}
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) =>
+                      handleQuantityChange(cartItem, e.target.value)
+                    }
                   />
-                  <FaAngleDown
-                    className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
-                    onClick={() => handleMinus(cartItem)}
-                  />
+                  <div className="">
+                    <FaAngleUp
+                      className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
+                      onClick={() => handlePlus(cartItem)}
+                    />
+                    <FaAngleDown
+                      className="bg-accent-color/20 border border-accent-color text-sm cursor-pointer select-none"
+                      onClick={() => handleMinus(cartItem)}
+                    />
+                  </div>
                 </div>
               </div>
+              {/* delete button  */}
+              <div className="">
+                <button
+                  type="button"
+                  className="absolute top-2 right-2"
+                  onClick={() => handleDelete(cartItem)}
+                >
+                  <TiDelete className="text-red-600 text-xl" />
+                </button>
+                <p className="line-through text-accent-color/40 absolute bottom-2 right-2">
+                  {cartItem?.price !== cartItem?.salePrice
+                    ? "$" + cartItem?.price
+                    : ""}
+                </p>
+              </div>
             </div>
-            {/* delete button  */}
-            <div className="">
-              <button
-                type="button"
-                className="absolute top-2 right-2"
-                onClick={() => handleDelete(cartItem)}
-              >
-                <TiDelete className="text-red-600 text-xl" />
-              </button>
-              <p className="line-through text-accent-color/40 absolute bottom-2 right-2">
-                {cartItem?.price !== cartItem?.salePrice
-                  ? "$" + cartItem?.price
-                  : ""}
-              </p>
+          ))}
+        </section>
+        {/* checkout section  */}
+        <section className="mt-14">
+          <div className=" mb-4 bg-white p-3 shadow-lg">
+            <div className="flex justify-between items-center md:w-[20vw]">
+              <p>subtotal</p>
+              <p>${subTotal}</p>
             </div>
-          </div>
-        ))}
-      </section>
-      {/* checkout section  */}
-      <section className="mt-14">
-        <div className=" mb-4 bg-white p-3 shadow-lg">
-          <div className="flex justify-between items-center md:w-[20vw]">
-            <p>subtotal</p>
-            <p>${subTotal}</p>
-          </div>
-          <div className="divider my-1" />
+            <div className="divider my-1" />
 
-          <div className="flex justify-between md:w-[20vw]">
-            <p>shipping</p>
-            <p>free</p>
-          </div>
-          <div className="divider my-1" />
+            <div className="flex justify-between md:w-[20vw]">
+              <p>shipping</p>
+              <p>free</p>
+            </div>
+            <div className="divider my-1" />
 
-          <div className="flex justify-between md:w-[20vw]">
-            <p>coupon discount</p>
-            <p>0%</p>
-          </div>
-          <div className="divider my-1" />
+            <div className="flex justify-between md:w-[20vw]">
+              <p>coupon discount</p>
+              <p>0%</p>
+            </div>
+            <div className="divider my-1" />
 
-          <div className="flex justify-between md:w-[20vw]">
-            <p>Total</p>
-            <p>${total}</p>
+            <div className="flex justify-between md:w-[20vw]">
+              <p>Total</p>
+              <p>${total}</p>
+            </div>
+
+            <Link to="/checkout">
+              <Button className={"w-full text-base font-secondaryFont mt-2"}>
+                Checkout
+              </Button>
+            </Link>
           </div>
 
-          <Link to="/checkout">
-            <Button className={"w-full text-base font-secondaryFont mt-2"}>
-              Checkout
-            </Button>
-          </Link>
-        </div>
-
-        <div className="bg-white p-2 shadow-lg flex join">
-          <input
-            type="text"
-            name="coupon"
-            className="border border-accent-color w-full h-10 pl-3 focus-visible:outline-none"
-            placeholder="Enter your coupon here"
-          />
-          <button
-            className="text-sm rounded-none bg-accent-color hover:bg-on-hover w-16 h-10 text-white px-1 flex justify-center items-center"
-            type="submit"
-          >
-            <FaArrowRight className="" />
-          </button>
-        </div>
-      </section>
-    </div>
+          <div className="bg-white p-2 shadow-lg flex join">
+            <input
+              type="text"
+              name="coupon"
+              className="border border-accent-color w-full h-10 pl-3 focus-visible:outline-none"
+              placeholder="Enter your coupon here"
+            />
+            <button
+              className="text-sm rounded-none bg-accent-color hover:bg-on-hover w-16 h-10 text-white px-1 flex justify-center items-center"
+              type="submit"
+            >
+              <FaArrowRight className="" />
+            </button>
+          </div>
+        </section>
+      </div>
+    </>
   );
 };
 
