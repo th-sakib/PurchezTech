@@ -20,7 +20,7 @@ const PopularProducts = ({ className }) => {
         Popular Products
       </h1>
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 justify-center items-center mt-3">
-        {isLoading || !isFetching
+        {isLoading || isFetching
           ? Array(4)
               .fill()
               .map((_, idx) => (
