@@ -4,11 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import {
   useCreateOrderMutation,
   useFetchCartQuery,
+  useLazyUseCouponQuery,
 } from "../../redux/api/apiSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "../../lib/sweetAlert/toast";
 
 const Checkout = () => {
-  const [getRates, setGetRates] = useState();
+  const [getRates, setGetRates] = useState(0);
+  const [coupon, setCoupon] = useState("");
+  const [discount, setDiscount] = useState(0);
   const userInfo = useSelector((state) => state.user.userInfo);
 
   const {
@@ -18,11 +22,8 @@ const Checkout = () => {
   } = useFetchCartQuery({ userId: userInfo?._id });
 
   const [createOrder, { isLoading: orderIsLoading }] = useCreateOrderMutation();
-
-  const cartItems = cartInfo?.data?.items;
-
-  const formRef = useRef(); // ref to the form
-  const navigate = useNavigate();
+  const [triggerCouponUse, { isLoading: usingCoupon, isError, error }] =
+    useLazyUseCouponQuery();
 
   // calculations
   const subTotal =
@@ -33,9 +34,27 @@ const Checkout = () => {
         )
       : 0;
 
-  const discount = 0;
-
   const total = subTotal - (subTotal / 100) * discount;
+
+  const cartItems = cartInfo?.data?.items;
+
+  const formRef = useRef(); // ref to the form
+  const navigate = useNavigate();
+
+  const handleApplyCoupon = async (coupon) => {
+    try {
+      const res = await triggerCouponUse(coupon).unwrap();
+      if (res.statusCode === 200) {
+        setDiscount(res?.data?.discount);
+        toast.fire({
+          title: "Coupon Applied Successfully",
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      console.log(error?.data?.message);
+    }
+  };
 
   // getting exchange rates
   async function fetchExchangeRates() {
@@ -213,7 +232,7 @@ const Checkout = () => {
 
             <div className="flex justify-between">
               <p>coupon discount</p>
-              <p>0%</p>
+              <p>{discount}%</p>
             </div>
             <div className="divider my-1" />
 
@@ -235,6 +254,34 @@ const Checkout = () => {
             >
               Order Now
             </button>
+
+            {/* coupon  */}
+            <div className="join w-full mt-1">
+              <input
+                className="input input-bordered join-item rounded-none border-accent-color w-full"
+                placeholder="Type Coupon Here"
+                onChange={(e) => setCoupon(e.target.value)}
+              />
+              <button
+                className="btn join-item text-white border border-accent-color hover:border-accent-color bg-accent-color rounded-none hover:bg-on-hover min-w-32"
+                onClick={() => handleApplyCoupon(coupon)}
+              >
+                {usingCoupon ? (
+                  <span className="loading loading-ring loading-sm"></span>
+                ) : (
+                  "Apply Coupon"
+                )}
+              </button>
+
+              {/* hidden message  */}
+              <p className="text-white fixed bottom-0 right-0">
+                try coupon - purcheztech
+              </p>
+            </div>
+            {/* if coupon error occurs  */}
+            <p className="text-error font-semibold text-sm">
+              {error?.data?.message}
+            </p>
           </div>
         </div>
       </section>

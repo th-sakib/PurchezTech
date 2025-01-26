@@ -22,7 +22,7 @@ const BannerText = () => {
 
       <Link to="/all-products">
         <Button className="border-none font-bold text-base text-white" shopNow>
-          Shop now
+          Shop Now
         </Button>
       </Link>
     </div>

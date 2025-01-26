@@ -3,10 +3,11 @@ import { clearUser } from "../features/user/userSlice";
 import Swal from "sweetalert2";
 import { useId } from "react";
 
+const GLOBAL_URL = "api/v1";
 const USER_URL = "api/v1/user";
 const ADMIN_URL = "api/v1/admin";
-const GLOBAL_URL = "api/v1";
 const SHOP_URL = "api/v1/shop";
+const COUPON_URL = "api/v1/coupon";
 
 // default base query
 const baseQuery = fetchBaseQuery({
@@ -86,7 +87,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReAuth,
-  tagTypes: ["User", "Product", "Cart", "Wishlist", "Order"], // For cache management
+  tagTypes: ["User", "Product", "Cart", "Wishlist", "Order", "Coupon"], // For cache management
   endpoints: (builder) => ({
     // refresh access token - POST
     refreshAccessToken: builder.mutation({
@@ -481,6 +482,13 @@ export const apiSlice = createApi({
 
       invalidatesTags: ["Order"],
     }),
+
+    // coupon api's
+    useCoupon: builder.query({
+      query: (coupon) => `${COUPON_URL}/use/${coupon}`,
+
+      providesTags: ["Coupon"],
+    }),
   }),
 });
 
@@ -524,4 +532,5 @@ export const {
   useCancelOderMutation,
   useFetchCancelledOrderQuery,
   useGetPopularProductsQuery,
+  useLazyUseCouponQuery,
 } = apiSlice;
