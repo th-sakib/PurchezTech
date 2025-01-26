@@ -4,7 +4,11 @@ import ProductCard from "../../../Components/ProductCard";
 import { cn } from "../../../lib/cn";
 
 const NewlyArrivals = ({ className }) => {
-  const { data: productInfo } = useGetAllProductQuery({
+  const {
+    data: productInfo,
+    isFetching,
+    isLoading,
+  } = useGetAllProductQuery({
     category: "default",
     sortByDate: "desc",
   });
@@ -17,9 +21,32 @@ const NewlyArrivals = ({ className }) => {
         new arrivals
       </h1>
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 justify-center items-center mt-3">
-        {newProducts?.map((product) => (
-          <ProductCard key={product?._id} product={product} />
-        ))}
+        {isLoading || isFetching
+          ? Array(4)
+              .fill()
+              .map((_, idx) => (
+                <div
+                  key={idx}
+                  className="card bg-base-100 shadow-xl gap-3 rounded-sm rounded-b-lg mt-4"
+                >
+                  <div className="skeleton h-44 w-full rounded-none"></div>
+                  <div className="px-2 overflow-hidden ">
+                    <div className="w-[70%] float-left overflow-hidden">
+                      <div className="skeleton h-4 w-28 mb-2 rounded-none"></div>
+                      <div className="skeleton h-4 w-full rounded-none"></div>
+                    </div>
+                    <div className="w-[30%] float-left">
+                      <div className="skeleton w-4/5 h-4 mb-2 rounded-none ml-2"></div>
+                      <div className="skeleton h-4 rounded-none ml-2"></div>
+                    </div>
+                  </div>
+
+                  <div className="skeleton h-12 rounded-none w-full rounded-b-lg"></div>
+                </div>
+              ))
+          : newProducts?.map((product) => (
+              <ProductCard key={product?._id} product={product} />
+            ))}
       </section>
     </div>
   );
