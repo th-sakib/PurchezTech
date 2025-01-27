@@ -89,6 +89,10 @@ const Profile = () => {
         });
       }
     } catch (error) {
+      toast.fire({
+        title: error?.data?.message,
+        icon: "error",
+      });
       console.log(error?.data?.message);
       console.log("Error while uploading avatar");
     }
@@ -160,7 +164,7 @@ const Profile = () => {
               <img
                 src={userInfo?.avatar || robotAvatar}
                 alt={userInfo?.username + "profile picture"}
-                className="w-full h-full rounded-full"
+                className="w-full h-full object-cover rounded"
               />
             )}
             {/* edit profile button */}
@@ -170,7 +174,7 @@ const Profile = () => {
                 type="file"
                 name="avatar"
                 id="avatar"
-                accept="image/png, image/gif, image/jpeg"
+                accept="image/png, image/jpeg"
                 className="absolute top-0 left-0 w-full h-full opacity-0"
                 onChange={handleFile}
               />

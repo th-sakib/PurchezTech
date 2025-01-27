@@ -9,10 +9,6 @@ import { selectIsAuthenticated } from "../../../redux/features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "./Avatar";
 import { setSearchTerm } from "../../../redux/features/user/searchSlice.js";
-import {
-  useFetchCartQuery,
-  useFetchWishlistQuery,
-} from "../../../redux/api/apiSlice.js";
 
 const Navbar = () => {
   const [localSearch, setLocalSearch] = useState("");
@@ -24,13 +20,6 @@ const Navbar = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const userInfo = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
-
-  // apiSlice endpoint for fetchingCart
-  const {
-    data: cartInfo,
-    isLoading: cartLoading,
-    isFetching: cartFetching,
-  } = useFetchCartQuery({ userId: userInfo?._id });
 
   const handleSearch = () => {
     if (localSearch !== "") {
@@ -170,9 +159,6 @@ const Navbar = () => {
           {/* cart icon  */}
           <Link to="/cart" className="relative group hover:text-on-hover">
             <HiOutlineShoppingCart className={`text-xl cursor-pointer`} />
-            <span className="absolute -top-2 -right-2 text-xs bg-black text-white w-4 h-4 rounded-full font-extrabold group-hover:bg-on-hover group-hover:text-white text-center ">
-              {cartInfo?.data?.items?.length || "0"}
-            </span>
           </Link>
 
           {/* login button */}

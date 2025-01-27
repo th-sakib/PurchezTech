@@ -1,3 +1,4 @@
+import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layouts/Main";
 import Home from "../Pages/Home/Home/Home";
@@ -5,25 +6,36 @@ import ErrorPage from "../Components/ErrorPage";
 import Contact from "../Pages/Contact/Contact";
 import AllProducts from "../Pages/AllProducts/AllProducts/AllProducts";
 import Login from "../Pages/Auth/Login";
-import AuthLayout from "../Layouts/AuthLayout";
+// import AuthLayout from "../Layouts/AuthLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import Signup from "../Pages/Auth/Signup";
 import NoAccess from "../Components/NonAdmin";
-import AdminLayout from "../Layouts/AdminLayout";
+// import AdminLayout from "../Layouts/AdminLayout";
 import Profile from "../Pages/Shared/Profile/Profile";
 import Products from "../Pages/Admin/Products/Products";
-import ProductDetails from "../Components/ProductDetails";
-import Cart from "../Pages/Cart/Cart";
+// import ProductDetails from "../Components/ProductDetails";
+// import Cart from "../Pages/Cart/Cart";
 import NavOptions from "../Pages/Shared/Navbar/SmallDNav/NavOptions";
-import Wishlist from "../Pages/Wishlist/Wishlist";
+// import Wishlist from "../Pages/Wishlist/Wishlist";
+
 import Order from "../Pages/Order/Order";
-import UserDashboard from "../Layouts/UserDashboard";
+// import UserDashboard from "../Layouts/UserDashboard";
 import Checkout from "../Pages/Checkout/Checkout";
 import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
 import PaymentFails from "../Pages/Payment/PaymentFails";
 import PaymentCancel from "../Pages/Payment/PaymentCancel";
 import ManageOrder from "../Pages/Admin/ManageOrder/ManageOrder";
-import Cancelled from "../Pages/Order/Cancelled";
+// import Cancelled from "../Pages/Order/Cancelled";
+import LoaderSpinner from "../Components/LoaderSpinner";
+const LazyCart = React.lazy(() => import("../Pages/Cart/Cart"));
+const LazyWishlist = React.lazy(() => import("../Pages/Wishlist/Wishlist"));
+const LazyAdmin = React.lazy(() => import("../Layouts/AdminLayout"));
+const LazyUserDashboard = React.lazy(() => import("../Layouts/UserDashboard"));
+const LazyAuthLayout = React.lazy(() => import("../Layouts/AuthLayout"));
+const LazyCancelled = React.lazy(() => import("../Pages/Order/Cancelled"));
+const LazyProductDetails = React.lazy(() =>
+  import("../Components/ProductDetails")
+);
 
 export const router = createBrowserRouter([
   {
@@ -45,13 +57,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "product-details/:id",
-        element: <ProductDetails />,
+        element: (
+          <React.Suspense fallback={<LoaderSpinner />}>
+            <LazyProductDetails />
+          </React.Suspense>
+        ),
       },
       {
         path: "/cart",
         element: (
           <ProtectedRoute>
-            <Cart />
+            <React.Suspense fallback={<LoaderSpinner />}>
+              <LazyCart />
+            </React.Suspense>
           </ProtectedRoute>
         ),
       },
@@ -59,7 +77,9 @@ export const router = createBrowserRouter([
         path: "/wishlist",
         element: (
           <ProtectedRoute>
-            <Wishlist />
+            <React.Suspense fallback={<LoaderSpinner />}>
+              <LazyWishlist />
+            </React.Suspense>
           </ProtectedRoute>
         ),
       },
@@ -87,7 +107,9 @@ export const router = createBrowserRouter([
     path: "/user",
     element: (
       <ProtectedRoute>
-        <UserDashboard />
+        <React.Suspense fallback={<LoaderSpinner />}>
+          <LazyUserDashboard />
+        </React.Suspense>
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
@@ -102,7 +124,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "cancelled",
-        element: <Cancelled />,
+        element: (
+          <React.Suspense fallback={<LoaderSpinner />}>
+            <LazyCancelled />
+          </React.Suspense>
+        ),
       },
     ],
   },
@@ -112,7 +138,9 @@ export const router = createBrowserRouter([
     path: "/admin",
     element: (
       <ProtectedRoute>
-        <AdminLayout />
+        <React.Suspense fallback={<LoaderSpinner />}>
+          <LazyAdmin />
+        </React.Suspense>
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
@@ -131,7 +159,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "product-details/:id",
-        element: <ProductDetails />,
+        element: (
+          <React.Suspense fallback={<LoaderSpinner />}>
+            <LazyProductDetails />
+          </React.Suspense>
+        ),
       },
     ],
   },
@@ -152,7 +184,9 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     element: (
       <ProtectedRoute>
-        <AuthLayout />
+        <React.Suspense fallback={<LoaderSpinner />}>
+          <LazyAuthLayout />
+        </React.Suspense>
       </ProtectedRoute>
     ),
     children: [
