@@ -106,7 +106,7 @@ const Navbar = () => {
       </section>
 
       {/* nav end  */}
-      <section className={`md:flex gap-2 w-full`}>
+      <section className={`md:flex gap-2 shrink-0`}>
         {/* search box  */}
         <div
           className={`flex rounded-none items-center justify-end relative ml-auto w-[90vw] md:w-auto ${

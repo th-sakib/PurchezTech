@@ -1,10 +1,8 @@
-import React from "react";
-
 const LoaderSpinner = ({ className }) => {
   return (
-    <div>
+    <div className="min-w-screen min-h-screen flex-col justify-center items-center">
       <span
-        className={`loading loading-infinity ${
+        className={`loading loading-infinity text-center ${
           className ? className : "loading-lg"
         }`}
       ></span>

@@ -16,6 +16,14 @@ const AllProducts = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
 
+  const handleMinPriceChange = (value) => {
+    setMinPrice(Math.min(value, maxPrice - 1)); // Ensure minPrice is less than maxPrice
+  };
+
+  const handleMaxPriceChange = (value) => {
+    setMaxPrice(Math.max(value, minPrice + 1)); // Ensure maxPrice is greater than minPrice
+  };
+
   // pagination
   const [page, setPage] = useState(1);
   const [limit] = useState(12);
@@ -72,14 +80,6 @@ const AllProducts = () => {
   }, [initialPriceRange, lastInitialPriceRange]);
 
   // handlers
-  const handleMinPriceChange = (value) => {
-    setMinPrice(Math.min(value, maxPrice - 1)); // Ensure minPrice is less than maxPrice
-  };
-
-  const handleMaxPriceChange = (value) => {
-    setMaxPrice(Math.max(value, minPrice + 1)); // Ensure maxPrice is greater than minPrice
-  };
-
   const handlePageChange = useCallback((newPage) => {
     setPage(newPage);
   }, []);
