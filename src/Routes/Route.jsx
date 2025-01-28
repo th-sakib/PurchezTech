@@ -27,6 +27,7 @@ import PaymentCancel from "../Pages/Payment/PaymentCancel";
 import ManageOrder from "../Pages/Admin/ManageOrder/ManageOrder";
 // import Cancelled from "../Pages/Order/Cancelled";
 import LoaderSpinner from "../Components/LoaderSpinner";
+import OrderDetails from "../Components/OrderDetails";
 const LazyCart = React.lazy(() => import("../Pages/Cart/Cart"));
 const LazyWishlist = React.lazy(() => import("../Pages/Wishlist/Wishlist"));
 const LazyAdmin = React.lazy(() => import("../Layouts/AdminLayout"));
@@ -156,6 +157,10 @@ export const router = createBrowserRouter([
       {
         path: "orders",
         element: <ManageOrder />,
+      },
+      {
+        path: "orders/:id",
+        element: <OrderDetails />,
       },
       {
         path: "product-details/:id",

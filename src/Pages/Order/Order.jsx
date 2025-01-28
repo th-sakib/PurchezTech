@@ -5,7 +5,7 @@ import {
 } from "../../redux/api/apiSlice.js";
 import { useState } from "react";
 import { TbCurrencyTaka, TbListDetails } from "react-icons/tb";
-import { MdOutlineRemoveShoppingCart } from "react-icons/md";
+import { MdDetails, MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { Link } from "react-router-dom";
 import errorRobo from "../../assets/images/error-page.png";
 
@@ -187,7 +187,7 @@ const Order = () => {
                       >
                         <TbListDetails />
                         <p className="text-gray-500 font-bold font-secondaryFont text-xs">
-                          Details
+                          <MdDetails />
                         </p>
                       </button>
                       <button

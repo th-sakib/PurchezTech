@@ -98,7 +98,7 @@ const Navbar = () => {
       </section>
 
       {/* center of navbar  */}
-      <section className="flex-grow mx-auto justify-center items-center flex mt-1 w-full transition-all duration-300 ml-[10%yarn]">
+      <section className="flex-grow mx-auto justify-center items-center flex mt-1 w-full  ml-[10%yarn]">
         {/* menu items */}
         <nav className="uppercase hidden md:inline-flex text-sm font-bold md:mr-0 lg:mr-2 md:space-x-3">
           {navOptions}
@@ -164,7 +164,7 @@ const Navbar = () => {
           {/* login button */}
           {!isAuthenticated ? (
             <Link to="/auth/login" state={{ from: location.pathname }}>
-              <Button className="ml-4 bg-transparent border-black text-accent-color hover:bg-on-hover hover:text-white">
+              <Button className="bg-transparent border-black text-accent-color hover:bg-on-hover hover:text-white">
                 Login
               </Button>
             </Link>

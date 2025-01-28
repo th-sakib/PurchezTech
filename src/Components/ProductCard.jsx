@@ -243,12 +243,12 @@ const ProductCard = ({
 
           {/* image section  */}
           <figure
-            className={`h-36 md:h-44 group ${
+            className={`h-36 p-2 md:h-44 group ${
               location.pathname === "/all-products" ? "xl:h-36" : "xl:h-44"
             }`}
           >
             <img
-              className="h-40 group-hover:scale-105 transition-all duration-300"
+              className="h-full group-hover:scale-105 transition-all duration-300"
               src={imageURL}
               alt="Shoes"
             />

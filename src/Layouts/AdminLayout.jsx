@@ -81,7 +81,7 @@ const AdminLayout = () => {
 
       {/* Side bar - drawer */}
       <div
-        className={`drawer lg:drawer-open bg-white shadow-md w-0 lg:w-1/4 ${
+        className={`drawer lg:drawer-open bg-white shadow-md w-0 lg:w-fit ${
           isDrawerOpen ? "drawer-open" : ""
         }`}
       >

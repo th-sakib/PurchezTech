@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { clearUser } from "../features/user/userSlice";
 import Swal from "sweetalert2";
-import { useId } from "react";
 
 const GLOBAL_URL = "api/v1";
 const USER_URL = "api/v1/user";
@@ -226,7 +225,14 @@ export const apiSlice = createApi({
       }) => {
         let queryString = "?";
 
-        if (category) queryString += `category=${category}&`;
+        if (category) {
+          if (category.includes("&")) {
+            const modifiedCategory = category.replace("&", "%26");
+            queryString += `category=${modifiedCategory}&`;
+          } else {
+            queryString += `category=${category}&`;
+          }
+        }
         if (brand) queryString += `brand=${brand}&`;
         if (sortByPrice) queryString += `sortByPrice=${sortByPrice}&`;
         if (sortByDate) queryString += `sortByDate=${sortByDate}&`;
@@ -449,6 +455,13 @@ export const apiSlice = createApi({
       providesTags: ["Order"],
     }),
 
+    // fetch one order - GET/:orderId
+    fetchIndividualOrder: builder.query({
+      query: ({ orderId }) => `${SHOP_URL}/fetch-individual-order/${orderId}`,
+
+      providesTags: ["Order"],
+    }),
+
     fetchCancelledOrder: builder.query({
       query: ({ userId }) => `${SHOP_URL}/fetch-cancelled/${userId}`,
 
@@ -527,6 +540,7 @@ export const {
 
   useCreateOrderMutation,
   useFetchOrderQuery,
+  useFetchIndividualOrderQuery,
   useUpdateOrderStatusMutation,
   useFetchAllOrderQuery,
   useCancelOderMutation,

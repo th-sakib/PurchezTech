@@ -1,6 +1,6 @@
 const LoaderSpinner = ({ className }) => {
   return (
-    <div className="min-w-screen min-h-screen flex-col justify-center items-center">
+    <div className="">
       <span
         className={`loading loading-infinity text-center ${
           className ? className : "loading-lg"
