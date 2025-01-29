@@ -1,15 +1,36 @@
 import { RiDashboardFill, RiSidebarUnfoldFill } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
 import { BsFillCartCheckFill } from "react-icons/bs";
-import { LuBaggageClaim } from "react-icons/lu";
-import { AiOutlineDashboard } from "react-icons/ai";
+import { LuBaggageClaim, LuLogOut } from "react-icons/lu";
+import logo from "../assets/images/Logo/main-logo-fn.png";
 
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { useState } from "react";
-import Header from "../Pages/Admin/Header/Header";
+import { useDispatch } from "react-redux";
+import { useLogoutUserMutation } from "../redux/api/apiSlice";
+import { toast } from "../lib/sweetAlert/toast";
+import { clearUser } from "../redux/features/user/userSlice";
 
 const AdminLayout = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [logoutUser] = useLogoutUserMutation();
+
+  const dispatch = useDispatch();
+
+  const logoutHandler = async () => {
+    try {
+      const res = await logoutUser().unwrap();
+      dispatch(clearUser());
+      if (res.success === true) {
+        toast.fire({
+          icon: "warning",
+          title: "You are logged out!",
+        });
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -37,51 +58,89 @@ const AdminLayout = () => {
   ];
 
   const sidebarContent = (
-    <nav className="menu text-base-content min-h-full py-4 px-7 w-full bg-white">
+    <nav className="menu mr-12 min-h-screen w-full border-r bg-background-color px-4 py-4 text-base-content">
       {/* sidebar HEADER  */}
-      <div className="text-2xl flex items-center justify-between">
-        <div className=" flex gap-2 items-center">
-          <AiOutlineDashboard className="text-accent-color text-3xl" />
-          <h1 className="font-bold">Admin Panel</h1>
+      <div className="mb-6 flex items-center justify-between text-2xl">
+        <div className="flex items-center gap-2">
+          {/* logo part  */}
+          <section className="flex">
+            <Link to={"/admin/dashboard"}>
+              <img
+                src={logo}
+                alt="PurchezTech Logo"
+                className="aspect-square h-auto w-8"
+              />
+            </Link>
+            <Link
+              to={"/admin/dashboard"}
+              className="-mx-4 mt-[.7rem] font-josefin_sans text-xl font-extrabold logoMd:-mx-2 logoMd:mt-[.5rem]"
+            >
+              <span>urch</span>
+              EZ
+              <span>Tech</span>
+            </Link>
+          </section>
         </div>
         <RxCross2
-          className="cursor-pointer lg:hidden absolute top-1 right-1 text-base hover:text-accent-color"
+          className="absolute right-1 top-1 cursor-pointer text-base hover:text-accent-color lg:hidden"
           onClick={toggleDrawer}
         />
       </div>
 
-      <div className="divider " />
+      <section className="flex h-full flex-col justify-between">
+        <div>
+          {sidebarContentLinks.map((item) => (
+            <li key={item.id} onClick={toggleDrawer}>
+              <NavLink to={item.path}>
+                {({ isActive }) => (
+                  <>
+                    <span className={`${isActive ? "text-accent-color" : ""}`}>
+                      {item.icon}
+                    </span>
+                    <span
+                      className={`${isActive ? "font-bold text-black" : ""}`}
+                    >
+                      {item.label}
+                    </span>
+                  </>
+                )}
+              </NavLink>
+            </li>
+          ))}
+        </div>
 
-      {sidebarContentLinks.map((item) => (
-        <li key={item.id} onClick={toggleDrawer}>
-          <NavLink to={item.path}>
-            {({ isActive }) => (
-              <>
-                <span className={`${isActive ? "text-accent-color" : ""}`}>
-                  {item.icon}
-                </span>
-                <span className={`${isActive ? "text-black font-bold" : ""}`}>
-                  {item.label}
-                </span>
-              </>
-            )}
-          </NavLink>
-        </li>
-      ))}
+        <div>
+          <li
+            className="flex cursor-pointer flex-row items-center rounded-lg font-bold hover:bg-[#1f29371a]"
+            onClick={logoutHandler}
+          >
+            <div className="">
+              <LuLogOut className="mt-1 text-error" />
+            </div>
+            <p className="-ml-2 p-0 hover:bg-transparent">Logout</p>
+          </li>
+        </div>
+      </section>
     </nav>
   );
 
   return (
-    <div className="bg-background-color font-sans text-primary-color flex flex-row-reverse">
+    <div className="flex flex-row-reverse bg-white font-sans text-primary-color">
       {/* Second part of layout (non sidebar) */}
       <div className="w-full">
-        <Header toggleDrawer={toggleDrawer} />
-        <Outlet />
+        {/* sidebar toggler  */}
+        <RiSidebarUnfoldFill
+          className="absolute top-6 cursor-pointer text-3xl hover:text-accent-color lg:hidden"
+          onClick={toggleDrawer}
+        />
+        <div className="ml-6 lg:ml-0">
+          <Outlet />
+        </div>
       </div>
 
       {/* Side bar - drawer */}
       <div
-        className={`drawer lg:drawer-open bg-white shadow-md w-0 lg:w-fit ${
+        className={`drawer min-h-screen w-0 bg-background-color shadow-md lg:drawer-open lg:w-fit ${
           isDrawerOpen ? "drawer-open" : ""
         }`}
       >

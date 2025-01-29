@@ -2,7 +2,7 @@ import { PiEye } from "react-icons/pi";
 import { GrFormEdit } from "react-icons/gr";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { GiSelfLove } from "react-icons/gi";
-import { MdAddShoppingCart } from "react-icons/md";
+import { MdAddShoppingCart, MdEdit, MdEditDocument } from "react-icons/md";
 
 import Button from "./Button";
 import LoaderSpinner from "./LoaderSpinner";
@@ -18,6 +18,7 @@ import {
 import { toast } from "../lib/sweetAlert/toast";
 import Swal from "sweetalert2";
 import { replace, useLocation, useNavigate } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
 
 const ProductCard = ({
   product, // this is coming from product component
@@ -190,16 +191,16 @@ const ProductCard = ({
     <>
       {!isLoading ? (
         //======== The CARD  ==========
-        <div className="card bg-base-100 shadow-lg hover:shadow-2xl rounded-none font-josefin_sans border rounded-b-lg overflow-hidden group/parent relative">
-          <div className="absolute -top-2 -right-2 cursor-pointer">
+        <div className="group/parent card relative overflow-hidden rounded-none rounded-b-lg border bg-base-100 font-josefin_sans shadow-lg hover:shadow-2xl">
+          <div className="absolute -right-2 -top-2 cursor-pointer">
             {/* the visible icon  */}
-            <div className="bg-accent-color w-12 h-12 text-white rounded-bl-full flex justify-center items-center absolute top-0 right-0 z-20 isolate group/inner">
+            <div className="group/inner absolute right-0 top-0 isolate z-20 flex h-12 w-12 items-center justify-center rounded-bl-full bg-accent-color text-white">
               {userRole === "admin" ? (
                 // delete button
                 <button
                   type="button"
                   onClick={() => handleDelete(product)}
-                  className="group-hover/inner:scale-110 transition-all duration-300 group-hover/inner:text-red-600"
+                  className="transition-all duration-300 group-hover/inner:scale-110 group-hover/inner:text-red-600"
                 >
                   <RiDeleteBin5Line className="text-lg" />
                 </button>
@@ -208,7 +209,7 @@ const ProductCard = ({
                 <button
                   type="button"
                   onClick={handleWishlist}
-                  className="group-hover/inner:scale-110 transition-all duration-300"
+                  className="transition-all duration-300 group-hover/inner:scale-110"
                 >
                   <GiSelfLove />
                 </button>
@@ -216,13 +217,13 @@ const ProductCard = ({
             </div>
 
             {/* floating buttons inside image  */}
-            <div className="absolute top-3 -right-5 flex z-10 transform isolate group-hover/parent:-translate-x-16 transition-all duration-300">
+            <div className="absolute -right-5 top-3 isolate z-10 flex transform transition-all duration-300 group-hover/parent:-translate-x-16">
               {userRole === "admin"
                 ? adminIcons.map((item) => (
                     <button
                       key={item.id}
                       onClick={() => item.handler(product)}
-                      className="border border-accent-color text-accent-color p-0.5 text-lg rounded-full mr-1 hover:text-white hover:border-on-hover hover:bg-accent-color transition-all duration-500"
+                      className="mr-1 rounded-full border border-accent-color p-0.5 text-lg text-accent-color transition-all duration-500 hover:border-on-hover hover:bg-accent-color hover:text-white"
                       type="button"
                     >
                       {item.icon}
@@ -232,7 +233,7 @@ const ProductCard = ({
                     <button
                       key={item.id}
                       onClick={item.handler}
-                      className="border border-accent-color text-accent-color p-0.5 text-lg rounded-full mr-1 hover:text-white hover:border-on-hover hover:bg-accent-color transition-all duration-500"
+                      className="mr-1 rounded-full border border-accent-color p-0.5 text-lg text-accent-color transition-all duration-500 hover:border-on-hover hover:bg-accent-color hover:text-white"
                       type="button"
                     >
                       {item.icon}
@@ -243,28 +244,28 @@ const ProductCard = ({
 
           {/* image section  */}
           <figure
-            className={`h-36 p-2 md:h-44 group ${
+            className={`group h-36 p-2 md:h-44 ${
               location.pathname === "/all-products" ? "xl:h-36" : "xl:h-44"
             }`}
           >
             <img
-              className="h-full group-hover:scale-105 transition-all duration-300"
+              className="h-full transition-all duration-300 group-hover:scale-105"
               src={imageURL}
               alt="Shoes"
             />
           </figure>
 
-          <div className="flex flex-row p-2 h-20 relative">
+          <div className="relative flex h-20 flex-row p-2">
             {/* title & desc. part  */}
-            <div className="overflow-hidden flex flex-col justify-around w-4/5">
+            <div className="flex w-4/5 flex-col justify-around overflow-hidden">
               <h2
-                className="text-sm font-semibold capitalize line leading-5 line-clamp-1"
+                className="line line-clamp-1 text-sm font-semibold capitalize leading-5"
                 title={title}
               >
                 {title}
               </h2>
               <p
-                className="text-xs text-faded-text line-clamp-2 text-pretty"
+                className="line-clamp-2 text-pretty text-xs text-faded-text"
                 title={description}
               >
                 {description}
@@ -273,7 +274,7 @@ const ProductCard = ({
 
             {/* total sold  */}
             {totalSold ? (
-              <div className="text-right self-center absolute right-2 bottom-0 font-bold text-accent-color">
+              <div className="absolute bottom-0 right-2 self-center text-right font-bold text-accent-color">
                 {totalSold} Sold
               </div>
             ) : (
@@ -281,17 +282,17 @@ const ProductCard = ({
             )}
 
             {/* price part  */}
-            <div className="text-right self-center absolute right-2">
-              <div className="text-xl font-bold relative w-fit">
+            <div className="absolute right-2 self-center text-right">
+              <div className="relative w-fit text-xl font-bold">
                 {price !== salePrice ? (
-                  <p className="text-sm line-through text-faded-text w-fit absolute -top-3.5 right-0">
+                  <p className="absolute -top-3.5 right-0 w-fit text-sm text-faded-text line-through">
                     ${price}
                   </p>
                 ) : (
                   ""
                 )}
                 <div className="text-xl font-bold text-accent-color">
-                  <span className="text-xs absolute top-0 -left-2">$</span>
+                  <span className="absolute -left-2 top-0 text-xs">$</span>
                   {salePrice}
                 </div>
               </div>
@@ -301,21 +302,21 @@ const ProductCard = ({
           <div className="card-actions justify-center">
             {userRole === "admin" ? (
               <Button
-                btnHandler={handleDelete}
-                className="w-full bg-accent-color hover:bg-on-hover text-white border-none group rounded-b-md uppercase"
+                btnHandler={() => handleEdit(product)}
+                className="group w-full rounded-b-md border-none bg-accent-color uppercase text-white hover:bg-on-hover"
               >
-                <RiDeleteBin5Line className="text-xl -mt-1" />
-                <p>Delete Product</p>
+                <MdEdit className="-mt-1 text-xl" />
+                <p>Edit Product</p>
               </Button>
             ) : (
               <Button
                 btnHandler={handleCart}
-                className="w-full bg-accent-color hover:bg-on-hover text-white border-none group rounded-b-md uppercase flex px-0"
+                className="group flex w-full rounded-b-md border-none bg-accent-color px-0 uppercase text-white hover:bg-on-hover"
               >
                 {cartIsLoading ? (
                   <span className="text-xs">Adding to cart...</span>
                 ) : (
-                  <span className="text-xs md:text-sm flex sm:gap-1">
+                  <span className="flex text-xs sm:gap-1 md:text-sm">
                     <MdAddShoppingCart className="text-base md:text-xl" />
                     add to cart
                   </span>

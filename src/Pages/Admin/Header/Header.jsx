@@ -24,15 +24,10 @@ const Header = ({ toggleDrawer }) => {
   };
 
   return (
-    <header className="flex items-center py-3 w-full bg-white font-josefin_sans px-8">
-      {/* sidebar toggler  */}
-      <RiSidebarUnfoldFill
-        className="text-3xl cursor-pointer lg:hidden hover:text-accent-color"
-        onClick={toggleDrawer}
-      />
+    <header className="flex w-full items-center bg-white px-8 py-3 font-josefin_sans">
       <Button
         btnHandler={logoutHandler}
-        className="ml-auto text-white font-normal"
+        className="ml-auto font-normal text-white"
       >
         Logout
       </Button>

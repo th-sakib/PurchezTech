@@ -1,8 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useFetchIndividualOrderQuery } from "../redux/api/apiSlice";
-import { TbCurrencyTaka, TbEdit } from "react-icons/tb";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 export default function OrderDetails() {
   const { id } = useParams();
@@ -53,7 +52,7 @@ function OrderStatus({ order }) {
           : "text-success";
 
   return (
-    <div className="w-full space-y-1 rounded-lg bg-white px-4 py-2">
+    <div className="w-full space-y-1 rounded-lg bg-background-color px-4 py-2">
       <div className="flex items-center justify-between px-4 py-3">
         <h2 className="text-lg font-bold">Order Status</h2>
         <div className="font-bold">
@@ -68,9 +67,9 @@ function OrderStatus({ order }) {
 
 function AllItems({ order }) {
   return (
-    <div className="mt-4 rounded-lg bg-white p-3">
+    <div className="mt-4 rounded-lg bg-background-color p-3">
       {/* header part of all item section  */}
-      <div className="mb-6 mt-3 flex items-center justify-between rounded-lg bg-background-color/50 px-4 py-3">
+      <div className="mb-6 mt-3 flex items-center justify-between rounded-lg bg-background-color/50 px-4 py-0">
         <h2 className="text-lg font-bold">All Items</h2>
         <div className="font-bold">Items: {order?.orderItems?.length}</div>
       </div>
@@ -79,7 +78,7 @@ function AllItems({ order }) {
           // order Card
           <div
             key={orderItem?._id}
-            className="grid grid-cols-6 items-center gap-8 rounded-lg p-2 odd:bg-background-color/50"
+            className="grid grid-cols-6 items-center gap-8 rounded-lg p-2 odd:bg-white"
           >
             <OrderItemCard orderItem={orderItem} />
           </div>
@@ -120,7 +119,7 @@ function OrderItemCard({ orderItem }) {
 function Summary({ order }) {
   return (
     <>
-      <div className="w-full space-y-1 rounded-lg bg-white px-6 py-4">
+      <div className="w-full space-y-1 rounded-lg bg-background-color px-6 py-4">
         <h2 className="font-bold"> Summary</h2>
         <div className="flex gap-6">
           <p className="w-16 shrink-0 text-gray-500">Order ID</p>
@@ -144,7 +143,7 @@ function Summary({ order }) {
 
 function ShippingAddress({ order }) {
   return (
-    <section className="w-full space-y-1 rounded-lg bg-white px-6 py-4">
+    <section className="w-full space-y-1 rounded-lg bg-background-color px-6 py-4">
       <h3 className="font-bold">Shipping Address</h3>
       <p className="text-gray-500">
         {order?.addressInfo?.address}, {order?.addressInfo?.country} - postal:{" "}
@@ -157,7 +156,7 @@ function ShippingAddress({ order }) {
 function PaymentMethods({ order }) {
   return (
     <>
-      <div className="w-full space-y-1 rounded-lg bg-white px-6 py-4">
+      <div className="w-full space-y-1 rounded-lg bg-background-color px-6 py-4">
         <h2 className="font-bold"> PaymentDetails</h2>
         <div className="flex gap-6">
           <p className="w-20 shrink-0 text-gray-500">Card Issuer</p>

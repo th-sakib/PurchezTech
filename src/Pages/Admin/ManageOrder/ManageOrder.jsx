@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useFetchAllOrderQuery } from "../../../redux/api/apiSlice.js";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
@@ -9,15 +8,20 @@ const ManageOrder = () => {
 
   return (
     <div className="m-4">
-      <h1 className="mb-6 ml-4 text-3xl font-bold text-gray-700 md:text-center">
-        Manage Orders
-      </h1>
-      <div className="mr-16 overflow-x-auto md:mr-0">
+      {/* title section */}
+      <section className="mt-4 flex items-center py-2">
+        <h1 className="text-2xl font-bold capitalize">Orders</h1>
+      </section>
+
+      <div className="divider mt-0"></div>
+
+      <div className="mr-16 min-h-screen overflow-x-scroll rounded-lg bg-white md:mr-0">
         <table className="table">
           {/* head */}
-          <thead className="text-center">
+          <thead className="">
             <tr>
-              <th>User Id</th>
+              <th>Order Id</th>
+              <th>Status</th>
               <th>Order Date</th>
               <th>Order Price(BDT)</th>
               <th>Order Items</th>
@@ -26,12 +30,15 @@ const ManageOrder = () => {
           </thead>
           <tbody>
             {orders?.data?.order?.map((item) => (
-              <tr key={item?._id} className="text-center">
-                <td>{item?.user}</td>
+              <tr key={item?._id} className="">
+                <td># {item?._id}</td>
+                <td>
+                  <OrderStatus order={item} />
+                </td>
                 <td>{item?.createdAt.split("T")[0]}</td>
                 <td>{item?.totalPrice}</td>
                 <td className="">{item?.orderItems.length}</td>
-                <td className="flex items-center justify-center gap-2">
+                <td className="flex items-center justify-start gap-2">
                   {/* details button */}
                   <button className="hover:text-additional-color">
                     <Link to={`/admin/orders/${item._id}`}>
@@ -51,5 +58,24 @@ const ManageOrder = () => {
     </div>
   );
 };
+
+function OrderStatus({ order }) {
+  const tagColor =
+    order?.orderStatus === "Cancelled"
+      ? "text-error"
+      : order?.orderStatus === "Processing"
+        ? "text-accent"
+        : order?.orderStatus === "Delivered"
+          ? "text-success"
+          : "text-success";
+
+  return (
+    <div className="font-bold">
+      <div className={`badge badge-outline ${tagColor}`}>
+        {order?.orderStatus}
+      </div>
+    </div>
+  );
+}
 
 export default ManageOrder;
