@@ -149,7 +149,7 @@ const AddProductForm = ({
         encType="multipart/form-data"
       >
         {/* title */}
-        <div className="relative group h-12 mb-10">
+        <div className="group relative mb-10 h-12">
           <label className="font-bold" htmlFor="title">
             Title
           </label>
@@ -170,11 +170,11 @@ const AddProductForm = ({
             id="title"
             placeholder="Enter product title"
           />
-          <p className="text-red-600 text-sm">{errors?.title?.message}</p>
+          <p className="text-sm text-red-600">{errors?.title?.message}</p>
         </div>
 
         {/* description */}
-        <div className="relative group h-8 mb-[83.2px]">
+        <div className="group relative mb-[83.2px] h-8">
           <label className="font-bold" htmlFor="description">
             Description
           </label>
@@ -195,13 +195,13 @@ const AddProductForm = ({
             id="description"
             placeholder="Enter product description"
           />
-          <p className="text-red-600 text-sm -mt-1">
+          <p className="-mt-1 text-sm text-red-600">
             {errors?.description?.message}
           </p>
         </div>
 
         {/* category  */}
-        <div className="relative group h-8 mb-14">
+        <div className="group relative mb-14 h-8">
           <label className="font-bold" htmlFor="category">
             Category
           </label>
@@ -229,11 +229,11 @@ const AddProductForm = ({
           </select>
 
           {/* Error message */}
-          <p className="text-red-600 text-sm">{errors?.category?.message}</p>
+          <p className="text-sm text-red-600">{errors?.category?.message}</p>
         </div>
 
         {/* brand  */}
-        <div className="relative group h-8 mb-14">
+        <div className="group relative mb-14 h-8">
           <label className="font-bold" htmlFor="brand">
             Brand
           </label>
@@ -259,11 +259,11 @@ const AddProductForm = ({
           </select>
 
           {/* Error message */}
-          <p className="text-red-600 text-sm">{errors?.brand?.message}</p>
+          <p className="text-sm text-red-600">{errors?.brand?.message}</p>
         </div>
 
         {/* price  */}
-        <div className="relative group h-12 mb-10">
+        <div className="group relative mb-10 h-12">
           <label className="font-bold" htmlFor="price">
             Price
           </label>
@@ -288,11 +288,11 @@ const AddProductForm = ({
             id="price"
             placeholder="Enter product price"
           />
-          <p className="text-red-600 text-sm">{errors?.price?.message}</p>
+          <p className="text-sm text-red-600">{errors?.price?.message}</p>
         </div>
 
         {/* Sale price  */}
-        <div className="relative group h-12 mb-12">
+        <div className="group relative mb-12 h-12">
           <label className="font-bold" htmlFor="salePrice">
             Sale Price
           </label>
@@ -317,11 +317,11 @@ const AddProductForm = ({
             id="salePrice"
             placeholder="Enter product salePrice"
           />
-          <p className="text-red-600 text-sm">{errors?.salePrice?.message}</p>
+          <p className="text-sm text-red-600">{errors?.salePrice?.message}</p>
         </div>
 
         {/* Total Stock  */}
-        <div className="relative group h-12 mb-12">
+        <div className="group relative mb-12 h-12">
           <label className="font-bold" htmlFor="stock">
             Total Stock
           </label>
@@ -346,14 +346,16 @@ const AddProductForm = ({
             id="stock"
             placeholder="Enter product stock"
           />
-          <p className="text-red-600 text-sm">{errors?.stock?.message}</p>
+          <p className="text-sm text-red-600">{errors?.stock?.message}</p>
         </div>
 
         {/* buttons */}
         {isEditMode ? (
           <Button btnType="submit" className="w-full">
             {updating ? (
-              <LoaderSpinner className="loading-md" />
+              <div className="flex h-screen w-screen items-center justify-center">
+                <LoaderSpinner className="loading-md" />
+              </div>
             ) : (
               "Update Product"
             )}

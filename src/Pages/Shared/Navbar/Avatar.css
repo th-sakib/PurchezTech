@@ -1,0 +1,9 @@
+.active {
+    background: #1f29371a !important;
+    border-radius: .5rem !important;
+}
+
+li a:active {
+    background-color: transparent !important;
+    color: black !important
+}

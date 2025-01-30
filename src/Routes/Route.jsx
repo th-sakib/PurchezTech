@@ -28,14 +28,16 @@ import ManageOrder from "../Pages/Admin/ManageOrder/ManageOrder";
 // import Cancelled from "../Pages/Order/Cancelled";
 import LoaderSpinner from "../Components/LoaderSpinner";
 import OrderDetails from "../Components/OrderDetails";
+import Dashboard from "../Pages/Admin/Dashboard/Dashboard";
+import Users from "../Pages/Admin/Users/Users";
 const LazyCart = React.lazy(() => import("../Pages/Cart/Cart"));
 const LazyWishlist = React.lazy(() => import("../Pages/Wishlist/Wishlist"));
 const LazyAdmin = React.lazy(() => import("../Layouts/AdminLayout"));
 const LazyUserDashboard = React.lazy(() => import("../Layouts/UserDashboard"));
 const LazyAuthLayout = React.lazy(() => import("../Layouts/AuthLayout"));
 const LazyCancelled = React.lazy(() => import("../Pages/Order/Cancelled"));
-const LazyProductDetails = React.lazy(() =>
-  import("../Components/ProductDetails")
+const LazyProductDetails = React.lazy(
+  () => import("../Components/ProductDetails"),
 );
 
 export const router = createBrowserRouter([
@@ -148,7 +150,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "dashboard",
-        element: <h1>hello world</h1>,
+        element: <Dashboard />,
       },
       {
         path: "products",
@@ -161,6 +163,10 @@ export const router = createBrowserRouter([
       {
         path: "orders/:id",
         element: <OrderDetails />,
+      },
+      {
+        path: "users",
+        element: <Users />,
       },
       {
         path: "product-details/:id",

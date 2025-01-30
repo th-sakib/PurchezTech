@@ -4,7 +4,6 @@ import { useState } from "react";
 import { toast } from "../../../lib/sweetAlert/toast";
 
 export default function EditComp({ orderItem }) {
-  const [currentStatus, setCurrentStatus] = useState("");
   const [updateOrder, { isLoading: updating }] = useUpdateOrderStatusMutation();
 
   const orderStatus = [
@@ -35,8 +34,7 @@ export default function EditComp({ orderItem }) {
     // const value = orderItem?.orderStatus;
 
     try {
-      const res = await updateOrder({ tranId, status: value });
-      setCurrentStatus(value);
+      await updateOrder({ tranId, status: value });
       toast.fire({
         title: "Status updated successfully",
         icon: "success",
@@ -48,7 +46,7 @@ export default function EditComp({ orderItem }) {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="dropdown dropdown-end">
         <div tabIndex={0} role="button" className="">
           <button className="hover:text-accent-color">
@@ -57,7 +55,7 @@ export default function EditComp({ orderItem }) {
         </div>
         <ul
           tabIndex={0}
-          className="menu dropdown-content z-[1] w-52 rounded-md bg-base-100 p-2 shadow"
+          className="menu dropdown-content z-50 w-52 rounded-md bg-base-100 p-2 shadow"
         >
           {orderStatus.map((item) => (
             <li

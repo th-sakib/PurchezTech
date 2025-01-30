@@ -9,6 +9,7 @@ import { selectIsAuthenticated } from "../../../redux/features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "./Avatar";
 import { setSearchTerm } from "../../../redux/features/user/searchSlice.js";
+import "./Navbar.css";
 
 const Navbar = () => {
   const [localSearch, setLocalSearch] = useState("");
@@ -37,29 +38,29 @@ const Navbar = () => {
 
   const navOptions = (
     <>
-      <li className="hover:text-black text-[#000000c3]">
+      <li className="text-[#000000c3] hover:text-black">
         <NavLink to="/">
           {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-1 px-1">
+            <div className="flex items-center justify-center space-x-1 px-1">
               {/* {isActive ? <IoHome /> : <IoHomeOutline />} */ <p>home</p>}
             </div>
           )}
         </NavLink>
       </li>
-      <li className="active:bg-transparent hover:text-black text-[#000000c3]">
+      <li className="text-[#000000c3] hover:text-black active:bg-transparent">
         <NavLink to={"/all-products"}>
           {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-1 px-1">
+            <div className="flex items-center justify-center space-x-1 px-1">
               {/* {isActive ? <AiFillProduct /> : <AiOutlineProduct />} */}
               <p>shop</p>
             </div>
           )}
         </NavLink>
       </li>
-      <li className="hover:text-black text-[#000000c3]">
+      <li className="text-[#000000c3] hover:text-black">
         <NavLink to="/contact">
           {({ isActive }) => (
-            <div className="flex justify-center items-center space-x-1 px-1">
+            <div className="flex items-center justify-center space-x-1 px-1">
               {/* {isActive ? <RiContactsBookFill /> : <RiContactsBook3Line />}{" "} */}
               <p>Contact</p>
             </div>
@@ -70,21 +71,21 @@ const Navbar = () => {
   );
 
   return (
-    <div className="flex py-2 bg-white text-black justify-between max-w-[90vw] lg:max-w-[95vw] xxl:max-w-[1450px] mx-auto items-center">
+    <div className="mx-auto flex max-w-[90vw] items-center justify-between bg-white py-2 text-black lg:max-w-[95vw] xxl:max-w-[1450px]">
       {/* navbar start  */}
-      <section className="hidden md:flex min-w-[15rem]">
+      <section className="hidden min-w-[15rem] md:flex">
         {/* logo section  */}
         <section className="flex">
           <Link>
             <img
               src={logo}
               alt="PurchezTech Logo"
-              className="h-auto w-9 aspect-square"
+              className="aspect-square h-auto w-9"
             />
           </Link>
           <Link
             to={"/"}
-            className="-mx-4 logoMd:-mx-2 mt-[.7rem] logoMd:mt-[.6rem] text-xl font-josefin_sans font-extrabold"
+            className="-mx-4 mt-[.7rem] font-josefin_sans text-xl font-extrabold logoMd:-mx-2 logoMd:mt-[.6rem]"
           >
             <span className="">urch</span>
             {/* <span className="text-xl font-sankofa px-1 inline-block transform translate-y-[-2px] bg-textC text-white mt-2 font-normal">
@@ -98,26 +99,26 @@ const Navbar = () => {
       </section>
 
       {/* center of navbar  */}
-      <section className="flex-grow mx-auto justify-center items-center flex mt-1 w-full  ml-[10%yarn]">
+      <section className="mx-auto ml-[10%yarn] mt-1 flex w-full flex-grow items-center justify-center">
         {/* menu items */}
-        <nav className="uppercase hidden md:inline-flex text-sm font-bold md:mr-0 lg:mr-2 md:space-x-3">
+        <nav className="hidden text-sm font-bold uppercase md:mr-0 md:inline-flex md:space-x-3 lg:mr-2">
           {navOptions}
         </nav>
       </section>
 
       {/* nav end  */}
-      <section className={`md:flex gap-2 shrink-0`}>
+      <section className={`shrink-0 gap-2 md:flex`}>
         {/* search box  */}
         <div
-          className={`flex rounded-none items-center justify-end relative ml-auto w-[90vw] md:w-auto ${
+          className={`relative ml-auto flex w-[90vw] items-center justify-end rounded-none md:w-auto ${
             !searchEnabled ? "w-[80%]" : ""
           }`}
         >
           <input
             type="text"
             name="search-box"
-            className={`input rounded-none focus:outline-none h-10 border-black focus:border-on-hover transition-all duration-300 ${
-              searchEnabled ? "w-full md:w-0 md:border-none " : "w-full "
+            className={`input h-10 rounded-none border-black transition-all duration-300 focus:border-on-hover focus:outline-none ${
+              searchEnabled ? "w-full md:w-0 md:border-none" : "w-full"
             }`}
             placeholder="Search for your desired Products"
             onChange={(e) => setLocalSearch(e.target.value)}
@@ -136,35 +137,34 @@ const Navbar = () => {
             />
           )}
           <button
-            className={`px-3 
-           rounded-none min-h-10 h-10 hover:border-additional-color group/search ${
-             !searchEnabled
-               ? "bg-black mr-0"
-               : "bg-black md:bg-white text-white md:text-black md:-mr-2"
-           }`}
+            className={`group/search h-10 min-h-10 rounded-none px-3 hover:border-additional-color ${
+              !searchEnabled
+                ? "mr-0 bg-black"
+                : "bg-black text-white md:-mr-2 md:bg-white md:text-black"
+            }`}
             onClick={handleSearch}
           >
             <IoSearchSharp
               className={`group-hover/search:text-additional-color ${
                 !searchEnabled
-                  ? "text-white text-base"
-                  : "lg:text-black lg:text-xl text-base md:text-xl"
+                  ? "text-base text-white"
+                  : "text-base md:text-xl lg:text-xl lg:text-black"
               }`}
             />
           </button>
         </div>
 
         {/* cart and login button  */}
-        <div className="hidden md:flex space-x-4 items-center">
+        <div className="hidden items-center space-x-4 md:flex">
           {/* cart icon  */}
-          <Link to="/cart" className="relative group hover:text-on-hover">
-            <HiOutlineShoppingCart className={`text-xl cursor-pointer`} />
+          <Link to="/cart" className="group relative hover:text-on-hover">
+            <HiOutlineShoppingCart className={`cursor-pointer text-xl`} />
           </Link>
 
           {/* login button */}
           {!isAuthenticated ? (
             <Link to="/auth/login" state={{ from: location.pathname }}>
-              <Button className="bg-transparent border-black text-accent-color hover:bg-on-hover hover:text-white">
+              <Button className="border-black bg-transparent text-accent-color hover:bg-on-hover hover:text-white">
                 Login
               </Button>
             </Link>

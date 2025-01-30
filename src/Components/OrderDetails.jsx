@@ -1,7 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useFetchIndividualOrderQuery } from "../redux/api/apiSlice";
-import { TbCurrencyTaka } from "react-icons/tb";
+import {
+  useFetchIndividualOrderQuery,
+  useUpdateOrderStatusMutation,
+} from "../redux/api/apiSlice";
+import { TbCircleLetterG, TbCurrencyTaka } from "react-icons/tb";
+import Button from "./Button";
+import { toast } from "../lib/sweetAlert/toast";
 
 export default function OrderDetails() {
   const { id } = useParams();
@@ -9,11 +14,27 @@ export default function OrderDetails() {
   const { data: orderRes, isFetching } = useFetchIndividualOrderQuery({
     orderId: id,
   });
+  const [updateOrderStatus, { isLoading }] = useUpdateOrderStatusMutation();
+
+  const handleComplete = async () => {
+    const tranId = order?.paymentDetails?.tranID;
+
+    try {
+      await updateOrderStatus({ tranId, status: "Completed" });
+      toast.fire({
+        title: "Status updated successfully",
+        icon: "success",
+        timer: 3000,
+      });
+    } catch (error) {
+      console.log(error?.message);
+    }
+  };
 
   const order = orderRes?.data;
 
   return (
-    <div className="m-4 min-h-screen">
+    <div className="min-h-screen bg-background-color p-4">
       <section className="w-fit">
         <h1 className="text-xl font-normal sm:text-2xl md:text-3xl md:font-semibold">
           Order #{id}
@@ -34,6 +55,13 @@ export default function OrderDetails() {
 
             <ShippingAddress order={order} />
             <PaymentMethods order={order} />
+            <Button
+              disabled={order?.orderStatus === "Completed"}
+              className="rounded-lg"
+              btnHandler={handleComplete}
+            >
+              Complete Order
+            </Button>
           </div>
         </section>
       </div>
@@ -52,8 +80,8 @@ function OrderStatus({ order }) {
           : "text-success";
 
   return (
-    <div className="w-full space-y-1 rounded-lg bg-background-color px-4 py-2">
-      <div className="flex items-center justify-between px-4 py-3">
+    <div className="w-auto space-y-1 rounded-lg bg-white px-4 py-4">
+      <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold">Order Status</h2>
         <div className="font-bold">
           <div className={`badge badge-outline ${tagColor}`}>
@@ -67,9 +95,9 @@ function OrderStatus({ order }) {
 
 function AllItems({ order }) {
   return (
-    <div className="mt-4 rounded-lg bg-background-color p-3">
+    <div className="mt-4 rounded-lg bg-white p-3">
       {/* header part of all item section  */}
-      <div className="mb-6 mt-3 flex items-center justify-between rounded-lg bg-background-color/50 px-4 py-0">
+      <div className="mb-6 mt-3 flex items-center justify-between rounded-lg bg-background-color/50 px-4 py-3">
         <h2 className="text-lg font-bold">All Items</h2>
         <div className="font-bold">Items: {order?.orderItems?.length}</div>
       </div>
@@ -78,7 +106,7 @@ function AllItems({ order }) {
           // order Card
           <div
             key={orderItem?._id}
-            className="grid grid-cols-6 items-center gap-8 rounded-lg p-2 odd:bg-white"
+            className="grid grid-cols-6 items-center gap-8 rounded-lg p-2 odd:bg-background-color"
           >
             <OrderItemCard orderItem={orderItem} />
           </div>
@@ -119,7 +147,7 @@ function OrderItemCard({ orderItem }) {
 function Summary({ order }) {
   return (
     <>
-      <div className="w-full space-y-1 rounded-lg bg-background-color px-6 py-4">
+      <div className="w-full space-y-1 rounded-lg bg-white px-6 py-4">
         <h2 className="font-bold"> Summary</h2>
         <div className="flex gap-6">
           <p className="w-16 shrink-0 text-gray-500">Order ID</p>
@@ -143,7 +171,7 @@ function Summary({ order }) {
 
 function ShippingAddress({ order }) {
   return (
-    <section className="w-full space-y-1 rounded-lg bg-background-color px-6 py-4">
+    <section className="w-full space-y-1 rounded-lg bg-white px-6 py-4">
       <h3 className="font-bold">Shipping Address</h3>
       <p className="text-gray-500">
         {order?.addressInfo?.address}, {order?.addressInfo?.country} - postal:{" "}
@@ -156,7 +184,7 @@ function ShippingAddress({ order }) {
 function PaymentMethods({ order }) {
   return (
     <>
-      <div className="w-full space-y-1 rounded-lg bg-background-color px-6 py-4">
+      <div className="w-full space-y-1 rounded-lg bg-white px-6 py-4 capitalize">
         <h2 className="font-bold"> PaymentDetails</h2>
         <div className="flex gap-6">
           <p className="w-20 shrink-0 text-gray-500">Card Issuer</p>
@@ -165,6 +193,10 @@ function PaymentMethods({ order }) {
         <div className="flex gap-6">
           <p className="w-20 shrink-0 text-gray-500">Card Brand</p>
           <p className="font-bold">{order?.paymentDetails?.cardBrand}</p>
+        </div>
+        <div className="flex gap-6">
+          <p className="w-20 shrink-0 text-gray-500">Status</p>
+          <p className="font-bold">{order?.paymentDetails?.status}</p>
         </div>
       </div>
     </>

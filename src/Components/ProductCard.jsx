@@ -326,7 +326,9 @@ const ProductCard = ({
           </div>
         </div>
       ) : (
-        <LoaderSpinner />
+        <div className="h-screen w-full">
+          <LoaderSpinner />
+        </div>
       )}
     </>
   );

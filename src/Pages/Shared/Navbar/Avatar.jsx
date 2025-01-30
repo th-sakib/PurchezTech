@@ -6,6 +6,7 @@ import { clearUser } from "../../../redux/features/user/userSlice";
 import { Link, useLocation } from "react-router-dom";
 import { FaUser, FaUserGear } from "react-icons/fa6";
 import { FaSignOutAlt, FaShoppingBag } from "react-icons/fa";
+import "./Avatar.css";
 
 import { useState } from "react";
 import { BsCartXFill } from "react-icons/bs";
@@ -55,7 +56,7 @@ const Avatar = () => {
           <label htmlFor="my-drawer-on-profile" className="drawer-button">
             {/* avatar  */}
             <div className="avatar">
-              <div className="ring-primary-color ring-offset-base-100 h-8 rounded-full ring-2 ring-offset-1 cursor-pointer">
+              <div className="h-8 cursor-pointer rounded-full ring-2 ring-primary-color ring-offset-1 ring-offset-base-100">
                 <img src={userInfo.avatar ? userInfo.avatar : robotAvatar} />
               </div>
             </div>
@@ -67,7 +68,7 @@ const Avatar = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 drawer-end">
+          <ul className="menu drawer-end min-h-full w-80 bg-base-200 p-4 text-base-content">
             {/* Sidebar content here */}
             <li onClick={() => setIsDrawerOpen(false)}>
               <Link to="/user/manage-account">

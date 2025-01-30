@@ -7,15 +7,13 @@ const ManageOrder = () => {
   const { data: orders } = useFetchAllOrderQuery();
 
   return (
-    <div className="m-4">
+    <div className="">
       {/* title section */}
-      <section className="mt-4 flex items-center py-2">
-        <h1 className="text-2xl font-bold capitalize">Orders</h1>
+      <section className="flex items-center bg-white px-5 py-6">
+        <h1 className="text-2xl font-bold capitalize">Manage Orders</h1>
       </section>
 
-      <div className="divider mt-0"></div>
-
-      <div className="mr-16 min-h-screen overflow-x-scroll rounded-lg bg-white md:mr-0">
+      <div className="m-4 mr-4 min-h-[80vh] overflow-x-auto overflow-y-hidden rounded-lg bg-white px-3">
         <table className="table">
           {/* head */}
           <thead className="">
@@ -25,6 +23,7 @@ const ManageOrder = () => {
               <th>Order Date</th>
               <th>Order Price(BDT)</th>
               <th>Order Items</th>
+              <th>Payment Status</th>
               <th>action</th>
             </tr>
           </thead>
@@ -38,6 +37,11 @@ const ManageOrder = () => {
                 <td>{item?.createdAt.split("T")[0]}</td>
                 <td>{item?.totalPrice}</td>
                 <td className="">{item?.orderItems.length}</td>
+                <td
+                  className={`font-bold capitalize ${item?.paymentDetails?.status === "paid" ? "text-success" : ""}`}
+                >
+                  {item?.paymentDetails?.status}
+                </td>
                 <td className="flex items-center justify-start gap-2">
                   {/* details button */}
                   <button className="hover:text-additional-color">

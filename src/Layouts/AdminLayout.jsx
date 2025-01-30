@@ -1,4 +1,8 @@
-import { RiDashboardFill, RiSidebarUnfoldFill } from "react-icons/ri";
+import {
+  RiDashboardFill,
+  RiSidebarUnfoldFill,
+  RiUserSettingsFill,
+} from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { LuBaggageClaim, LuLogOut } from "react-icons/lu";
@@ -10,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { useLogoutUserMutation } from "../redux/api/apiSlice";
 import { toast } from "../lib/sweetAlert/toast";
 import { clearUser } from "../redux/features/user/userSlice";
+import "./AdminLayout.css";
 
 const AdminLayout = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -41,24 +46,30 @@ const AdminLayout = () => {
       id: "dashboard",
       path: "dashboard",
       label: "Dashboard",
-      icon: <RiDashboardFill />,
+      icon: <RiDashboardFill className="mt-1 text-lg" />,
     },
     {
       id: "products",
       path: "products",
       label: "Products",
-      icon: <LuBaggageClaim />,
+      icon: <LuBaggageClaim className="mt-1 text-lg" />,
     },
     {
       id: "orders",
       path: "orders",
       label: "Orders",
-      icon: <BsFillCartCheckFill />,
+      icon: <BsFillCartCheckFill className="mt-1 text-lg" />,
+    },
+    {
+      id: "users",
+      path: "users",
+      label: "Users",
+      icon: <RiUserSettingsFill className="mt-1 text-lg" />,
     },
   ];
 
   const sidebarContent = (
-    <nav className="menu mr-12 min-h-screen w-full border-r bg-background-color px-4 py-4 text-base-content">
+    <nav className="menu mr-12 min-h-screen w-full border-r bg-white px-4 py-4 text-base-content">
       {/* sidebar HEADER  */}
       <div className="mb-6 flex items-center justify-between text-2xl">
         <div className="flex items-center gap-2">
@@ -117,7 +128,9 @@ const AdminLayout = () => {
             <div className="">
               <LuLogOut className="mt-1 text-error" />
             </div>
-            <p className="-ml-2 p-0 hover:bg-transparent">Logout</p>
+            <h3 className="-ml-2 p-0 hover:bg-transparent active:!bg-transparent active:!text-gray-800">
+              Logout
+            </h3>
           </li>
         </div>
       </section>
@@ -125,7 +138,7 @@ const AdminLayout = () => {
   );
 
   return (
-    <div className="flex flex-row-reverse bg-white font-sans text-primary-color">
+    <div className="flex flex-row-reverse font-sans text-primary-color">
       {/* Second part of layout (non sidebar) */}
       <div className="w-full">
         {/* sidebar toggler  */}
@@ -133,14 +146,14 @@ const AdminLayout = () => {
           className="absolute top-6 cursor-pointer text-3xl hover:text-accent-color lg:hidden"
           onClick={toggleDrawer}
         />
-        <div className="ml-6 lg:ml-0">
+        <div className="ml-6 min-h-screen bg-background-color lg:ml-0">
           <Outlet />
         </div>
       </div>
 
       {/* Side bar - drawer */}
       <div
-        className={`drawer min-h-screen w-0 bg-background-color shadow-md lg:drawer-open lg:w-fit ${
+        className={`drawer min-h-screen w-0 bg-white shadow-md lg:drawer-open lg:w-fit ${
           isDrawerOpen ? "drawer-open" : ""
         }`}
       >

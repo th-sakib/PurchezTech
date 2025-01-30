@@ -1,20 +1,28 @@
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { cn } from "../lib/cn";
 
-const Button = ({ children, className, shopNow, btnType, btnHandler }) => {
+const Button = ({
+  children,
+  className,
+  shopNow,
+  btnType,
+  btnHandler,
+  disabled,
+}) => {
   return (
     <button
+      disabled={disabled}
       type={btnType || "button"}
       onClick={btnHandler}
       className={cn(
-        "btn bg-accent-color text-white hover:bg-on-hover rounded-none px-6 group",
-        className
+        "group btn rounded-none bg-accent-color px-6 text-white hover:bg-on-hover",
+        className,
       )}
     >
       {children}
       {shopNow && (
         <div className="flex items-center transition-all duration-300">
-          <FaLongArrowAltRight className="w-3 ml-0 transition-all duration-300 group-hover:translate-x-2 group-hover:scale-125" />
+          <FaLongArrowAltRight className="ml-0 w-3 transition-all duration-300 group-hover:translate-x-2 group-hover:scale-125" />
         </div>
       )}
     </button>

@@ -36,7 +36,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
         method: "POST",
       },
       api,
-      extraOptions
+      extraOptions,
     );
 
     if (refreshResult?.data) {
@@ -51,7 +51,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
           method: "POST",
         },
         api,
-        extraOptions
+        extraOptions,
       );
       api.dispatch(clearUser());
 
@@ -124,6 +124,17 @@ export const apiSlice = createApi({
       }),
     }),
 
+    // make admin - PATCH
+    makeAdmin: builder.mutation({
+      query: (userId) => ({
+        url: `${USER_URL}/make-admin`,
+        method: "PATCH",
+        body: { userId },
+      }),
+
+      invalidatesTags: ["User"],
+    }),
+
     // to login user - POST
     loginUser: builder.mutation({
       query: (user) => ({
@@ -156,6 +167,12 @@ export const apiSlice = createApi({
     // to get user - GET
     getUser: builder.query({
       query: () => `${USER_URL}/current-user`,
+      providesTags: ["User"],
+    }),
+
+    // to get all user - GET
+    getAllUser: builder.query({
+      query: () => `${USER_URL}/all-user`,
       providesTags: ["User"],
     }),
 
@@ -271,10 +288,10 @@ export const apiSlice = createApi({
         const patchResult = dispatch(
           apiSlice.util.updateQueryData("getAllProduct", undefined, (draft) => {
             const productIndex = draft.data.findIndex(
-              (product) => product.id === id
+              (product) => product.id === id,
             );
             draft.data.splice(productIndex, 1);
-          })
+          }),
         );
 
         try {
@@ -324,17 +341,17 @@ export const apiSlice = createApi({
       invalidatesTags: ["Cart"],
       async onQueryStarted(
         { productId, userId },
-        { dispatch, queryFulfilled }
+        { dispatch, queryFulfilled },
       ) {
         const patchResult = dispatch(
           apiSlice.util.updateQueryData("fetchCart", { userId }, (draft) => {
             const productIndex = draft.data.items.findIndex(
-              (item) => item.productId === productId
+              (item) => item.productId === productId,
             );
             if (productIndex >= 0) {
               draft.data.items.splice(productIndex, 1);
             }
-          })
+          }),
         );
 
         try {
@@ -358,17 +375,17 @@ export const apiSlice = createApi({
       invalidatesTags: ["Cart"],
       async onQueryStarted(
         { productId, quantity, userId },
-        { dispatch, queryFulfilled }
+        { dispatch, queryFulfilled },
       ) {
         const patchResult = dispatch(
           apiSlice.util.updateQueryData("fetchCart", { userId }, (draft) => {
             const productIndex = draft.data.items.findIndex(
-              (item) => item.productId === productId
+              (item) => item.productId === productId,
             );
             if (productIndex >= 0) {
               draft.data.items[productIndex].quantity = quantity;
             }
-          })
+          }),
         );
 
         try {
@@ -410,7 +427,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["Wishlist"],
       async onQueryStarted(
         { productId, userId },
-        { dispatch, queryFulfilled }
+        { dispatch, queryFulfilled },
       ) {
         const patchResult = dispatch(
           apiSlice.util.updateQueryData(
@@ -418,13 +435,13 @@ export const apiSlice = createApi({
             { userId },
             (draft) => {
               const productIndex = draft?.data?.list.findIndex(
-                (item) => item.productId === productId
+                (item) => item.productId === productId,
               );
               if (productIndex >= 0) {
                 draft?.data?.list?.splice(productIndex, 1);
               }
-            }
-          )
+            },
+          ),
         );
 
         try {
@@ -502,6 +519,20 @@ export const apiSlice = createApi({
 
       providesTags: ["Coupon"],
     }),
+
+    // get stats
+    getStats: builder.query({
+      query: () => `${ADMIN_URL}/stats`,
+
+      providesTags: ["Order", "Product"],
+    }),
+
+    // get category stats
+    getCatStats: builder.query({
+      query: () => `${ADMIN_URL}/category-states`,
+
+      providesTags: ["Order"],
+    }),
   }),
 });
 
@@ -547,4 +578,10 @@ export const {
   useFetchCancelledOrderQuery,
   useGetPopularProductsQuery,
   useLazyUseCouponQuery,
+
+  useGetStatsQuery,
+  useGetCatStatsQuery,
+
+  useGetAllUserQuery,
+  useMakeAdminMutation,
 } = apiSlice;

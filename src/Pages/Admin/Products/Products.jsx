@@ -47,7 +47,7 @@ const Products = () => {
   return (
     <div className="">
       {/* title section */}
-      <section className="mx-5 mt-4 flex items-center">
+      <section className="flex items-center bg-white px-5 py-4">
         <h1 className="text-2xl font-bold capitalize">manage products</h1>
         <Button
           btnHandler={toggleSidebar}
@@ -57,8 +57,6 @@ const Products = () => {
           Add Product
         </Button>
       </section>
-
-      <div className="divider my-0 px-5"></div>
 
       <section className="mx-5 mb-3 flex flex-wrap justify-center">
         {/* if loading or fetching  */}
