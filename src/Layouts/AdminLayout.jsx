@@ -1,6 +1,8 @@
 import {
   RiDashboardFill,
+  RiSidebarFoldFill,
   RiSidebarUnfoldFill,
+  RiSidebarUnfoldLine,
   RiUserSettingsFill,
 } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
@@ -15,6 +17,11 @@ import { useLogoutUserMutation } from "../redux/api/apiSlice";
 import { toast } from "../lib/sweetAlert/toast";
 import { clearUser } from "../redux/features/user/userSlice";
 import "./AdminLayout.css";
+import {
+  TbLayoutSidebarRightCollapse,
+  TbLayoutSidebarRightExpand,
+  TbLayoutSidebarRightExpandFilled,
+} from "react-icons/tb";
 
 const AdminLayout = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -92,8 +99,8 @@ const AdminLayout = () => {
             </Link>
           </section>
         </div>
-        <RxCross2
-          className="absolute right-1 top-1 cursor-pointer text-base hover:text-accent-color lg:hidden"
+        <TbLayoutSidebarRightExpand
+          className="cursor-pointer text-3xl hover:text-accent-color xl:hidden"
           onClick={toggleDrawer}
         />
       </div>
@@ -142,18 +149,18 @@ const AdminLayout = () => {
       {/* Second part of layout (non sidebar) */}
       <div className="w-full">
         {/* sidebar toggler  */}
-        <RiSidebarUnfoldFill
-          className="absolute top-6 cursor-pointer text-3xl hover:text-accent-color lg:hidden"
+        <TbLayoutSidebarRightCollapse
+          className="absolute top-6 cursor-pointer text-3xl hover:text-accent-color xl:hidden"
           onClick={toggleDrawer}
         />
-        <div className="ml-6 min-h-screen bg-background-color lg:ml-0">
+        <div className="min-h-screen bg-background-color lg:ml-0">
           <Outlet />
         </div>
       </div>
 
       {/* Side bar - drawer */}
       <div
-        className={`drawer min-h-screen w-0 bg-white shadow-md lg:drawer-open lg:w-fit ${
+        className={`drawer min-h-screen w-0 bg-white shadow-md xl:drawer-open xl:w-fit ${
           isDrawerOpen ? "drawer-open" : ""
         }`}
       >

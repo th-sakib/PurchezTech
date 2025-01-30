@@ -15,32 +15,32 @@ const PopularProducts = ({ className }) => {
 
   const popularProducts = fetchData?.data?.popularProducts;
   return (
-    <div className={(cn("lg:px-0 my-5 relative"), className)}>
-      <h1 className="text-xl font-bold border-l-8 border-l-additional-color font-secondaryFont pl-3 bg-gradient-to-r from-additional-color/10 via-10% to-background-color to-100% capitalize inline-block">
+    <div className={(cn("relative my-5 lg:px-0"), className)}>
+      <h1 className="inline-block border-l-8 border-l-additional-color bg-gradient-to-r from-additional-color/10 via-10% to-background-color to-100% pl-3 font-secondaryFont text-xl font-bold capitalize">
         Popular Products
       </h1>
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 justify-center items-center mt-3">
+      <section className="mt-3 grid grid-cols-1 items-center justify-center gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {isLoading || isFetching
           ? Array(4)
               .fill()
               .map((_, idx) => (
                 <div
                   key={idx}
-                  className="card bg-base-100 shadow-xl gap-3 rounded-sm rounded-b-lg mt-4"
+                  className="card mt-4 gap-3 rounded-sm rounded-b-lg bg-base-100 shadow-xl"
                 >
                   <div className="skeleton h-44 w-full rounded-none"></div>
-                  <div className="px-2 overflow-hidden ">
-                    <div className="w-[70%] float-left overflow-hidden">
-                      <div className="skeleton h-4 w-28 mb-2 rounded-none"></div>
+                  <div className="overflow-hidden px-2">
+                    <div className="float-left w-[70%] overflow-hidden">
+                      <div className="skeleton mb-2 h-4 w-28 rounded-none"></div>
                       <div className="skeleton h-4 w-full rounded-none"></div>
                     </div>
-                    <div className="w-[30%] float-left">
-                      <div className="skeleton w-4/5 h-4 mb-2 rounded-none ml-2"></div>
-                      <div className="skeleton h-4 rounded-none ml-2"></div>
+                    <div className="float-left w-[30%]">
+                      <div className="skeleton mb-2 ml-2 h-4 w-4/5 rounded-none"></div>
+                      <div className="skeleton ml-2 h-4 rounded-none"></div>
                     </div>
                   </div>
 
-                  <div className="skeleton h-12 rounded-none w-full rounded-b-lg"></div>
+                  <div className="skeleton h-12 w-full rounded-none rounded-b-lg"></div>
                 </div>
               ))
           : popularProducts?.map((product) => (

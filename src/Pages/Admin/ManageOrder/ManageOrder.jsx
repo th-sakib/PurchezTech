@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import EditComp from "./EditComp.jsx";
 
 const ManageOrder = () => {
-  const { data: orders } = useFetchAllOrderQuery();
+  const { data: orders, isFetching, isLoading } = useFetchAllOrderQuery();
 
   return (
     <div className="">
@@ -13,6 +13,7 @@ const ManageOrder = () => {
         <h1 className="text-2xl font-bold capitalize">Manage Orders</h1>
       </section>
 
+      {(isLoading || isFetching) && <OrderTableSkeleton />}
       <div className="m-4 mr-4 min-h-[80vh] overflow-x-auto overflow-y-hidden rounded-lg bg-white px-3">
         <table className="table">
           {/* head */}
@@ -30,7 +31,7 @@ const ManageOrder = () => {
           <tbody>
             {orders?.data?.order?.map((item) => (
               <tr key={item?._id} className="">
-                <td># {item?._id}</td>
+                <td>#{item?._id}</td>
                 <td>
                   <OrderStatus order={item} />
                 </td>
@@ -81,5 +82,53 @@ function OrderStatus({ order }) {
     </div>
   );
 }
+
+const OrderTableSkeleton = () => {
+  return (
+    <div className="m-4 mr-4 min-h-[80vh] overflow-x-auto overflow-y-hidden rounded-lg bg-white px-3">
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Order Id</th>
+            <th>Status</th>
+            <th>Order Date</th>
+            <th>Order Price(BDT)</th>
+            <th>Order Items</th>
+            <th>Payment Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <tr key={index} className="animate-pulse">
+              <td>
+                <div className="h-4 w-24 rounded bg-gray-300"></div>
+              </td>
+              <td>
+                <div className="h-4 w-20 rounded bg-gray-300"></div>
+              </td>
+              <td>
+                <div className="h-4 w-28 rounded bg-gray-300"></div>
+              </td>
+              <td>
+                <div className="h-4 w-16 rounded bg-gray-300"></div>
+              </td>
+              <td>
+                <div className="h-4 w-12 rounded bg-gray-300"></div>
+              </td>
+              <td>
+                <div className="h-4 w-20 rounded bg-gray-300"></div>
+              </td>
+              <td className="flex items-center gap-2">
+                <div className="h-6 w-6 rounded bg-gray-300"></div>
+                <div className="h-6 w-6 rounded bg-gray-300"></div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export default ManageOrder;

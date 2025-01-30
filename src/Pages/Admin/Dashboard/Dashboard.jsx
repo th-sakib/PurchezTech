@@ -11,18 +11,23 @@ import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
 import {
   Bar,
   BarChart,
-  CartesianGrid,
   Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis,
 } from "recharts";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
+  const [totalSale, setTotalSale] = useState(0);
   const { data, isLoading } = useGetStatsQuery();
   const stats = data?.data;
+
+  const totalSales = stats?.totalSales;
+  if (totalSales > 999) {
+    const total = totalSales;
+  }
+
   const cardData = [
     {
       id: 1,
@@ -80,13 +85,13 @@ export default function Dashboard() {
             <div>{stat.icon}</div>
             <div>
               {isLoading ? (
-                <div className="skeleton my-0.5 h-5 w-20 rounded-sm drop-shadow-lg"></div>
+                <div className="skeleton my-0.5 h-5 w-28 rounded-sm drop-shadow-lg"></div>
               ) : (
                 <p className="font-bold drop-shadow-lg">{stat.name}</p>
               )}
               <div className="text-2xl font-bold xl:text-3xl">
                 {isLoading ? (
-                  <div className="skeleton mt-2 h-6 w-16 rounded-sm"></div>
+                  <div className="skeleton mb-0.5 mt-2 h-7 w-16 rounded-sm"></div>
                 ) : (
                   <p className="drop-shadow-lg">{stat.value}</p>
                 )}

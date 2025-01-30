@@ -8,8 +8,8 @@ import { toast } from "../../../lib/sweetAlert/toast";
 import Swal from "sweetalert2";
 
 const Users = () => {
-  const { data: users } = useGetAllUserQuery();
-  const [makeAdmin, { isLoading }] = useMakeAdminMutation();
+  const { data: users, isLoading, isFetching } = useGetAllUserQuery();
+  const [makeAdmin] = useMakeAdminMutation();
 
   const handleAdmin = async (userId) => {
     Swal.fire({
@@ -49,6 +49,7 @@ const Users = () => {
         <h1 className="text-2xl font-bold capitalize">Manage Users</h1>
       </section>
 
+      {(isLoading || isFetching) && <UserTableSkeleton />}
       <div className="m-4 mr-4 min-h-[80vh] overflow-x-auto overflow-y-hidden rounded-lg bg-white capitalize">
         <table className="table">
           {/* head */}
@@ -108,6 +109,49 @@ const Users = () => {
           </tbody>
         </table>
       </div>
+    </div>
+  );
+};
+
+const UserTableSkeleton = () => {
+  return (
+    <div className="m-4 mr-4 min-h-[80vh] overflow-x-auto overflow-y-hidden rounded-lg bg-white capitalize">
+      <table className="table">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>User Till</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <tr key={index} className="animate-pulse">
+              <td>
+                <div className="flex items-center gap-3">
+                  <div className="avatar">
+                    <div className="mask mask-squircle h-12 w-12 bg-gray-300"></div>
+                  </div>
+                  <div className="min-w-48">
+                    <div className="h-4 w-32 rounded bg-gray-300"></div>
+                    <div className="mt-1 h-3 w-24 rounded bg-gray-300"></div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div className="h-4 w-28 rounded bg-gray-300"></div>
+              </td>
+              <td>
+                <div className="h-4 w-20 rounded bg-gray-300"></div>
+              </td>
+              <td>
+                <div className="h-8 w-36 rounded bg-gray-300"></div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

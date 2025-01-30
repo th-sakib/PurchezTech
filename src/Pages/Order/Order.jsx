@@ -17,7 +17,7 @@ const Order = () => {
     userId: userInfo?._id,
   });
 
-  const [cancelOrder, { isLoading: cancelling }] = useCancelOderMutation();
+  const [cancelOrder] = useCancelOderMutation();
 
   const handleDetailClick = (item) => {
     setSelectedOrder(item);
@@ -43,7 +43,7 @@ const Order = () => {
       <title>Orders | PurchezTech</title>
       {/* meta tag end  */}
       <div className="m-4 mb-16">
-        <h1 className="text-3xl font-bold mb-2 ml-4 md:text-center text-gray-700">
+        <h1 className="mb-2 ml-4 text-3xl font-bold text-gray-700 md:text-center">
           My Orders
         </h1>
         <div className="">
@@ -51,51 +51,51 @@ const Order = () => {
           <section className="">
             {isLoading ? (
               // loading
-              <div className="grid grid-cols-1 orderSm:grid-cols-2 userDMd:grid-cols-1 userDLg:grid-cols-2 xl:grid-cols-3 gap-2 justify-center items-center">
+              <div className="grid grid-cols-1 items-center justify-center gap-2 orderSm:grid-cols-2 userDMd:grid-cols-1 userDLg:grid-cols-2 xl:grid-cols-3">
                 {Array(8)
                   .fill()
                   .map((_, idx) => (
                     // loading
                     <div
                       key={idx}
-                      className="rounded-lg border-2 border-gray-300 m-3 p-4 space-y-1 relative animate-pulse"
+                      className="relative m-3 animate-pulse space-y-1 rounded-lg border-2 border-gray-300 p-4"
                     >
-                      <span className="absolute right-2 top-2 font-bold bg-gray-200 rounded-full px-2 text-white text-sm">
-                        <div className="h-4 bg-gray-400 rounded"></div>
+                      <span className="absolute right-2 top-2 rounded-full bg-gray-200 px-2 text-sm font-bold text-white">
+                        <div className="h-4 rounded bg-gray-400"></div>
                       </span>
                       <div>
-                        <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-                        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                        <div className="h-4 w-1/4 rounded bg-gray-200"></div>
+                        <div className="h-4 w-1/2 rounded bg-gray-200"></div>
                       </div>
                       <div>
-                        <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-                        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                        <div className="h-4 w-1/4 rounded bg-gray-200"></div>
+                        <div className="h-4 w-1/2 rounded bg-gray-200"></div>
                       </div>
-                      <div className="flex justify-between items-end">
+                      <div className="flex items-end justify-between">
                         <div>
-                          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-                          <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                          <div className="h-4 w-1/4 rounded bg-gray-200"></div>
+                          <div className="h-4 w-1/2 rounded bg-gray-200"></div>
                         </div>
-                        <div className="font-bold flex items-center">
-                          <div className="h-5 bg-gray-200 rounded w-5"></div>
-                          <div className="h-4 bg-gray-200 rounded w-16"></div>
+                        <div className="flex items-center font-bold">
+                          <div className="h-5 w-5 rounded bg-gray-200"></div>
+                          <div className="h-4 w-16 rounded bg-gray-200"></div>
                         </div>
                       </div>
                       <div className="divider" />
-                      <div className="flex justify-around items-center">
+                      <div className="flex items-center justify-around">
                         <button
                           type="button"
-                          className="flex flex-col justify-center items-center gap-0.5 hover:text-gray-600"
+                          className="flex flex-col items-center justify-center gap-0.5 hover:text-gray-600"
                         >
-                          <div className="h-6 w-6 bg-gray-200 rounded"></div>
-                          <div className="h-4 bg-gray-200 rounded w-16"></div>
+                          <div className="h-6 w-6 rounded bg-gray-200"></div>
+                          <div className="h-4 w-16 rounded bg-gray-200"></div>
                         </button>
                         <button
                           type="button"
-                          className="flex flex-col justify-center items-center gap-0.5 hover:text-red-500"
+                          className="flex flex-col items-center justify-center gap-0.5 hover:text-red-500"
                         >
-                          <div className="h-6 w-6 bg-gray-200 rounded"></div>
-                          <div className="h-4 bg-gray-200 rounded w-16"></div>
+                          <div className="h-6 w-6 rounded bg-gray-200"></div>
+                          <div className="h-4 w-16 rounded bg-gray-200"></div>
                         </button>
                       </div>
                     </div>
@@ -103,7 +103,7 @@ const Order = () => {
               </div>
             ) : orderList?.data?.order.length <= 0 ? (
               // no orders
-              <div className="flex flex-col gap-2 justify-center items-center h-[65vh]">
+              <div className="flex h-[65vh] flex-col items-center justify-center gap-2">
                 <img
                   src={errorRobo}
                   alt="error robo scared because no orders are there"
@@ -121,37 +121,37 @@ const Order = () => {
               </div>
             ) : (
               // actual orders
-              <div className="grid grid-cols-1 orderSm:grid-cols-2 userDMd:grid-cols-1 userDLg:grid-cols-2 xl:grid-cols-3 gap-0 md:gap-2 justify-center items-center w-full">
+              <div className="grid w-full grid-cols-1 items-center justify-center gap-0 orderSm:grid-cols-2 md:gap-2 userDMd:grid-cols-1 userDLg:grid-cols-2 xl:grid-cols-3">
                 {orderList?.data?.order?.map((item) => (
                   <div
                     key={item?._id}
-                    className="rounded-lg border border-accent-color m-3 p-4 space-y-1 relative"
+                    className="relative m-3 space-y-1 rounded-lg border border-accent-color p-4"
                   >
                     {/* items count  */}
-                    <span className="absolute right-2 top-2 font-bold bg-accent-color rounded-full px-2 text-white text-sm">
+                    <span className="absolute right-2 top-2 rounded-full bg-accent-color px-2 text-sm font-bold text-white">
                       {item?.orderItems.length} items
                     </span>
                     {/* order number */}
                     <div>
-                      <h3 className="text-faded-text font-bold text-xs">
+                      <h3 className="text-xs font-bold text-faded-text">
                         Order number:
                       </h3>
-                      <p className="font-bold text-sm">{item?._id}</p>
+                      <p className="text-sm font-bold">{item?._id}</p>
                     </div>
                     {/* order date */}
                     <div>
-                      <h3 className="text-faded-text font-bold text-xs">
+                      <h3 className="text-xs font-bold text-faded-text">
                         Order date:
                       </h3>
-                      <p className="font-bold text-sm">
+                      <p className="text-sm font-bold">
                         {item?.createdAt.split("T")[0]} -{" "}
                         {item?.createdAt.split("T")[1].split(".")[0]}
                       </p>
                     </div>
                     {/* order status */}
-                    <div className="flex justify-between items-end">
+                    <div className="flex items-end justify-between">
                       <div>
-                        <h3 className="text-faded-text font-bold text-xs mb-1">
+                        <h3 className="mb-1 text-xs font-bold text-faded-text">
                           Order Status:
                         </h3>
                         <p
@@ -159,19 +159,19 @@ const Order = () => {
                             item?.orderStatus === "Processing"
                               ? "text-warning"
                               : item?.orderStatus === "Cancelled"
-                              ? "text-error"
-                              : item?.orderStatus === "Delivered"
-                              ? "text-accent-color"
-                              : item?.orderStatus === "Shipped"
-                              ? "text-success"
-                              : ""
+                                ? "text-error"
+                                : item?.orderStatus === "Delivered"
+                                  ? "text-accent-color"
+                                  : item?.orderStatus === "Shipped"
+                                    ? "text-success"
+                                    : ""
                           }`}
                         >
                           {item?.orderStatus}
                         </p>
                       </div>
                       {/* price  */}
-                      <div className="font-bold flex items-center">
+                      <div className="flex items-center font-bold">
                         <TbCurrencyTaka className="text-xl" />{" "}
                         {item?.totalPrice}
                       </div>
@@ -179,24 +179,24 @@ const Order = () => {
 
                     <div className="divider" />
                     {/* buttons  */}
-                    <div className="flex justify-around items-center">
+                    <div className="flex items-center justify-around">
                       <button
                         type="button"
-                        className="flex flex-col justify-center items-center gap-0.5 hover:text-accent-color"
+                        className="flex flex-col items-center justify-center gap-0.5 hover:text-accent-color"
                         onClick={() => handleDetailClick(item)}
                       >
                         <TbListDetails />
-                        <p className="text-gray-500 font-bold font-secondaryFont text-xs">
+                        <p className="font-secondaryFont text-xs font-bold text-gray-500">
                           <MdDetails />
                         </p>
                       </button>
                       <button
                         type="button"
-                        className="flex flex-col justify-center items-center gap-0.5 hover:text-error"
+                        className="flex flex-col items-center justify-center gap-0.5 hover:text-error"
                         onClick={() => handleCancel(item)}
                       >
                         <MdOutlineRemoveShoppingCart />
-                        <p className="text-gray-500 font-bold font-secondaryFont text-xs">
+                        <p className="font-secondaryFont text-xs font-bold text-gray-500">
                           Cancel
                         </p>
                       </button>
@@ -209,17 +209,17 @@ const Order = () => {
 
           {/* modal */}
           <dialog id="orderDetailsModal" className="modal capitalize">
-            <div className="modal-box rounded-sm text-white font-bold bg-gray-300/20 backdrop-blur-md overflow-auto">
+            <div className="modal-box overflow-auto rounded-sm bg-gray-300/20 font-bold text-white backdrop-blur-md">
               <form method="dialog">
                 {/* if there is a button in form, it will close the modal */}
-                <button className="btn btn-sm btn-circle btn-ghost absolute right-1 top-0">
+                <button className="btn btn-circle btn-ghost btn-sm absolute right-1 top-0">
                   ✕
                 </button>
               </form>
               {/* order details  */}
               {selectedOrder && (
                 <>
-                  <div className="flex gap-3 flex-col mt-1">
+                  <div className="mt-1 flex flex-col gap-3">
                     <div className="flex justify-between">
                       <p>order number</p>
                       <p className="font-thin">{selectedOrder?._id}</p>
@@ -253,12 +253,12 @@ const Order = () => {
                           selectedOrder?.orderStatus === "Processing"
                             ? "text-warning"
                             : selectedOrder?.orderStatus === "Cancelled"
-                            ? "text-error"
-                            : selectedOrder?.orderStatus === "Delivered"
-                            ? "text-accent-color"
-                            : selectedOrder?.orderStatus === "Shipped"
-                            ? "text-success"
-                            : ""
+                              ? "text-error"
+                              : selectedOrder?.orderStatus === "Delivered"
+                                ? "text-accent-color"
+                                : selectedOrder?.orderStatus === "Shipped"
+                                  ? "text-success"
+                                  : ""
                         }`}
                       >
                         {selectedOrder?.orderStatus}
@@ -269,20 +269,20 @@ const Order = () => {
                   {/* products  */}
                   <div className="">
                     <h1>products</h1>
-                    <div className="font-normal text-sm space-y-2">
+                    <div className="space-y-2 text-sm font-normal">
                       {selectedOrder?.orderItems.map((product) => (
                         <div
                           key={product?.product}
-                          className="flex items-center justify-around relative"
+                          className="relative flex items-center justify-around"
                         >
                           <img
                             className="h-10 w-auto"
                             src={product?.image}
                             alt={product?.name}
                           />
-                          <div className="mr-auto ml-2 md:ml-10">
+                          <div className="ml-2 mr-auto md:ml-10">
                             <p>{product?.product}</p>
-                            <p className="text-xs line-clamp-1">
+                            <p className="line-clamp-1 text-xs">
                               {product?.name}
                             </p>
                           </div>

@@ -3,6 +3,14 @@
     border-radius: .5rem !important;
 }
 
+
+
+li a:hover {
+    background-color: transparent !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+
 li a:active {
     background-color: transparent !important;
     color: black !important
