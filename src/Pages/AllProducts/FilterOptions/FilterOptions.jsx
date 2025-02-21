@@ -4,6 +4,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { techProductWithBrands } from "../../../constant";
 import { useDispatch } from "react-redux";
 import { setCategory } from "../../../redux/features/user/filterCategorySlice";
+import { setSearchTerm } from "../../../redux/features/user/searchSlice";
 
 const FilterOptions = ({
   setBrand,
@@ -32,6 +33,7 @@ const FilterOptions = ({
     const brands = techProductWithBrands[currentCategory] || [];
     setSelectedBrands(brands);
     dispatch(setCategory(currentCategory));
+    dispatch(setSearchTerm(""));
     setBrand("");
     setIsCategoryOpen(false);
     setPage(1);
@@ -40,14 +42,14 @@ const FilterOptions = ({
   return (
     <div className="overflow-hidden">
       {/* filter with price  */}
-      <section className="mb-4 ">
-        <p className="text-lg font-bold capitalize mb-2">price range: </p>
+      <section className="mb-4">
+        <p className="mb-2 text-lg font-bold capitalize">price range: </p>
 
         {/* text range price section  */}
-        <div className="capitalize flex justify-center items-center mb-3">
-          <div className="w-full h-full mr-3">
+        <div className="mb-3 flex items-center justify-center capitalize">
+          <div className="mr-3 h-full w-full">
             <input
-              className="w-full h-full ml-1 text-center text-sm text-gray-700 py-1.5 border border-accent-color"
+              className="ml-1 h-full w-full border border-accent-color py-1.5 text-center text-sm text-gray-700"
               type="number"
               name="min"
               autoComplete="off"
@@ -58,9 +60,9 @@ const FilterOptions = ({
             />
           </div>
           <span className="text-2xl">-</span>
-          <div className="w-full h-full mx-2">
+          <div className="mx-2 h-full w-full">
             <input
-              className="w-full h-full ml-1 text-center text-sm text-gray-700 py-1.5 border border-accent-color"
+              className="ml-1 h-full w-full border border-accent-color py-1.5 text-center text-sm text-gray-700"
               type="number"
               name="max"
               autoComplete="off"
@@ -73,10 +75,10 @@ const FilterOptions = ({
         </div>
 
         {/* price range progress bar  */}
-        <div className="h-0.5 bg-[#ddd] rounded w-full relative">
+        <div className="relative h-0.5 w-full rounded bg-[#ddd]">
           {/* the slider body range */}
           <div
-            className="absolute h-0.5 left-0 right-0 rounded bg-additional-color/80"
+            className="absolute left-0 right-0 h-0.5 rounded bg-additional-color/80"
             style={{
               left: `${
                 ((minPrice - initialPriceRange?.initialMinPrice) /
@@ -94,7 +96,7 @@ const FilterOptions = ({
           ></div>
           {/* min range thumb */}
           <input
-            className={`absolute w-full bg-transparent pointer-events-none -top-[5px] appearance-none ${
+            className={`pointer-events-none absolute -top-[5px] w-full appearance-none bg-transparent ${
               isLoading || isFetching ? "cursor-wait" : "cursor-auto"
             }`}
             type="range"
@@ -106,7 +108,7 @@ const FilterOptions = ({
           />
           {/* max range thumb */}
           <input
-            className="absolute w-full bg-transparent pointer-events-none -top-[5px] appearance-none"
+            className="pointer-events-none absolute -top-[5px] w-full appearance-none bg-transparent"
             type="range"
             name="maxRange"
             min={initialPriceRange?.initialMinPrice}
@@ -121,11 +123,11 @@ const FilterOptions = ({
       <section className="">
         {/* the drop down button  */}
         <div
-          className="bg-accent-color text-white flex items-center px-5 py-2 rounded-[3px] cursor-pointer select-none"
+          className="flex cursor-pointer select-none items-center rounded-[3px] bg-accent-color px-5 py-2 text-white"
           onClick={toggleCategory}
         >
           <GiHamburgerMenu className="text-xl" />
-          <h2 className="text-base xl:text-lg font-bold mx-2 flex-1 w-28 transition-all duration-300">
+          <h2 className="mx-2 w-28 flex-1 text-base font-bold transition-all duration-300 xl:text-lg">
             Category
           </h2>
           {!isCategoryOpen ? (
@@ -137,12 +139,12 @@ const FilterOptions = ({
 
         {/* view categories  */}
         <ul
-          className={`flex  flex-col transition-all overflow-auto overflow-x-hidden no-scrollbar duration-300 ease-in-out ${
+          className={`no-scrollbar flex flex-col overflow-auto overflow-x-hidden transition-all duration-300 ease-in-out ${
             isCategoryOpen ? "max-h-[50vh]" : "max-h-0"
           }`}
         >
           <li
-            className="px-3 bg-white rounded-sm py-2 hover:text-additional-color cursor-pointer text-sm text-[#666] mb-0.5 capitalize"
+            className="mb-0.5 cursor-pointer rounded-sm bg-white px-3 py-2 text-sm capitalize text-[#666] hover:text-additional-color"
             onClick={() => handleCategory("default")}
           >
             all
@@ -150,7 +152,7 @@ const FilterOptions = ({
           {categories.map((category) => (
             <li
               key={category}
-              className="px-3 bg-white rounded-sm py-2 hover:text-additional-color cursor-pointer text-sm text-[#666] mb-0.5 capitalize"
+              className="mb-0.5 cursor-pointer rounded-sm bg-white px-3 py-2 text-sm capitalize text-[#666] hover:text-additional-color"
               onClick={() => handleCategory(category)}
             >
               {category}
@@ -170,7 +172,7 @@ const FilterOptions = ({
             selectedBrands.map((brand) => (
               <div
                 key={brand}
-                className={`capitalize text-sm rounded-full btn btn-outline py-0 px-2 min-h-0 h-7 hover:bg-accent-color ${
+                className={`btn btn-outline h-7 min-h-0 rounded-full px-2 py-0 text-sm capitalize hover:bg-accent-color ${
                   brandState === brand
                     ? "bg-accent-color text-white"
                     : "bg-transparent"

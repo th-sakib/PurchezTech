@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  useGetAllProductQuery,
-  useGetPopularProductsQuery,
-} from "../../../redux/api/apiSlice";
+import { useGetPopularProductsQuery } from "../../../redux/api/apiSlice";
 import ProductCard from "../../../Components/ProductCard";
 import { cn } from "../../../lib/cn";
 
@@ -14,6 +11,8 @@ const PopularProducts = ({ className }) => {
   } = useGetPopularProductsQuery();
 
   const popularProducts = fetchData?.data?.popularProducts;
+  console.log(popularProducts);
+
   return (
     <div className={(cn("relative my-5 lg:px-0"), className)}>
       <h1 className="inline-block border-l-8 border-l-additional-color bg-gradient-to-r from-additional-color/10 via-10% to-background-color to-100% pl-3 font-secondaryFont text-xl font-bold capitalize">
@@ -47,7 +46,7 @@ const PopularProducts = ({ className }) => {
               <ProductCard
                 key={product?._id}
                 product={product?.productDetails}
-                totalSold={product?.totalProduct}
+                totalSold={product?.totalSold}
                 productId={product?._id}
               />
             ))}

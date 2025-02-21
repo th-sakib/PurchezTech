@@ -4,7 +4,7 @@ import { MdAddShoppingCart } from "react-icons/md";
 
 import Button from "./Button";
 import LoaderSpinner from "./LoaderSpinner";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectUserRole } from "../redux/features/user/userSlice";
 import {
   useAddToCartMutation,
@@ -12,7 +12,6 @@ import {
   useLazyGetAuthenticityQuery,
 } from "../redux/api/apiSlice";
 import { toast } from "../lib/sweetAlert/toast";
-import Swal from "sweetalert2";
 import { replace, useLocation, useNavigate } from "react-router-dom";
 
 const ProductCard = ({
@@ -24,7 +23,6 @@ const ProductCard = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const dispatch = useDispatch();
   const userRole = useSelector(selectUserRole);
   const userData = useSelector((state) => state.user.userInfo);
   const userId = userData?._id;
@@ -204,7 +202,7 @@ const ProductCard = ({
 
             {/* total sold  */}
             {totalSold ? (
-              <div className="absolute bottom-0 right-2 self-center text-right font-bold text-accent-color">
+              <div className="absolute bottom-0 right-2 self-center text-right text-sm font-bold text-accent-color">
                 {totalSold} Sold
               </div>
             ) : (
